@@ -1,5 +1,6 @@
 # TP3 - CS21 Main
 [![pipeline status](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/badges/master/pipeline.svg)](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/-/commits/master)[![coverage report](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/badges/master/coverage.svg)](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/-/commits/master)
+
 Main code repository for Team Project 3 of Honours program. Customer and project still to be chosen.
 
 ## Project
