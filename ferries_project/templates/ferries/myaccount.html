@@ -1,0 +1,15 @@
+{% extends 'ferries/base.html' %}
+
+{% block title_block %}
+	My Account
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+	My account page
+	<a href="{% url 'ferries:querydata' %}">Query Data</a>
+	<a href="{% url 'ferries:changedata' %}">Change Data</a>
+{% endblock %}
