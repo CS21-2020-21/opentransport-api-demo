@@ -43,3 +43,8 @@ $RECYCLE.BIN/
 # Compiled Documents
 *.pdf
 *.ps
+
+__pycache__/
+db.dqlite3
+*.key
+thumbs.db
