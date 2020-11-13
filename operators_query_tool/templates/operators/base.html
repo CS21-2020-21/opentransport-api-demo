@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+
+<html>
+    <head lang = "en">
+        <link  rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css"/>
+      
+        <meta charset = "UTF-8" />
+        <title>operators -
+               {% block title_block %}
+
+               {% endblock %}
+        </title>
+
+        <!-- necessary bootstrap statements -->
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" 
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" 
+        crossorigin="anonymous">
+
+     
+        {% block head_block %}
+
+        {% endblock %}
+    </head>
+    <body>
+    	  
+        <div class="baseColour">
+
+            
+            <div class="row">
+                <div class="col-md-10"><h2><strong><a href="{% url 'operators:index' %}">Operator API</a></strong></h2> </div>
+                <!-- if user not authenticated -->
+                <div class="col-md-1"><a href="{% url 'operators:signup' %}">Sign Up</a></div>
+                <div class="col-md-1"><a href="{% url 'operators:signin' %}">Sign In</a></div>      
+                <!-- if user is authenticated 
+                <div class="col-md-2"><a href="{% url 'operators:myaccount' %}">My account</a></div>
+                -->
+            </div>
+            <div class="row">
+                <div class="col-md-12"><a href="{% url 'operators:index' %}">Operator API</a></div>
+                
+            </div>
+            
+        </div>
+
+        <div>
+            <div class="row">
+                <div class="col-md-12">
+                    <img src="{% static 'images/ferry_image.jpg' %}"/>
+                </div>
+            </div>
+        </div>
+            {% block body_block %}
+
+            {% endblock %}
+            
+     <div class="baseColour">
+            <div class="row">
+                <div class="col-md-4">Terms</div>
+                <div class="col-md-4">Accessibility</div>
+                <div class="col-md-4">Contact Us</div>
+            </div>
+            <div class="row">
+                <div class="col-md-4">Privacy</div>
+                <div class="col-md-4">Language</div>
+                <div class="col-md-4">Sitemap</div>
+            </div>
+        </div>
+
+    </body>
+
+</html>
