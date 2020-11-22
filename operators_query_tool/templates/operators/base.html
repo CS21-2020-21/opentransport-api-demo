@@ -3,7 +3,7 @@
 
 <html>
     <head lang = "en">
-        <link  rel="stylesheet" href="{% static 'css/style.css' %}" type="text/css"/>
+        
       
         <meta charset = "UTF-8" />
         <title>operators -
@@ -18,27 +18,79 @@
         integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" 
         crossorigin="anonymous">
 
+        <style>
+            
+            body{
+                color:white;
+            }
+
+            .base_colour{
+                background-color:#4C566A;
+            }
+
+            #header{
+                padding-bottom:0.5%;
+                font-size:150%;
+            }
+
+            #footer{
+                text-align:center;
+                font-size:150%;
+                padding-top: 1%;
+                padding-bottom: 1%;
+            }
+
+            .link{
+                color:white;
+                
+            }
+
+            .link:hover{
+                color:white;
+                text-decoration: none;
+
+            }
+
+            #ferry_image{
+                width:100%;
+                opacity:50%;
+            }
+
+            #textbox{
+                background-color: #4C566A;
+                opacity:50%;
+                text-align: center;
+                font-size:200%;
+                width:50%;
+                position:absolute;
+                bottom:50%;
+                left:25%;
+            }
+
+        </style>
      
         {% block head_block %}
 
         {% endblock %}
     </head>
     <body>
-    	  
-        <div class="baseColour">
 
-            
+        <div class="base_colour" id="header">
+
             <div class="row">
-                <div class="col-md-10"><h2><strong><a href="{% url 'operators:index' %}">Operator API</a></strong></h2> </div>
+                <div class="col-md-10"><h2><strong><a href="{% url 'operators:index' %}" class="link">Operator API</a></strong></h2> </div>
                 <!-- if user not authenticated -->
-                <div class="col-md-1"><a href="{% url 'operators:signup' %}">Sign Up</a></div>
-                <div class="col-md-1"><a href="{% url 'operators:signin' %}">Sign In</a></div>      
-                <!-- if user is authenticated 
-                <div class="col-md-2"><a href="{% url 'operators:myaccount' %}">My account</a></div>
-                -->
+                <div style="padding-top:2%;">
+                    <div class="col-md-1"><a href="{% url 'operators:signup' %}" class="link">Sign Up</a></div>
+                    <div class="col-md-1"><a href="{% url 'operators:signin' %}" class="link">Sign In</a></div>      
+                    <!-- if user is authenticated 
+                    <div class="col-md-2"><a href="{% url 'operators:myaccount' %}" class="link">My account</a></div>
+                    -->
+                </div>
+                
             </div>
             <div class="row">
-                <div class="col-md-12"><a href="{% url 'operators:index' %}">Operator API</a></div>
+                <div class="col-md-12"><h3><a href="{% url 'operators:index' %}" class="link">Query Tool</a></h3></div>
                 
             </div>
             
@@ -47,16 +99,18 @@
         <div>
             <div class="row">
                 <div class="col-md-12">
-                    <img src="{% static 'images/ferry_image.jpg' %}"/>
+                    <img src="{% static 'images/ferry_image.jpg' %}" id="ferry_image"/>
+                    <div id="textbox">This is a tool for transport providers to be able to query others’ and change their data in database without any coding knowledge</div>
                 </div>
             </div>
+            
         </div>
             {% block body_block %}
 
             {% endblock %}
             
-     <div class="baseColour">
-            <div class="row">
+     <div class="base_colour"  id="footer">
+            <div class="row" style="padding-bottom:1%;">
                 <div class="col-md-4">Terms</div>
                 <div class="col-md-4">Accessibility</div>
                 <div class="col-md-4">Contact Us</div>
