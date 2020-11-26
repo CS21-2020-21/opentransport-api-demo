@@ -2,7 +2,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-	Homepage
+    Homepage
 {% endblock %}
 
 {% block head_block %}
@@ -10,7 +10,15 @@
 {% endblock %}
 
 {% block body_block %}
-	
-	
 
+
+
+{% endblock %}
+
+{% block text_block %}
+    <div class="py-4">
+        <h4 class="font-weight-light text-white py-4">This is a tool for transport providers to be able to query others’
+            and change their data in database without any coding knowledge</h4>
+        <a href="{% url 'operators:signup' %}" class="btn btn-dark btn-lg pt-2">Click here to get started</a>
+    </div>
 {% endblock %}

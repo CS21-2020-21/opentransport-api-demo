@@ -11,5 +11,6 @@ urlpatterns = [
     path('myaccount/', views.myaccount, name="myaccount"),
     path('myaccount/querydata/', views.querydata, name="querydata"),
     path('myaccount/changedata/', views.changedata, name="changedata"),
-    path('myaccount/querydata/viewdata', views.viewdata, name="viewdata"),
+    path('myaccount/querydata/viewmodes', views.viewmodes, name="viewmodes"),
+    path('myaccount/querydata/viewoperators', views.viewoperators, name="viewoperators"),
 ]

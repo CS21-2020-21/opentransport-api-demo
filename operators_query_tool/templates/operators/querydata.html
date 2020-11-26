@@ -9,7 +9,18 @@
 {% endblock %}
 
 {% block body_block %}
-    
-    <a href="{% url 'operators:viewdata' %}">View Data</a>
 
+
+{% endblock %}
+
+{% block text_block %}
+    
+    <div class="py-4">
+        <form id="query_form" method="post" class="font-weight-light text-white py-4">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" name="submit" value="Submit Query" class="btn btn-dark btn-lg pt-2" />
+
+        </form>
+    </div>
 {% endblock %}
