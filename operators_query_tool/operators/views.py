@@ -31,7 +31,7 @@ def signup(request):
                 user = User.objects.create_user(username=username, password=password, email=email)
                 user.save()
                 print('user created')
-                return render(request, 'operators/signup.html', {'success': "You are successfully signed up"})
+                return render(request, 'operators/signin.html', {'success': "You are successfully signed up"})
 
         else:
             return render(request, 'operators/signup.html', {'error': "Password don't match"})
