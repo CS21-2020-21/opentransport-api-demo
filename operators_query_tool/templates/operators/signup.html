@@ -14,28 +14,29 @@
 
 {% block text_block %}
     {% if error %}
-        <h4> {{ error }} </h4>
+    <h4> {{ error }} </h4>
     {% endif %}
     {% if success %}
-        <h4> {{ success }} </h4>
+    <h4> {{ success }} </h4>
     {% endif %}
 
-    <form action="{% url 'operators:signup' %}" class="form-signin text-white" method='POST'>
-        {% csrf_token %}
+    <form action="{% url 'operators:signup' %}" class="form-signin text-white" method='POST' >
+    {% csrf_token %}
         <h1 class="h3 mb-3 font-weight-normal">Sign Up</h1>
         <p>Already have an account? Then please <a href="{% url 'operators:signin' %}">sign in</a>.</p>
         <label for="username" class="sr-only">Password</label>
-        <input type="username" class="form-control" name="username" placeholder="Username" required>
-
+        <input type="username"  class="form-control" name="username" placeholder="Username" required>
+        
         <label for="inputEmail" class="sr-only">Email address</label>
-        <input type="email" class="form-control" name="email" placeholder="Email address" required autofocus>
+        <input type="email"  class="form-control" name="email" placeholder="Email address" required autofocus>
 
         <label for="inputPassword" class="sr-only">Password</label>
-        <input type="password" class="form-control" name="password" placeholder="Password" required>
+        <input type="password"  class="form-control" name="password" placeholder="Password" required>
 
         <label for="confirmPassword" class="sr-only">Confirm Password</label>
-        <input type="password" class="form-control" name="confirmpassword" placeholder="Confirm Password" required>
+        <input type="password"  class="form-control" name="confirmpassword"placeholder="Confirm Password" required>
 
         <button class="btn btn-lg btn-primary btn-block mt-2" type="submit">Sign up</button>
     </form>
+    
 {% endblock %}
