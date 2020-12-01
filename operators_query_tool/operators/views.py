@@ -29,7 +29,7 @@ def signup(request):
                 return render(request, 'operators/signup.html', {'error': "Email already taken"})
             else:
                 user = User.objects.create_user(username=username, password=password, email=email)
-                user.save();
+                user.save()
                 print('user created')
                 return render(request, 'operators/signup.html', {'success': "You are successfully signed up"})
 
@@ -44,9 +44,9 @@ def signin(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-
+        
         user = auth.authenticate(username=username, password=password)
-
+        
         if user is not None:
             auth.login(request, user)
             return render(request, 'operators/myaccount.html', {'success': "You're logged in now "})
