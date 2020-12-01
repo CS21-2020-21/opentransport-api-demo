@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
 
+
 # Need clarification from Hayden about the Operator model.
 # class Operator(models.Model):
 #     op_id = models.IntegerField(unique=True)
@@ -22,4 +23,4 @@ class Modes(models.Model):
     long_desc = models.TextField()
 
     def __str__(self):
-        return self.mode_id # short_desc might be more useful? - LT
+        return self.mode_id  # short_desc might be more useful? - LT
