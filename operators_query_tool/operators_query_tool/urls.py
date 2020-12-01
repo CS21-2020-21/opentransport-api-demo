@@ -17,18 +17,11 @@ from django.contrib import admin
 from django.urls import path
 from django.urls import include
 from operators import views
-from django.conf import settings 
+from django.conf import settings
 from django.conf.urls.static import static
-
-
-urlpatterns = [ path('', views.index, name='index'), 
-                path('operators/', include('operators.urls')), 
-                # The above maps any URLs starting with operators/ to be handled by operators. 
-                path('admin/', admin.site.urls), ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 urlpatterns = [
     path('', include('operators.urls')),
     path('admin/', admin.site.urls),
-] 
-
+]
 urlpatterns = urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

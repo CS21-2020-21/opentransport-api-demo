@@ -4,15 +4,17 @@ from django.urls import reverse
 from operators.forms import operatorQueryForm
 import requests
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User,auth
+from django.contrib.auth.models import User, auth
 from django.contrib import messages
 from .models import Operator
 from .models import Modes
+
 
 # Create your views here.
 
 def index(request):
     return render(request, 'operators/index.html')
+
 
 def signup(request):
     if request.method == 'POST':
@@ -30,7 +32,7 @@ def signup(request):
                 user = User.objects.create_user(username=username, password=password, email=email)
                 user.save();
                 print('user created')
-                return render(request, 'operators/signin.html', {'success': "You are successfully signed up and sign in to access your account. "})
+                return render(request, 'operators/signup.html', {'success': "You are successfully signed up"})
 
         else:
             return render(request, 'operators/signup.html', {'error': "Password don't match"})
@@ -83,51 +85,47 @@ def querydata(request):
 def changedata(request):
     return render(request, 'operators/changedata.html')
 
-def viewmodes(request):
-    #query the operators API with the get request /mode
-    #the context dictionary will contain the data we have returned from the query
 
-    
+def viewmodes(request):
+    # query the operators API with the get request /mode
+    # the context dictionary will contain the data we have returned from the query
 
     context = {}
-    #if the status code says the request went ok
+    # if the status code says the request went ok
     try:
 
-        #this URL is just a placeholder for now, we will know the exact URL when we host the API
+        # this URL is just a placeholder for now, we will know the exact URL when we host the API
         modes_response = requests.get("http://open-transport/mode")
-        #the json returned by the query can be translated to a python list of dictionaries
-        #each dictionary has a key 'short-desc' which is mapped to a string detailing the mode of transport
+        # the json returned by the query can be translated to a python list of dictionaries
+        # each dictionary has a key 'short-desc' which is mapped to a string detailing the mode of transport
         mode_list_of_dict = modes_response.json()
 
-        #create a list of dictionaries, where each dictionary has a mapping for short-desc and long-desc
-        #these descriptions describe the mode of transport
-        #e.g short-desc: "train"
+        # create a list of dictionaries, where each dictionary has a mapping for short-desc and long-desc
+        # these descriptions describe the mode of transport
+        # e.g short-desc: "train"
         #    long-desc: "includes intercity, Eurostar / TGV, etc."
-
         # rewritten this part below, left it just in case we might change back
         # modes = [{'short':dictionary['short-desc'], 'long':dictionary['long-desc']}
         #          for dictionary in mode_list_of_dict]
 
         modes = []
         for i, dictionary in enumerate(mode_list_of_dict):
-            modes.append({'short':dictionary['short-desc'], 'long':dictionary['long-desc']})
+            modes.append({'short': dictionary['short-desc'], 'long': dictionary['long-desc']})
 
             # create modes object and save it in the db
-            m = Modes(mode_id=dictionary['id'], op_id=i, short_desc=dictionary['short-desc'], long_desc=dictionary['long-desc'])    # not sure about op_id
+            m = Modes(mode_id=dictionary['id'], op_id=i, short_desc=dictionary['short-desc'],
+                      long_desc=dictionary['long-desc'])  # not sure about op_id
             m.save()
-        
-        context['modes'] = modes
-        
-    except:
-        context['modes']=False
-    
-    
 
+        context['modes'] = modes
+
+    except:
+        context['modes'] = False
 
     return render(request, 'operators/viewmodes.html', context=context)
 
-def viewoperators(request):
 
+def viewoperators(request):
     context = {}
     try:
         operators_response = requests.get("http://open-transport/operator")
@@ -138,6 +136,5 @@ def viewoperators(request):
 
     except:
         context['operators'] = False
-
 
     return render(request, 'operators/viewOperators.html')
