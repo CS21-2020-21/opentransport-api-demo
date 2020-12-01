@@ -1,7 +1,7 @@
 {% extends 'operators/base.html' %}
 
 {% block title_block %}
-	View Data
+    View Data
 {% endblock %}
 
 {% block head_block %}
@@ -9,5 +9,22 @@
 {% endblock %}
 
 {% block body_block %}
-    
+
+{% endblock %}
+
+{% block text_block %}
+    {% if modes %}
+        <h4 class="font-weight-light text-white py-4">Here are your results</h4>
+
+        <div class="infinite-container">
+            {% for mode in modes %}
+                <div class="infinite-item">{{ mode.short }}</div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="py-4">
+            <h4 class="font-weight-light text-white py-4">Unfortunately we were unable to process your request</h4>
+            <a href="{% url 'operators:querydata' %}" class="btn btn-dark btn-lg pt-2">Click here to try again</a>
+        </div>
+    {% endif %}
 {% endblock %}
