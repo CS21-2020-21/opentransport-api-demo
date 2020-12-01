@@ -6,7 +6,6 @@ import requests
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
-from .models import Operator
 from .models import Modes
 
 
