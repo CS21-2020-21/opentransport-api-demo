@@ -1,0 +1,17 @@
+{% extends 'operators/base.html' %}
+
+{% block title_block %}
+	My Account
+{% endblock %}
+
+{% block head_block %}
+
+
+{% endblock %}
+
+{% block body_block %}
+	
+	<a href="{% url 'operators:querydata' %}">Query Data</a>
+	<a href="{% url 'operators:changedata' %}">Change Data</a>
+
+{% endblock %}
