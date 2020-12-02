@@ -10,8 +10,14 @@
 {% endblock %}
 
 {% block body_block %}
-	
-	<a href="{% url 'operators:querydata' %}">Query Data</a>
-	<a href="{% url 'operators:changedata' %}">Change Data</a>
 
+{% endblock %}
+
+{% block text_block %}
+	<div class="py-4">
+			
+		<a href="{% url 'operators:querydata' %}" class="btn btn-dark btn-lg pt-2">Query Data</a>
+		<a href="{% url 'operators:changedata' %}" class="btn btn-dark btn-lg pt-2">Change Data</a>
+
+	</div>
 {% endblock %}
