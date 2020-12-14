@@ -126,6 +126,7 @@ def viewmodes(request):
 
 def viewoperators(request):
     context = {}
+    
     try:
         operators_response = requests.get("http://open-transport/operator")
         operator_list_of_dict = operators_response.json()
