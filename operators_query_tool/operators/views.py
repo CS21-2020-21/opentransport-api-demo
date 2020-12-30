@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
@@ -44,9 +45,9 @@ def signin(request):
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
-        
+
         user = auth.authenticate(username=username, password=password)
-        
+
         if user is not None:
             auth.login(request, user)
             return render(request, 'operators/myaccount.html', {'success': "You're logged in now "})
@@ -126,7 +127,7 @@ def viewmodes(request):
 
 def viewoperators(request):
     context = {}
-    
+
     try:
         operators_response = requests.get("http://open-transport/operator")
         operator_list_of_dict = operators_response.json()
@@ -138,3 +139,21 @@ def viewoperators(request):
         context['operators'] = False
 
     return render(request, 'operators/viewOperators.html')
+
+
+@login_required
+def deactivate_user_view(request):
+    return render(request, "account/delete_user_account.html")
+
+
+@login_required
+def deactivate_user(request):
+    pk = request.user.id
+    user = request.user
+
+    if request.user.is_authenticated and request.user.id == user.id:
+        user.is_active = False
+        user.delete()
+        return redirect("operators:index")
+    else:
+        return HttpResponse("Cannot delete account")
