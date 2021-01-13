@@ -1,0 +1,18 @@
+{% extends 'customers/base.html' %}
+
+{% block title_block %}
+    My Account
+{% endblock %}
+
+{% block head_block %}
+{% endblock %}
+
+{% block body_block %}
+{% endblock %}
+
+{% block text_block %}
+    <div class="py-4">
+        <a href="{% url 'customers:my_account' %}" class="btn btn-dark btn-lg pt-2">My PSD Bookings</a>
+        <a href="{% url 'customers:query' %}" class="btn btn-dark btn-lg pt-2">All My Accounts</a>
+    </div>
+{% endblock %}
