@@ -13,9 +13,11 @@ class customerQueryForm(forms.Form):
 
 #once the user has decided on the query they would like to perform, they can specify option arguments to pass into the query
 class requestDetailsForm(forms.Form):
-    from_date = forms.CharField(label="All objects after the date  (optional)", required=False)
-    to_date = forms.CharField(label="All records after the date  (optional)", required=False)
+    from_date = forms.DateTimeField(label="All records after the date  (optional)", required=False)
+    to_date = forms.DateTimeField(label="All records before the date  (optional)", required=False)
     skip = forms.IntegerField(label="How many records would you like to skip for pagination?  (optional)", required=False)
     limit = forms.IntegerField(label="What is the maximum number of records you would like to see? (optional)", required=False)
+
+   
 
 
