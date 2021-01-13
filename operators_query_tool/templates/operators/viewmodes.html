@@ -18,7 +18,9 @@
 	
 	<div class="infinite-container">
 		{% for mode in modes %}
-			<div class="infinite-item">{{ mode.short }}</div>
+			<div class="infinite-item">{{ mode.id }}</div>
+			<div class="infinite-item">{{ mode.short_desc }}</div>
+			<div class="infinite-item">{{ mode.long_desc }}</div>
 		{% endfor %}
 	</div>
 	{% else %}
