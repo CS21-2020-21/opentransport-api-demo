@@ -1,0 +1,83 @@
+{% extends 'operators/base.html' %}
+
+{% load staticfiles %}
+
+{% block title_block %}
+    View Operator pages
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+
+	
+{% if operators %}
+<h4 class="font-weight-light text-white py-4">Here are your results</h4>
+
+
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col"><h6 class="font-weight-light text-white py-1">Description</h6></th>
+                <th scope="col"><h6 class="font-weight-light text-white py-1">Homepage</h6></th>
+                <th scope="col"><h6 class="font-weight-light text-white py-1">ID</h6></th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for operator in operators %}
+            <tr>
+                <td><h6 class="font-weight-light text-white py-1">{{ operator.description }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1">{{ operator.homepage }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1">{{ operator.id }}</h6></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+
+        <thead>
+            <tr>
+                <th scope="col"><h6 class="font-weight-light text-white py-1">Phone</h6></th>
+                <th scope="col"><h6 class="font-weight-light text-white py-1">Email</h6></th>
+                <th scope="col"><h6 class="font-weight-light text-white py-1">Language</h6></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for operator in operators %}
+            <tr>
+                <td><h6 class="font-weight-light text-white py-1">{{ operator.phone }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1">{{ operator.email }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1">{{ operator.language }}</h6></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+
+
+    {% if operators.has_previous %}
+        <a href="?href=&description=&operator_id=&phone=&email=&homepage=&language=&modes=None&mode=&url=&page={{ operators.previous_page_number }}" class="btn btn-dark btn-lg pt-2">Previous</a>
+
+    {% endif %}
+
+    {% if operators.has_next %}
+        <a href="?href=&description=&operator_id=&phone=&email=&homepage=&language=&modes=None&mode=&url=&page={{ operators.next_page_number }}" class="btn btn-dark btn-lg pt-2">Next</a>
+    {% endif %}
+</div>
+{% else %}
+    <h4 class="font-weight-light text-white py-4">Your query returned no results</h4>
+    <a href="{% url 'operators:query_operators' %}" class="btn btn-dark btn-lg pt-2">Click here to try again</a>
+
+{% endif %}
+
+
+{% endblock %}
+
+
+
