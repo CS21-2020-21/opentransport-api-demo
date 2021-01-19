@@ -4,7 +4,6 @@ from django.http import HttpResponse
 from django.urls import reverse
 from operators.forms import *
 import requests
-from .models import Modes
 from django.core.paginator import Paginator
 from urllib.parse import urlencode
 
