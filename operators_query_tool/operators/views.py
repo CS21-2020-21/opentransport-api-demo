@@ -2,66 +2,22 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
-from operators.forms import operatorQueryForm
+from operators.forms import *
 import requests
-from django.contrib.auth import authenticate
-from django.contrib.auth.models import User, auth
-from django.contrib import messages
+from .models import Modes
+from django.core.paginator import Paginator
+from urllib.parse import urlencode
 
-
-# Create your views here.
 
 def index(request):
     return render(request, 'operators/index.html')
 
 
-def signup(request):
-    if request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        confirmpassword = request.POST['confirmpassword']
-        email = request.POST['email']
-
-        if password == confirmpassword:
-            if User.objects.filter(username=username).exists():
-                return render(request, 'operators/signup.html', {'error': "Username already taken"})
-            elif User.objects.filter(email=email).exists():
-                return render(request, 'operators/signup.html', {'error': "Email already taken"})
-            else:
-                user = User.objects.create_user(username=username, password=password, email=email)
-                user.save()
-                print('user created')
-                return render(request, 'operators/signin.html', {'success': "You are successfully signed up"})
-
-        else:
-            return render(request, 'operators/signup.html', {'error': "Password don't match"})
-
-    else:
-        return render(request, 'operators/signup.html')
+def my_account(request):
+    return render(request, 'operators/my_account.html')
 
 
-def signin(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
-
-        user = auth.authenticate(username=username, password=password)
-
-        if user is not None:
-            auth.login(request, user)
-            return render(request, 'operators/myaccount.html', {'success': "You're logged in now "})
-        else:
-            return render(request, 'operators/signin.html', {'error': "Invalid credentials"})
-
-    else:
-        return render(request, 'operators/signin.html', {'error': "Try logging again"})
-
-
-def myaccount(request):
-    return render(request, 'operators/myaccount.html')
-
-
-def querydata(request):
+def query(request):
     form = operatorQueryForm()
 
     if request.method == "POST":
@@ -70,100 +26,193 @@ def querydata(request):
         if form.is_valid():
             query_type = form.cleaned_data.get('query_type')
             if query_type == 'mode':
-                return redirect(reverse('operators:viewmodes'))
+                return redirect(reverse('operators:query_modes'))
             elif query_type == 'operator':
                 # redirect to the page showing operators info
-                return redirect(reverse('operators:viewoperators'))
+                # need to understand what is going on before we can implement this
+                return redirect(reverse('operators:query_operators'))
 
     context = {'form': form}
 
-    return render(request, 'operators/querydata.html', context=context)
+    return render(request, 'operators/query.html', context=context)
 
 
-def changedata(request):
-    return render(request, 'operators/changedata.html')
+def change_data(request):
+    return render(request, 'operators/change_data.html')
 
 
-def viewmodes(request):
-    # query the operators API with the get request /mode
-    # the context dictionary will contain the data we have returned from the query
+def query_modes(request):
+    URL = "https://cs21operatorapi.pythonanywhere.com/modes/"
 
     context = {}
-    # if the status code says the request went ok
+
     try:
 
-        # this URL is just a placeholder for now, we will know the exact URL when we host the API
-        # I am currently working by hosting the api on the django development server
-        modes_response = requests.get("http://127.0.0.1:8000/mode/")
-        # the json returned by the query can be translated to a python list of dictionaries
-  
-        # these descriptions describe the mode of transport
-        # e.g id: "1"
-        #     short-desc: "train"
-        #     long-desc: "includes intercity, Eurostar / TGV, etc."
-    
-        mode_list_of_dict = modes_response.json()    
-    
-        context['modes'] = mode_list_of_dict
+        response = requests.get(url=URL)
+
+        # if response.status == 500:
+        #     context['empty'] = True
+
+        data = response.json()
+
+        context['mode_list'] = []
+
+        for item in data:
+            details = {}
+            details['id'] = item['id']
+            details['short_desc'] = item['short_desc']
+            details['long_desc'] = item['long_desc']
+
+            context['mode_list'].append(details)
+
+        page_num = request.GET.get('page')
+        if page_num is None:
+            context['modes'] = Paginator(context['mode_list'], 3).page(1)
+        else:
+            context['modes'] = Paginator(context['mode_list'], 3).page(page_num)
 
     except:
+
         context['modes'] = False
 
-    return render(request, 'operators/viewmodes.html', context=context)
+    return render(request, 'operators/query_modes.html', context=context)
 
 
-def viewoperators(request):
-    '''
+def query_operators(request):
     context = {}
 
+    form = requestDetailsForm()
+
+    if request.method == "POST":
+
+        form = requestDetailsForm(request.POST)
+
+        if form.is_valid():
+            href = form.cleaned_data.get('href')
+            description = form.cleaned_data.get('description')
+            operator_id = form.cleaned_data.get('operator_id')
+            phone = form.cleaned_data.get('phone')
+            email = form.cleaned_data.get('email')
+            homepage = form.cleaned_data.get('homepage')
+            language = form.cleaned_data.get('language')
+            modes = form.cleaned_data.get('modes')
+            mode = form.cleaned_data.get('mode')
+            url = form.cleaned_data.get('url')
+
+            url_params = {'href': href, 'description': description, 'operator_id': operator_id, 'phone': phone,
+                          'email': email, 'homepage': homepage, 'language': language, 'modes': modes, 'mode': mode,
+                          'url': url}
+
+            return redirect('{}?{}'.format(reverse('operators:view_operators'), urlencode(url_params)))
+
+    context['form'] = form
+
+    return render(request, 'operators/query_operators.html', context=context)
+
+
+def view_operators(request):
+    href = request.GET.get('href')
+    description = request.GET.get('description')
+    operator_id = request.GET.get('operator_id')
+    phone = request.GET.get('phone')
+    email = request.GET.get('email')
+    homepage = request.GET.get('homepage')
+    language = request.GET.get('language')
+    modes = request.GET.get('modes')
+    mode = request.GET.get('mode')
+    url = request.GET.get('url')
+
+    context = {'href': href, 'description': description, 'operator_id': operator_id, 'phone': phone,
+               'email': email, 'homepage': homepage, 'language': language, 'modes': modes, 'mode': mode, 'url': url}
+
+    params = {}
+    if href != '':
+        params['href'] = href
+
+    if description != '':
+        params['rel'] = 'description'
+        params['val'] = description
+
+    if operator_id != '':
+        params['rel'] = 'id'
+        params['val'] = operator_id
+
+    if phone != '':
+        params['rel'] = 'phone'
+        params['val'] = phone
+
+    if email != '':
+        params['rel'] = 'email'
+        params['val'] = email
+
+    if homepage != '':
+        params['rel'] = 'homepage'
+        params['val'] = homepage
+
+    if language != '':
+        params['rel'] = 'language'
+        params['val'] = language
+
+    # if modes is not None:
+    #   params['rel'] = 'modes'
+    #  params['val'] = modes
+
+    if mode != '':
+        params['rel'] = 'mode'
+        params['val'] = mode
+
+    if url != '':
+        params['rel'] = 'url'
+        params['val'] = url
+
     try:
-        operators_response = requests.get("http://open-transport/operator")
-        #get the json returned
-        operator_list_of_dict = operators_response.json()
+        URL = "https://cs21operatorapi.pythonanywhere.com/operators/"
 
-        operators = []
+        response = requests.get(url=URL, params=params)
 
-        #we are returned a list of dictionaries
-        #the first dictionary is a meta-data stating that this is a list of operator dictionaries
-        #the second dictionary is the list of operators
-        #each operator has an item-metadata list of rel,val pairs
-        #the rel will be for example name and the val will be the name of the company
-        #we want to loop through each operator dictionary and get the details from its rel,val pairs
+        data = response.json()
 
-        for dictionary in operator_list_of_dict['items']:
-            
-            #we are looking at the list of rel,val pairs
-            item_metadata = dictionary['item-metadata']
+        context['operators_list'] = []
 
-            #get the details of the operator from the rel,val pairs
-            for item in item_metadata:
-                if item['rel']=='urn:X-hypercat:rels:hasDescription:en':
-                    operator_name = item['val']
-                elif item['rel']=='urn:X-hypercat:rels:hasHomepage':
-                    operator_url = item['val']
-                elif item['rel'] == 'urn:X-opentransport:rels:hasId':
-                    operator_id = item['val']
-                elif item['rel'] == 'urn:X-opentransport:rels:hasEmail':
-                    operator_email = item['val']
-                elif item['rel'] == 'urn:X-opentransport:rels:hasPhone':
-                    operator_phone = item['val']
-                elif item['rel'] == 'urn:X-opentransport:rels:hasDefaultLanguage':
-                    operator_default_language = item['val']
+        for item in data:
 
-            #append the details that we will put in the context dictionary
-            operators.append({'name':operator_name, 'url':operator_url})
+            details = {}
+            details['href'] = item['href']
 
-           
+            for pair in item['item_metadata']:
 
-         
-        
-        context['operators'] = operators
-        
+                if pair['rel'] == 'urn:X-hypercat:rels:hasDescription:en':
+                    details['description'] = pair['val']
+
+                elif pair['rel'] == 'urn:X-hypercat:rels:hasHomepage':
+                    details['homepage'] = pair['val']
+
+                elif pair['rel'] == 'urn:X-opentransport:rels:hasId':
+                    details['id'] = pair['val']
+
+                elif pair['rel'] == 'urn:X-opentransport:rels:hasEmail':
+                    details['email'] = pair['val']
+
+                elif pair['rel'] == 'urn:X-opentransport:rels:hasPhone':
+                    details['phone'] = pair['val']
+
+                elif pair['rel'] == 'urn:X-opentransport:rels:hasDefaultLanguage':
+                    details['language'] = pair['val']
+
+            context['operators_list'].append(details)
+
+        page_num = request.GET.get('page')
+        pages = Paginator(context['operators_list'], 1)
+
+        if page_num is None:
+            context['operators'] = pages.page(1)
+        else:
+            context['operators'] = pages.page(page_num)
     except:
-        context['operators'] = False
-    '''
 
-    return render(request, 'operators/viewOperators.html')
+        context['operators'] = False
+
+    return render(request, 'operators/view_operators.html', context=context)
 
 
 @login_required

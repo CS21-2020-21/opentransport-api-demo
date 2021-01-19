@@ -6,7 +6,7 @@
 {% block text_block %}
     <div class='col-8 offset-2 py-3'>
         <div class="text-center text-white">
-            <h1 class="h1 mb-3 font-weight-normal">E-mail Addresses</h1>
+            <h1 class="h1 mb-3 font-weight-light">E-mail Addresses</h1>
             {% if user.emailaddress_set.all %}
                 <p>The following e-mail addresses are associated with your account:</p>
 
@@ -56,7 +56,7 @@
 
             {% endif %}
             <hr/>
-            <h2 class="h2 mb-3 font-weight-normal">Add E-mail Address</h2>
+            <h2 class="h2 mb-3 font-weight-light">Add E-mail Address</h2>
 
             <form method="post" action="{% url 'account_email' %}" class="add_email">
                 {% csrf_token %}
