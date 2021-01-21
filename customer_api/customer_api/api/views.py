@@ -6,7 +6,6 @@ from rest_framework import routers, serializers, viewsets
 from .models import *
 from .serializers import *
 
-# Create your views here.
 
 class ModeViewSet(viewsets.ModelViewSet):
     queryset = Mode.objects.all()
