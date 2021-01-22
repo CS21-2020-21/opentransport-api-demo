@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 class operatorQueryForm(forms.Form):
-    QUERY_CHOICES = [('mode', 'Modes of Transport'),
+    QUERY_CHOICES = [('mode', 'Modes'),
                      ('operator', 'Operators'),]
     query_type = forms.CharField(label="What type of query would you like to perform?",
                                  widget=forms.Select(choices=QUERY_CHOICES))

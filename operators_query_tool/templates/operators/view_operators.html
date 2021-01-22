@@ -3,7 +3,7 @@
 {% load staticfiles %}
 
 {% block title_block %}
-    View Operator pages
+    View Operators
 {% endblock %}
 
 {% block head_block %}
@@ -34,9 +34,9 @@
         <tbody>
             {% for operator in operators %}
             <tr>
-                <td><h6 class="font-weight-light text-white py-1">{{ operator.description }}</h6></td>
-                <td><h6 class="font-weight-light text-white py-1">{{ operator.homepage }}</h6></td>
-                <td><h6 class="font-weight-light text-white py-1">{{ operator.id }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1" id="id_description">{{ operator.description }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1" id="id_homepage">{{ operator.homepage }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1" id="id_operator_id">{{ operator.id }}</h6></td>
             </tr>
             {% endfor %}
         </tbody>
@@ -51,9 +51,9 @@
         <tbody>
             {% for operator in operators %}
             <tr>
-                <td><h6 class="font-weight-light text-white py-1">{{ operator.phone }}</h6></td>
-                <td><h6 class="font-weight-light text-white py-1">{{ operator.email }}</h6></td>
-                <td><h6 class="font-weight-light text-white py-1">{{ operator.language }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1" id="id_phone">{{ operator.phone }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1" id="id_email">{{ operator.email }}</h6></td>
+                <td><h6 class="font-weight-light text-white py-1" id="id_lanuage">{{ operator.language }}</h6></td>
             </tr>
             {% endfor %}
         </tbody>
