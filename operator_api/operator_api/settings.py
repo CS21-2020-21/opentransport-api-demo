@@ -24,13 +24,14 @@ SECRET_KEY = '$^ed(t1q&(ubl2n8^)ut6)^_u$!qtq)p)iwl39lc3+k%u_+)xq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['http://cs21operatorapi.pythonanywhere.com/']
+ALLOWED_HOSTS = ['http://cs21operatorapi.pythonanywhere.com/', '127.0.0.1',]
 
 # Application definition
 
 INSTALLED_APPS = [
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -114,3 +115,13 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+    ],
+
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],    
+}

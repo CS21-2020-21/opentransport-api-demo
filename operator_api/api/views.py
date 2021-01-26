@@ -1,9 +1,11 @@
 from rest_framework import viewsets
+from rest_framework.permissions import IsAuthenticated
 from .serializers import *
 from .models import *
 
 
 class ModeViewSet(viewsets.ModelViewSet):
+    permission_classes = (IsAuthenticated,)
     queryset = Mode.objects.all().order_by('id')
     serializer_class = ModeSerializer
 

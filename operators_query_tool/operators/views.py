@@ -41,13 +41,15 @@ def change_data(request):
 
 
 def query_modes(request):
+    
+    auth_header = {'Authorization': 'Token ab56fe09d6bd8da1d3922c0bbd740ba106801f82'}
     URL = "https://cs21operatorapi.pythonanywhere.com/modes/"
 
     context = {}
 
     try:
 
-        response = requests.get(url=URL)
+        response = requests.get(url=URL, headers=auth_header)
 
         # if response.status == 500:
         #     context['empty'] = True
@@ -165,9 +167,10 @@ def view_operators(request):
         params['val'] = url
 
     try:
+        auth_header = {'Authorization': 'Token ab56fe09d6bd8da1d3922c0bbd740ba106801f82'}
         URL = "https://cs21operatorapi.pythonanywhere.com/operators/"
 
-        response = requests.get(url=URL, params=params)
+        response = requests.get(url=URL, params=params, headers=auth_header)
 
         data = response.json()
 
