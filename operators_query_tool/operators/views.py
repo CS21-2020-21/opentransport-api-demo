@@ -8,6 +8,7 @@ from django.core.paginator import Paginator
 from urllib.parse import urlencode
 
 
+
 def index(request):
     return render(request, 'operators/index.html')
 
@@ -38,6 +39,7 @@ def query(request):
 
 def change_data(request):
     return render(request, 'operators/change_data.html')
+
 
 
 def query_modes(request):

@@ -16,7 +16,7 @@
 
 {% block text_block %}
 
-	
+	{% if user.is_authenticated %}
 		<div class='col-8'>
 			<div class="text-center text-white">
 				<form id="details_form" method="post" style="left:20%;position:relative;">
@@ -89,4 +89,10 @@
 			</div>
 		</div>
 	
+	{% else %}
+	<div class="py-4">
+        <h4 class="font-weight-light text-white py-4">Please login to perform the query</h4>
+    </div>
+	
+	{% endif %}
 {% endblock %}
