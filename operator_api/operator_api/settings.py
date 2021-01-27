@@ -124,4 +124,28 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
     ],    
+
+    'DEFAULT_THROTTLE_CLASSES':[
+        'rest_framework.throttling.AnonRateThrottle',
+        'rest_framework.throttling.UserRateThrottle',
+
+    ],
+
+    'DEFAULT_THROTTLE_RATES': {
+        'anon':'0/day',
+        'user':'200/day',
+    },
+
 }
+
+
+#this section is only in the live pythonanywhere code
+#if uncommented it means that the throttling will be remembered over sessions
+#instead when running locally if the throttle limit is reached,
+#just restart the server and it is reset to 0 requests
+#CACHES = {
+#    'default':{
+#       'BACKEND':'django.core.cache.backends.filebased.FileBasedCache',
+#        'LOCATION':'/home/CS21OperatorAPI/operator_api/',
+#   }
+#}
