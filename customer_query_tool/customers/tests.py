@@ -62,5 +62,5 @@ class TestForms(TestCase):
     #no tests for the other formats because Django handles them itself
 
 
-class TestProjectRequirements(TestCase):
+#class TestProjectRequirements(TestCase):
     
