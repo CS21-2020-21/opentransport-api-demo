@@ -1,7 +1,8 @@
 from django import forms
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
-
+import requests
+from .models import *
 
 #this form will be used on the page where the user selects which query they would like to perform
 class customerQueryForm(forms.Form):
@@ -17,6 +18,22 @@ class requestDetailsForm(forms.Form):
     to_date = forms.DateTimeField(label="All records before the date  (optional)", required=False)
     skip = forms.IntegerField(label="How many records would you like to skip for pagination?  (optional)", required=False)
     limit = forms.IntegerField(label="What is the maximum number of records you would like to see? (optional)", required=False)
+
+class linkAccountForm(forms.Form):
+    URL = "https://cs21operatorapi.pythonanywhere.com/operator/"
+    request = requests.get(url=URL)
+    operators_json = request.json()
+    operators = [operator['item_metadata'][0]['val'] for operator in operators_json]
+    operator_choices = [(operator, operator) for operator in operators]
+    operator_cbo_box = forms.CharField(label="What company would you like to link your account to?", widget=forms.Select(choices=operator_choices))
+    email = forms.EmailField(label="What email account do you have registered on the account with which you would like to link?")
+    username = forms.CharField(label="What is the username on the account with which you would like to link?")
+    
+class verificationForm(forms.Form):
+    code = forms.CharField(label="Please enter the verification code sent to the email you provided")
+
+
+
 
    
 

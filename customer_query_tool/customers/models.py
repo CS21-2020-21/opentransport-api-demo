@@ -2,6 +2,7 @@ from django.db import models
 from django.contrib.auth.models import User
 
 
+
 class Mode(models.Model):
     id = models.IntegerField(unique=True, primary_key=True)
     short_desc = models.CharField(max_length=50)
@@ -41,9 +42,18 @@ class Transaction(models.Model):
 
 
 class Customer(models.Model):
-    customer_id = models.IntegerField(primary_key=True, unique=True)
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    customer_id = models.CharField(primary_key=True, unique=True, max_length=50)
     name = models.CharField(max_length=50)
     email = models.EmailField()
+    
+
+
+class LinkedAccount(models.Model):
+    operator = models.CharField(max_length=50)
+    email = models.EmailField()
+    customer = models.ForeignKey(Customer, related_name="LinkedAccount", on_delete=models.CASCADE)
+    username = models.CharField(max_length=50)
 
 
 class AccountBalance(models.Model):

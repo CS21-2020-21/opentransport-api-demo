@@ -22,6 +22,11 @@ urlpatterns = [
     path('accounts/query/purchases', views.query_purchases, name="query_purchases"),
     path('accounts/query/concessions', views.query_concessions, name="query_concessions"),
     path('accounts/query/usages', views.query_usages, name="query_usages"),
+    path('accounts/link_account/', views.link_account, name="link_account"),
+    path('accounts/check_email/', views.check_email, name="check_email"),
+    path('accounts/account_linked/', views.account_linked, name="account_linked"),
+    path('accounts/link_failed/', views.link_failed, name="link_failed"),
+    path('accounts/linked_accounts/', views.linked_accounts, name="linked_accounts"),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 

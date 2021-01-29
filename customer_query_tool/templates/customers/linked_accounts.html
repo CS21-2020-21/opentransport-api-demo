@@ -1,0 +1,19 @@
+{% extends 'customers/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+    Linked Accounts
+{% endblock %}
+
+{% block head_block %}
+{% endblock %}
+
+{% block body_block %}
+{% endblock %}
+
+{% block text_block %}
+{% for operator in operators %}
+{{ operator }}
+{% endfor %}
+
+{% endblock %}

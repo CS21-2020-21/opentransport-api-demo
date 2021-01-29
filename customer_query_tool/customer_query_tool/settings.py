@@ -88,6 +88,9 @@ AUTHENTICATION_BACKENDS = [
     # `allauth` specific authentication methods, such as login by e-mail
     'allauth.account.auth_backends.AuthenticationBackend',
 ]
+
+
+
 SITE_ID = 1
 
 # The URL that Django redirects users to after logging in.
@@ -100,6 +103,11 @@ REGISTRATION_OPEN = True
 REGISTRATION_AUTO_LOGIN = True
 
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_USE_TLS = True
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'cs21project@gmail.com'
+EMAIL_HOST_PASSWORD = 'cs21cs21'
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'
 

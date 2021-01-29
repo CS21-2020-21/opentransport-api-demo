@@ -10,11 +10,28 @@ from django.contrib import messages
 from rest_framework import routers, serializers, viewsets
 from customers.models import *
 from customers.serializers import *
+from django.core.mail import send_mail
+from django.conf import settings
+from urllib.parse import urlencode
 
 def index(request):
     return render(request, 'customers/index.html')
 
 def my_account(request):
+    
+    user = request.user
+    
+    customer_id = request.user.username
+    
+    name = request.user.first_name
+    
+    email = request.user.email
+    
+    customer = Customer.objects.get_or_create(user=user, customer_id=customer_id, name=name, email=email)
+    
+    
+    
+
     return render(request, 'customers/my_account.html')
 
 def query(request):
@@ -277,6 +294,108 @@ def query_usages(request):
     context['form'] = form
     return render(request, 'customers/query_usages.html', context=context)
 
+
+def link_account(request):
+
+    form = linkAccountForm()
+
+    if request.method == "POST":
+
+        form = linkAccountForm(request.POST)
+
+        if form.is_valid():
+            linked_accounts = LinkedAccount.objects.filter(customer=request.user.username)
+            linked_operators = [account.operator for account in linked_accounts]
+
+
+            operator = form.cleaned_data.get('operator_cbo_box')
+            email = form.cleaned_data.get('email')
+            username = form.cleaned_data.get('username')
+            url_params = {'operator':operator, 'email':email, 'username':username}
+            if operator in linked_operators:
+                return redirect(reverse('customers:link_failed'))
+            else:
+                return redirect('{}?{}'.format(reverse('customers:check_email'), urlencode(url_params)))
+           
+    context = {'form': form}
+
+    return render(request, 'customers/link_account.html', context=context)
+"""
+            send_mail(
+            subject = 'Account Verification',
+            message = '''A user on PSD Ferries would like to link to your account on {}.
+            If this is you, please enter the code 123456 when prompted on the PSD ferries website.
+            '''.format(operator),
+            from_email = settings.EMAIL_HOST_USER,
+            recipient_list = [email,],
+            fail_silently = False,
+             )
+"""
+            
+
+            
+   
+
+def check_email(request):
+
+    form = verificationForm()
+    
+    if request.method == "POST":
+
+        form = verificationForm(request.POST)
+
+        if form.is_valid():
+            
+            code = form.cleaned_data.get('code')        
+            if code == "123456":
+                operator = request.GET.get('operator')
+                email = request.GET.get('email')
+                username = request.GET.get('username')
+                customer = Customer.objects.get(customer_id=request.user.username)
+                linked_account = LinkedAccount.objects.get_or_create(operator=operator, email=email, customer=customer, username=username)
+                return redirect(reverse('customers:account_linked'))
+            else:
+                return redirect(reverse('customers:link_failed'))
+            
+        
+            
+    context = {'form': form}
+
+    return render(request, 'customers/check_email.html', context=context)
+
+def account_linked(request):
+
+    return render(request, 'customers/account_linked.html')
+
+def link_failed(request):
+    return render(request, 'customers/link_failed.html')
+
+def linked_accounts(request):
+
+    linked_accounts = LinkedAccount.objects.filter(customer=request.user.username)
+    linked_operators = [(account.operator, account.username) for account in linked_accounts]
+
+    URL = "https://cs21operatorapi.pythonanywhere.com/operator"
+
+    all_operators = requests.get(url=URL).json()
+
+    all_operator_name_url_pairs = [(operator['item_metadata'][0]['val'], operator['item_metadata'][1]['val']) for operator in all_operators]
+    all_operator_names = [operator[0] for operator in all_operator_name_url_pairs]
+
+    operator_triples = []
+
+    for operator in linked_operators:
+        operator_triples.append((operator[0], operator[1], all_operator_name_url_pairs[all_operator_names.index(operator[0])][1]))
+
+    context = {'operators':operator_triples}
+
+    #get all the operators which the account is linked to
+    #get the api url for each of those operators
+    #get the user to select the operator they wish to view
+    #perform the query, passing in the corresponding username they have for the other operator
+
+
+    return render(request, 'customers/linked_accounts.html', context=context)
 
 @login_required
 def deactivate_user_view(request):
