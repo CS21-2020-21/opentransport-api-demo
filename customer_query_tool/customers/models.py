@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
+from django.urls import reverse
 
 
 
@@ -50,11 +52,18 @@ class Customer(models.Model):
 
 
 class LinkedAccount(models.Model):
+    id = models.AutoField(primary_key=True)
     operator = models.CharField(max_length=50)
     email = models.EmailField()
     customer = models.ForeignKey(Customer, related_name="LinkedAccount", on_delete=models.CASCADE)
     username = models.CharField(max_length=50)
+    slug = models.SlugField(unique=True)
 
+    def save(self, *args, **kwargs):
+        self.slug = slugify(self.id)
+        super(LinkedAccount, self).save(*args, **kwargs)
+
+    
 
 class AccountBalance(models.Model):
     account_id = models.IntegerField(primary_key=True, unique=True)

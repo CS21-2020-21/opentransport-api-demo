@@ -1,5 +1,5 @@
 from django.urls import include, path
-from . import views
+from . import views 
 from rest_framework import routers
 
 
@@ -27,6 +27,9 @@ urlpatterns = [
     path('accounts/account_linked/', views.account_linked, name="account_linked"),
     path('accounts/link_failed/', views.link_failed, name="link_failed"),
     path('accounts/linked_accounts/', views.linked_accounts, name="linked_accounts"),
+    path('accounts/linked_accounts/<slug:id_slug>/purchases', views.show_linked_account_purchases, name='show_linked_account_purchases'),
+    path('accounts/linked_accounts/<slug:id_slug>/concessions', views.show_linked_account_concessions, name='show_linked_account_concessions'),
+    path('accounts/linked_accounts/<slug:id_slug>/usages', views.show_linked_account_usages, name='show_linked_account_usages'),
     path('', include(router.urls)),
     path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 

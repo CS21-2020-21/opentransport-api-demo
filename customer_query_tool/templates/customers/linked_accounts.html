@@ -12,8 +12,15 @@
 {% endblock %}
 
 {% block text_block %}
-{% for operator in operators %}
-{{ operator }}
-{% endfor %}
 
+<div class="py-4">
+
+    {% for account in linked_accounts %}
+        <a href="{% url 'customers:show_linked_account_purchases' account.slug %}" class="btn btn-dark btn-lg pt-2">{{ account.operator }} Purchases</a>
+        <a href="{% url 'customers:show_linked_account_concessions' account.slug %}" class="btn btn-dark btn-lg pt-2">{{ account.operator }} Concessions</a>
+        <a href="{% url 'customers:show_linked_account_usages' account.slug %}" class="btn btn-dark btn-lg pt-2">{{ account.operator }} Usages</a>
+
+    {% endfor %}
+
+</div>
 {% endblock %}

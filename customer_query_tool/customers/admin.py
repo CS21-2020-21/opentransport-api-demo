@@ -1,6 +1,10 @@
 from django.contrib import admin
 from customers.models import *
 
+class LinkedAccountAdmin(admin.ModelAdmin):
+    prepopulated_fields = {'slug':('id',)}
+
+
 admin.site.register(Mode)
 admin.site.register(Operator)
 admin.site.register(Monetary_Value)
@@ -22,4 +26,4 @@ admin.site.register(Location)
 admin.site.register(TravelLocation)
 admin.site.register(Usage)
 admin.site.register(Service)
-admin.site.register(LinkedAccount)
+admin.site.register(LinkedAccount, LinkedAccountAdmin)

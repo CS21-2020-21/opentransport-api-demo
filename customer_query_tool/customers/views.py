@@ -13,6 +13,10 @@ from customers.serializers import *
 from django.core.mail import send_mail
 from django.conf import settings
 from urllib.parse import urlencode
+from django.core.paginator import Paginator
+
+
+
 
 def index(request):
     return render(request, 'customers/index.html')
@@ -307,7 +311,7 @@ def link_account(request):
             linked_accounts = LinkedAccount.objects.filter(customer=request.user.username)
             linked_operators = [account.operator for account in linked_accounts]
 
-
+    
             operator = form.cleaned_data.get('operator_cbo_box')
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
@@ -353,6 +357,7 @@ def check_email(request):
                 username = request.GET.get('username')
                 customer = Customer.objects.get(customer_id=request.user.username)
                 linked_account = LinkedAccount.objects.get_or_create(operator=operator, email=email, customer=customer, username=username)
+                linked_account[0].save()
                 return redirect(reverse('customers:account_linked'))
             else:
                 return redirect(reverse('customers:link_failed'))
@@ -373,29 +378,137 @@ def link_failed(request):
 def linked_accounts(request):
 
     linked_accounts = LinkedAccount.objects.filter(customer=request.user.username)
-    linked_operators = [(account.operator, account.username) for account in linked_accounts]
-
-    URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-
-    all_operators = requests.get(url=URL).json()
-
-    all_operator_name_url_pairs = [(operator['item_metadata'][0]['val'], operator['item_metadata'][1]['val']) for operator in all_operators]
-    all_operator_names = [operator[0] for operator in all_operator_name_url_pairs]
-
-    operator_triples = []
-
-    for operator in linked_operators:
-        operator_triples.append((operator[0], operator[1], all_operator_name_url_pairs[all_operator_names.index(operator[0])][1]))
-
-    context = {'operators':operator_triples}
-
-    #get all the operators which the account is linked to
-    #get the api url for each of those operators
-    #get the user to select the operator they wish to view
-    #perform the query, passing in the corresponding username they have for the other operator
-
+    context = {'linked_accounts':linked_accounts}
 
     return render(request, 'customers/linked_accounts.html', context=context)
+
+
+def show_linked_account_purchases(request, id_slug):
+    context_dict = {}
+    try:
+    
+        linked_account = LinkedAccount.objects.get(slug=id_slug)
+       
+        context_dict['account'] = linked_account
+
+        URL = "https://cs21operatorapi.pythonanywhere.com/operator"
+
+        all_operators = requests.get(url=URL).json()
+
+        for operator in all_operators:
+            if operator['item_metadata'][0]['val']==linked_account.operator:
+                purchase_url = operator['item_metadata'][1]['val'] + 'purchase/?filterString=' + linked_account.username
+                purchases = requests.get(url=purchase_url).json()
+                purchase_list = []
+                for purchase in purchases:
+                    details = {}
+                    details['operator'] = purchase['operator']['name']
+                    details['date_from'] = purchase['travel_from_date_time'][:10]
+                    details['date_to'] = purchase['travel_to_date_time'][:10]
+                    details['price'] = purchase['transaction']['price']['amount']
+                    purchase_list.append(details)
+                               
+                page_num = request.GET.get('page')
+                if page_num is None:
+                    context_dict['purchases'] = Paginator(purchase_list, 3).page(1)
+                else:
+                    context_dict['purchases'] = Paginator(purchase_list, 3).page(page_num)
+
+
+    except:
+        context_dict['account'] = None
+        context_dict['purchases'] = None
+    
+    
+    return render(request, 'customers/show_linked_account_purchases.html', context=context_dict)
+
+def show_linked_account_concessions(request, id_slug):
+    context_dict = {}
+    try:
+    
+        linked_account = LinkedAccount.objects.get(slug=id_slug)
+       
+        context_dict['account'] = linked_account
+
+        URL = "https://cs21operatorapi.pythonanywhere.com/operator"
+
+        all_operators = requests.get(url=URL).json()
+
+        for operator in all_operators:
+            if operator['item_metadata'][0]['val']==linked_account.operator:
+                
+                concession_url = operator['item_metadata'][1]['val'] + 'concession/?filterString=' + linked_account.username
+                concessions = requests.get(url=concession_url).json()
+                concession_list = []
+                for concession in concessions:
+                    details = {}
+                    details['name'] = concession['name']
+                    details['operator'] = concession['operator']['name']
+                    details['price'] = concession['price']['amount']
+                    details['discount'] = str(concession['discount']['discount_value'])+concession['discount']['discount_type']
+                    details['date_from'] = concession['valid_from_date_time'][:10]
+                    details['date_to'] = concession['valid_from_date_time'][:10]
+                    details['conditions'] = concession['conditions']
+                    concession_list.append(details)
+                               
+                page_num = request.GET.get('page')
+                if page_num is None:
+                    context_dict['concessions'] = Paginator(concession_list, 3).page(1)
+                else:
+                    context_dict['concessions'] = Paginator(concession_list, 3).page(page_num)
+
+                
+
+    except:
+        context_dict['account'] = None
+        context_dict['concession'] = None
+    
+    
+    return render(request, 'customers/show_linked_account_concessions.html', context=context_dict)
+
+def show_linked_account_usages(request, id_slug):
+    context_dict = {}
+    try:
+    
+        linked_account = LinkedAccount.objects.get(slug=id_slug)
+       
+        context_dict['account'] = linked_account
+
+        URL = "https://cs21operatorapi.pythonanywhere.com/operator"
+
+        all_operators = requests.get(url=URL).json()
+
+        for operator in all_operators:
+            if operator['item_metadata'][0]['val']==linked_account.operator:
+                usage_url = operator['item_metadata'][1]['val'] + 'usage/?filterString=' + linked_account.username
+                usages = requests.get(url=usage_url).json()
+                usage_list = []
+                for usage in usages:
+                    details = {}
+                    details['operator'] = usage['operator']['name']
+                    details['date_from'] = usage['travel_from']['date_time'][:10]
+                    details['date_to'] = usage['travel_to']['date_time'][:10]
+                    details['price'] = usage['price']['amount']
+                    usage_list.append(details)
+                
+                               
+                page_num = request.GET.get('page')
+                if page_num is None:
+                    context_dict['usages'] = Paginator(usage_list, 3).page(1)
+                else:
+                    context_dict['usages'] = Paginator(usage_list, 3).page(page_num)
+                print(context_dict)
+          
+
+    except:
+        context_dict['account'] = None
+        context_dict['usage'] = None
+    
+    
+    return render(request, 'customers/show_linked_account_usages.html', context=context_dict)
+
+
+
 
 @login_required
 def deactivate_user_view(request):
