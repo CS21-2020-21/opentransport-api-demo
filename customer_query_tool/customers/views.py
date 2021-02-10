@@ -22,20 +22,20 @@ def index(request):
     return render(request, 'customers/index.html')
 
 def my_account(request):
+        
+    try:
+        customer = Customer.objects.get(customer_id=request.user.username)
+    except:
+        user = request.user
     
-    user = request.user
+        customer_id = request.user.username
+         
+        name = request.user.first_name
     
-    customer_id = request.user.username
+        email = request.user.email
     
-    name = request.user.first_name
+        customer = Customer.objects.get_or_create(user=user, customer_id=customer_id, name=name, email=email)
     
-    email = request.user.email
-    
-    customer = Customer.objects.get_or_create(user=user, customer_id=customer_id, name=name, email=email)
-    
-    
-    
-
     return render(request, 'customers/my_account.html')
 
 def query(request):
