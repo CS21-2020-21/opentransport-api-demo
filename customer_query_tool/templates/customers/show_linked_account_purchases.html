@@ -1,0 +1,73 @@
+{% extends 'customers/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Show Linked Account
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+
+<div class="py-4">
+
+    {% if account %}
+        
+        {% if purchases %}
+
+        <h4 class="font-weight-light text-white py-4">{{ account.operator }} Purchases</h4>
+
+        <div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Operator</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Date From</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Date To</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Price</h6></th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for purchase in purchases %}
+                    <tr>
+                        <td><h6 class="font-weight-light text-white py-1">{{ purchase.operator }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ purchase.date_from }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ purchase.date_to }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ purchase.price }}</h6></td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+
+            {% for purchase in purchases %}
+                {{ purchase.id }}
+            {% endfor %}
+
+            {% if purchases.has_previous %}
+                <a href="?page={{ purchases.previous_page_number }}" class="btn btn-dark btn-lg pt-2">Previous</a>
+            {% endif %}
+
+            {% if purchases.has_next %}
+                <a href="?page={{ purchases.next_page_number }}" class="btn btn-dark btn-lg pt-2">Next</a>
+            {% endif %}
+        
+        {% else %}
+        <h4 class="font-weight-light text-white py-4">You have no purchases with {{ account.operator }}</h4>
+        {% endif %}
+
+        
+    {% endif %}      
+    
+</div>
+   
+{% endblock %}

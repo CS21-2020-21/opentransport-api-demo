@@ -1,0 +1,66 @@
+{% extends 'customers/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Show Linked Account
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+
+<div class="py-4">
+
+    {% if account %}
+        
+        {% if usages %}
+            <h4 class="font-weight-light text-white py-4">{{ account.operator }} Usages</h4>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Operator</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Date From</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Date To</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Price</h6></th>
+
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for usage in usages %}
+                    <tr>
+                        <td><h6 class="font-weight-light text-white py-1">{{ usage.operator }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ usage.date_from }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ usage.date_to }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ usage.price }}</h6></td>
+
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+
+            {% if usages.has_previous %}
+                <a href="?page={{ usages.previous_page_number }}" class="btn btn-dark btn-lg pt-2">Previous</a>
+            {% endif %}
+
+            {% if usages.has_next %}
+                <a href="?page={{ usages.next_page_number }}" class="btn btn-dark btn-lg pt-2">Next</a>
+            {% endif %}
+
+        {% else %}
+            <h4 class="font-weight-light text-white py-4">You have no usages with {{ account.operator }}</h4>
+        {% endif %}
+        
+
+    {% endif %}      
+    
+</div>
+   
+{% endblock %}

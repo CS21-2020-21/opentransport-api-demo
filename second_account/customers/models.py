@@ -6,7 +6,7 @@ from django.urls import reverse
 
 
 class Mode(models.Model):
-    id = models.IntegerField(unique=True, primary_key=True)
+    id = models.CharField(unique=True, primary_key=True, max_length=10)
     short_desc = models.CharField(max_length=50)
     long_desc = models.TextField()
 
