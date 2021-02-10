@@ -23,17 +23,18 @@ def index(request):
 
 def my_account(request):
     
-    user = request.user
+    try:
+        customer = Customer.objects.get(customer_id=request.user.username)
+    except:
+        user = request.user
     
-    customer_id = request.user.username
+        customer_id = request.user.username
+         
+        name = request.user.first_name
     
-    name = request.user.first_name
+        email = request.user.email
     
-    email = request.user.email
-    
-    customer = Customer.objects.get_or_create(user=user, customer_id=customer_id, name=name, email=email)
-    
-    
+        customer = Customer.objects.get_or_create(user=user, customer_id=customer_id, name=name, email=email)
     
 
     return render(request, 'customers/my_account.html')
