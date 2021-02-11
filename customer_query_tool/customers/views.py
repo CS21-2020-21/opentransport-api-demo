@@ -299,6 +299,75 @@ def query_usages(request):
     return render(request, 'customers/query_usages.html', context=context)
 
 
+def ferry_query_selection(request):
+
+    return render(request, 'customers/ferry_query_selection.html')
+
+def ferry_purchases(request):
+    context_dict = {}
+    customer = Customer.objects.get(customer_id=request.user.username)
+    purchases = Purchase.objects.filter(customer=customer)
+
+    purchase_list = []
+    for purchase in purchases:
+        details = {}
+        details['date_from'] = str(purchase.travel_from_date_time)[:10]
+        details['date_to'] = str(purchase.travel_to_date_time)[:10]
+        purchase_list.append(details)
+    
+    page_num = request.GET.get('page')
+    if page_num is None:
+        context_dict['purchases'] = Paginator(purchase_list, 3).page(1)
+    else:
+        context_dict['purchases'] = Paginator(purchase_list, 3).page(page_num)
+
+    return render(request, 'customers/ferry_purchases.html', context=context_dict)
+
+def ferry_concessions(request):
+    context_dict = {}
+    customer = Customer.objects.get(customer_id=request.user.username)
+    concessions = Concession.objects.filter(customer=customer)
+
+    concession_list = []
+    for concession in concessions:
+        details = {}
+        details['name'] = concession.name
+        details['date_from'] = str(concession.valid_from_date_time)[:10]
+        details['date_to'] = str(concession.valid_from_date_time)[:10]
+        details['discount'] = str(concession.discount.discount_value) + concession.discount.discount_type
+        concession_list.append(details)
+    
+    page_num = request.GET.get('page')
+    if page_num is None:
+        context_dict['concessions'] = Paginator(concession_list, 3).page(1)
+    else:
+        context_dict['concessions'] = Paginator(concession_list, 3).page(page_num)
+
+    return render(request, 'customers/ferry_concessions.html', context=context_dict)
+
+def ferry_usages(request):
+
+    context_dict = {}
+    customer = Customer.objects.get(customer_id=request.user.username)
+    usages = Usage.objects.filter(customer=customer)
+
+    usage_list = []
+    for usage in usages:
+        details = {}
+        
+        details['date'] = str(usage.usage_date_time)[:10]
+        details['travel_class'] = usage.travel_class
+        usage_list.append(details)
+    
+    page_num = request.GET.get('page')
+    if page_num is None:
+        context_dict['usages'] = Paginator(usage_list, 3).page(1)
+    else:
+        context_dict['usages'] = Paginator(usage_list, 3).page(page_num)
+
+    return render(request, 'customers/ferry_usages.html', context=context_dict)
+
+
 def link_account(request):
 
     form = linkAccountForm()
@@ -377,8 +446,18 @@ def link_failed(request):
 
 def linked_accounts(request):
 
+    context = {}
     linked_accounts = LinkedAccount.objects.filter(customer=request.user.username)
-    context = {'linked_accounts':linked_accounts}
+
+    page_num = request.GET.get('page')
+    
+    if page_num is None:
+        context['linked_accounts'] = Paginator(linked_accounts, 1).page(1)
+        
+    else:
+        
+        context['linked_accounts'] = Paginator(linked_accounts, 1).page(page_num)
+
 
     return render(request, 'customers/linked_accounts.html', context=context)
 
@@ -497,7 +576,7 @@ def show_linked_account_usages(request, id_slug):
                     context_dict['usages'] = Paginator(usage_list, 3).page(1)
                 else:
                     context_dict['usages'] = Paginator(usage_list, 3).page(page_num)
-                print(context_dict)
+                
           
 
     except:

@@ -12,10 +12,25 @@
 
 {% block text_block %}
     <div class="py-4">
-        <a href="{% url 'customers:my_account' %}" class="btn btn-dark btn-lg pt-2">My PSD Bookings</a>
-        <a href="{% url 'customers:query' %}" class="btn btn-dark btn-lg pt-2">All My Accounts</a>
-        <a href="{% url 'customers:link_account' %}" class="btn btn-dark btn-lg pt-2">Link Account</a>
-        <a href="{% url 'customers:linked_accounts' %}" class="btn btn-dark btn-lg pt-2">My Linked Accounts</a>
+        <div class="row">
+            <div class="col py-1">
+                <a href="{% url 'customers:ferry_query_selection' %}" class="btn btn-dark btn-lg pt-2 w-100">My PSD Ferries Account</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col py-1">
+                <a href="{% url 'customers:link_account' %}" class="btn btn-dark btn-lg pt-2 w-100">Link To My Other Accounts</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col py-1">
+                <a href="{% url 'customers:linked_accounts' %}" class="btn btn-dark btn-lg pt-2 w-100">My Linked Accounts</a>
+            </div>
+        </div>
+        
+        <!--<a href="{% url 'customers:query' %}" class="btn btn-dark btn-lg pt-2">All My Accounts</a>-->
 
     </div>
 {% endblock %}

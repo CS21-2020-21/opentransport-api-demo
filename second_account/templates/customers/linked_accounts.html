@@ -14,6 +14,8 @@
 {% block text_block %}
 
 <div class="py-4">
+    
+
 
     {% for account in linked_accounts %}
         <a href="{% url 'customers:show_linked_account_purchases' account.slug %}" class="btn btn-dark btn-lg pt-2">{{ account.operator }} Purchases</a>
@@ -21,6 +23,14 @@
         <a href="{% url 'customers:show_linked_account_usages' account.slug %}" class="btn btn-dark btn-lg pt-2">{{ account.operator }} Usages</a>
 
     {% endfor %}
+
+    {% if linked_accounts.has_previous %}
+        <a href="?page={{ linked_accounts.previous_page_number }}" class="btn btn-dark btn-lg pt-2">Previous</a>
+    {% endif %}
+
+    {% if linked_accounts.has_next %}
+        <a href="?page={{ linked_accounts.next_page_number }}" class="btn btn-dark btn-lg pt-2">Next</a>
+    {% endif %}
 
 </div>
 {% endblock %}

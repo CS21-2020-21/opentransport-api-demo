@@ -15,6 +15,7 @@
 
 {% block text_block %}
     <div class="py-4">
-        <h4 class="font-weight-light text-white py-4">You have successfully linked to your other account.  Now go to my account to access the data from it.</h4>
+        <h4 class="font-weight-light text-white py-4">You have successfully linked to your other account</h4>
+        <a href="{% url 'customers:my_account' %}" class="btn btn-dark btn-lg pt-2 w-100">My Account</a>
     </div>
 {% endblock %}

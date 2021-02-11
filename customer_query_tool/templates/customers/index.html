@@ -20,10 +20,10 @@
 
         {% if user.is_authenticated %}
             <a href="{% url 'customers:index' %}" class="btn btn-dark btn-lg pt-2">View Amended Services</a>
-            <a href="{% url 'customers:query' %}" class="btn btn-dark btn-lg pt-2">View All Accounts</a>
+            <!--<a href="{% url 'customers:query' %}" class="btn btn-dark btn-lg pt-2">View All Accounts</a>-->
         {% else %}
             <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg pt-2">View Amended Services</a>
-            <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg pt-2">View All Accounts</a>
+            <!--<a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg pt-2">View All Accounts</a>-->
         {% endif %}
     </div>
 {% endblock %}

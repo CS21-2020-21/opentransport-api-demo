@@ -15,6 +15,21 @@ from django.conf import settings
 from urllib.parse import urlencode
 from django.core.paginator import Paginator
 
+def remove_dashes(dictionary):
+	keys = dictionary.keys()
+	for key in keys:
+
+		if type(dictionary[key])==type({}):
+			remove_dashes(dictionary[key])
+		elif type(dictionary[key])==type([]):
+			for item in dictionary[key]:
+				remove_dashes(item)
+		if '-' in key:
+			new_key = key.replace('-', '_')
+			dictionary[new_key] = dictionary[key]
+			del dictionary[key]
+		
+
 
 
 
@@ -377,9 +392,19 @@ def link_failed(request):
     return render(request, 'customers/link_failed.html')
 
 def linked_accounts(request):
-
+    context = {}
     linked_accounts = LinkedAccount.objects.filter(customer=request.user.username)
-    context = {'linked_accounts':linked_accounts}
+
+    page_num = request.GET.get('page')
+    
+    if page_num is None:
+        context['linked_accounts'] = Paginator(linked_accounts, 1).page(1)
+        
+    else:
+        
+        context['linked_accounts'] = Paginator(linked_accounts, 1).page(page_num)
+
+    #context = {'linked_accounts':linked_accounts}
 
     return render(request, 'customers/linked_accounts.html', context=context)
 
@@ -387,9 +412,9 @@ def linked_accounts(request):
 def show_linked_account_purchases(request, id_slug):
     context_dict = {}
     try:
-    
+        
         linked_account = LinkedAccount.objects.get(slug=id_slug)
-       
+        
         context_dict['account'] = linked_account
 
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
@@ -397,9 +422,15 @@ def show_linked_account_purchases(request, id_slug):
         all_operators = requests.get(url=URL).json()
 
         for operator in all_operators:
+            
             if operator['item_metadata'][0]['val']==linked_account.operator:
                 purchase_url = operator['item_metadata'][1]['val'] + 'purchase/?filterString=' + linked_account.username
+                
                 purchases = requests.get(url=purchase_url).json()
+
+                for purchase in purchases:
+                    remove_dashes(purchase)
+
                 purchase_list = []
                 for purchase in purchases:
                     details = {}
@@ -440,6 +471,10 @@ def show_linked_account_concessions(request, id_slug):
                 
                 concession_url = operator['item_metadata'][1]['val'] + 'concession/?filterString=' + linked_account.username
                 concessions = requests.get(url=concession_url).json()
+
+                for concession in concessions:
+                    remove_dashes(concession)
+
                 concession_list = []
                 for concession in concessions:
                     details = {}
@@ -483,6 +518,10 @@ def show_linked_account_usages(request, id_slug):
             if operator['item_metadata'][0]['val']==linked_account.operator:
                 usage_url = operator['item_metadata'][1]['val'] + 'usage/?filterString=' + linked_account.username
                 usages = requests.get(url=usage_url).json()
+
+                for usage in usages:
+                    remove_dashes(usages)
+
                 usage_list = []
                 for usage in usages:
                     details = {}
