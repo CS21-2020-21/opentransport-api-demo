@@ -469,15 +469,21 @@ def show_linked_account_purchases(request, id_slug):
         linked_account = LinkedAccount.objects.get(slug=id_slug)
        
         context_dict['account'] = linked_account
-
+        
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-
-        all_operators = requests.get(url=URL).json()
+        headers = {'Authorization': 'Token f78cd4df8cfc696286047018e6092c532c08cc8d'}
+        all_operators = requests.get(url=URL, headers=headers).json()
+        
 
         for operator in all_operators:
+            
             if operator['item_metadata'][0]['val']==linked_account.operator:
+                
                 purchase_url = operator['item_metadata'][1]['val'] + 'purchase/?filterString=' + linked_account.username
+                print(purchase_url)
                 purchases = requests.get(url=purchase_url).json()
+                
+
                 purchase_list = []
                 for purchase in purchases:
                     details = {}
@@ -510,8 +516,8 @@ def show_linked_account_concessions(request, id_slug):
         context_dict['account'] = linked_account
 
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-
-        all_operators = requests.get(url=URL).json()
+        headers = {'Authorization': 'Token f78cd4df8cfc696286047018e6092c532c08cc8d'}
+        all_operators = requests.get(url=URL, headers=headers).json()
 
         for operator in all_operators:
             if operator['item_metadata'][0]['val']==linked_account.operator:
@@ -554,8 +560,8 @@ def show_linked_account_usages(request, id_slug):
         context_dict['account'] = linked_account
 
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-
-        all_operators = requests.get(url=URL).json()
+        headers = {'Authorization': 'Token f78cd4df8cfc696286047018e6092c532c08cc8d'}
+        all_operators = requests.get(url=URL, headers=headers).json()
 
         for operator in all_operators:
             if operator['item_metadata'][0]['val']==linked_account.operator:

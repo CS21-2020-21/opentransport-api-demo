@@ -1567,6 +1567,116 @@ def populate():
                     "val": "https://mipta.tfl.gov.uk/modes/london-overground/"
                 }
             ]
+        },
+
+        {
+            "id": "029",
+            "href": "https://psdbuses.pythonanywhere.com/",
+            "item-metadata": [
+                {
+                    "rel": "urn:X-hypercat:rels:hasDescription:en",
+                    "val": "PSD Buses"
+                },
+                {
+                    "rel": "urn:X-hypercat:rels:hasHomepage",
+                    "val": "https://psdbuses.pythonanywhere.com/"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasId",
+                    "val": "029"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasEmail",
+                    "val": ""
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasPhone",
+                    "val": "03432221234"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasDefaultLanguage",
+                    "val": "en"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasNumberModes",
+                    "val": "1"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasMode1#Code",
+                    "val": "007"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasMode1#Description",
+                    "val": "bus"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasNumberMIPTAURLs",
+                    "val": "1"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasMIPTAURL",
+                    "val": "https://mipta.psdbuses.pythonanywhere.com/"
+                }
+            ]
+        },
+
+        {
+            "id": "030",
+            "href": "https://psdferries.pythonanywhere.com/",
+            "item-metadata": [
+                {
+                    "rel": "urn:X-hypercat:rels:hasDescription:en",
+                    "val": "PSD Ferries"
+                },
+                {
+                    "rel": "urn:X-hypercat:rels:hasHomepage",
+                    "val": "https://psdferries.pythonanywhere.com/"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasId",
+                    "val": "030"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasEmail",
+                    "val": ""
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasPhone",
+                    "val": "03432221234"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasDefaultLanguage",
+                    "val": "en"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasNumberModes",
+                    "val": "2"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasMode1#Code",
+                    "val": "011"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasMode1#Description",
+                    "val": "water bus"
+                },
+                 {
+                    "rel": "urn:X-opentransport:rels:hasMode1#Code",
+                    "val": "012"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasMode1#Description",
+                    "val": "water ferry"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasNumberMIPTAURLs",
+                    "val": "1"
+                },
+                {
+                    "rel": "urn:X-opentransport:rels:hasMIPTAURL",
+                    "val": "https://mipta.psdferries.pythonanywhere.com/"
+                }
+            ]
         }
     ]
 
