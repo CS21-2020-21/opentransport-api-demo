@@ -17,16 +17,19 @@ from django.contrib import admin
 from django.urls import path, include
 from api.views import *
 from rest_framework.routers import DefaultRouter
-from rest_framework.authtoken.views import obtain_auth_token
+# from rest_framework.authtoken.views import obtain_auth_token
+from api import views
 
 router = DefaultRouter()
 router.register(r'cat', CatalogueViewSet, basename='catalogue')
-router.register(r'operators', ItemViewSet, basename='operators')
-router.register(r'modes', ModeViewSet, basename='mode')
+router.register(r'operator', ItemViewSet, basename='operator')
+router.register(r'mode', ModeViewSet, basename='mode')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('change_data/', views.change_data, name="change_data"),
+    path('accounts/', include('allauth.urls')),
     path(r'', include(router.urls)),
     path(r'', include('rest_framework.urls', namespace='rest_framework')),
-    path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
+    # path('api-token-auth/', obtain_auth_token, name='api_token_auth'),
 ]

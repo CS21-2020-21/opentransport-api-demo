@@ -1,0 +1,17 @@
+{% extends 'api/base.html' %}
+
+{% block title_block %}
+    Delete Account
+{% endblock %}
+
+{% block body_block %}
+    <div class="text-center col-6 offset-3 py-3">
+        <h1 class="h1 mb-3 font-weight-light">Delete your account</h1>
+        <hr>
+        <p>Deleting your account is irreversible.
+            Please be sure you want to delete your account before you confirm.</p>
+        <a class="btn btn-danger" href="{% url 'delete-user' %}">
+            Delete
+        </a>
+    </div>
+{% endblock %}
