@@ -45,7 +45,7 @@ def change_data(request):
 def query_modes(request):
     
     auth_header = {'Authorization': 'Token ab56fe09d6bd8da1d3922c0bbd740ba106801f82'}
-    URL = "https://cs21operatorapi.pythonanywhere.com/modes/"
+    URL = "https://cs21operatorapi.pythonanywhere.com/mode/"
 
     context = {}
 
@@ -170,7 +170,7 @@ def view_operators(request):
 
     try:
         auth_header = {'Authorization': 'Token ab56fe09d6bd8da1d3922c0bbd740ba106801f82'}
-        URL = "https://cs21operatorapi.pythonanywhere.com/operators/"
+        URL = "https://cs21operatorapi.pythonanywhere.com/operator/"
 
         response = requests.get(url=URL, params=params, headers=auth_header)
 

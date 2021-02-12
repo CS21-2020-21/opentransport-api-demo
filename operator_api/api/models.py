@@ -1,4 +1,25 @@
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+
+
+class UserProfile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    operator_id = models.CharField(max_length=10, null=True, unique=True)
+
+
+def save(self, *args, **kwargs):
+    super().save(*args, **kwargs)
+
+
+def userprofile_receiver(sender, instance, created, *args, **kwargs):
+    if created:
+        userprofile = UserProfile.objects.create(user=instance)
+    else:
+        instance.userprofile.save()
+
+
+post_save.connect(userprofile_receiver, sender=User)
 
 
 class Catalogue(models.Model):
@@ -27,6 +48,7 @@ class CatalogueMetadata(models.Model):
 
 
 class Item(models.Model):
+    operator_id = models.CharField(max_length=10, null=True, unique=True)
     href = models.URLField()
     catalogue = models.ForeignKey(Catalogue, on_delete=models.CASCADE, related_name="item", null=True)
 

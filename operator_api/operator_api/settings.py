@@ -14,6 +14,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+TEMPLATE_DIR = os.path.join(BASE_DIR, 'templates')
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
@@ -24,7 +25,7 @@ SECRET_KEY = '$^ed(t1q&(ubl2n8^)ut6)^_u$!qtq)p)iwl39lc3+k%u_+)xq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['http://cs21operatorapi.pythonanywhere.com/', '127.0.0.1',]
+ALLOWED_HOSTS = ['http://cs21operatorapi.pythonanywhere.com/', '127.0.0.1', ]
 
 # Application definition
 
@@ -38,6 +39,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -51,11 +56,12 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'operator_api.urls'
+MESSAGE_STORAGE = 'django.contrib.messages.storage.session.SessionStorage'
 
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATE_DIR, ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,10 +69,38 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.media',
             ],
         },
     },
 ]
+
+AUTHENTICATION_BACKENDS = [
+    # Needed to login by username in Django admin, regardless of `allauth`
+    'django.contrib.auth.backends.ModelBackend',
+
+    # `allauth` specific authentication methods, such as login by e-mail
+    'allauth.account.auth_backends.AuthenticationBackend',
+]
+SITE_ID = 1
+
+# The URL that Django redirects users to after logging in or out.
+LOGIN_REDIRECT_URL = 'change_data'
+ACCOUNT_LOGOUT_REDIRECT_URL = 'change_data'
+
+# If True, users can register.
+REGISTRATION_OPEN = True
+
+# If True, the user will be automatically logged in after registering.
+REGISTRATION_AUTO_LOGIN = True
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
+
+ACCOUNT_FORMS = {
+    'signup': 'api.forms.CustomSignupForm',
+}
 
 WSGI_APPLICATION = 'operator_api.wsgi.application'
 
@@ -116,6 +150,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.TokenAuthentication',
@@ -123,7 +163,7 @@ REST_FRAMEWORK = {
 
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ],    
+    ],
 
     'DEFAULT_THROTTLE_CLASSES':[
         'rest_framework.throttling.AnonRateThrottle',
@@ -138,14 +178,13 @@ REST_FRAMEWORK = {
 
 }
 
-
-#this section is only in the live pythonanywhere code
-#if uncommented it means that the throttling will be remembered over sessions
-#instead when running locally if the throttle limit is reached,
-#just restart the server and it is reset to 0 requests
-#CACHES = {
+# this section is only in the live pythonanywhere code
+# if uncommented it means that the throttling will be remembered over sessions
+# instead when running locally if the throttle limit is reached,
+# just restart the server and it is reset to 0 requests
+# CACHES = {
 #    'default':{
 #       'BACKEND':'django.core.cache.backends.filebased.FileBasedCache',
 #        'LOCATION':'/home/CS21OperatorAPI/operator_api/',
 #   }
-#}
+# }

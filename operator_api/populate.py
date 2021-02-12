@@ -111,6 +111,7 @@ def populate():
 
     items = [
         {
+            "id": "000",
             "href": "http://cs21operatorapi.pythonanywhere.com/",
             "item-metadata": [
                 {
@@ -168,6 +169,7 @@ def populate():
             ]
         },
         {
+            "id": "001",
             "href": "https://opentransport.avantiwestcoast.co.uk/",
             "item-metadata": [
                 {
@@ -217,6 +219,7 @@ def populate():
             ]
         },
         {
+            "id": "002",
             "href": "https://opentransport.c2c-online.co.uk/",
             "item-metadata": [
                 {
@@ -266,6 +269,7 @@ def populate():
             ]
         },
         {
+            "id": "003",
             "href": "https://opentransport.sleeper.scot/",
             "item-metadata": [
                 {
@@ -315,6 +319,7 @@ def populate():
             ]
         },
         {
+            "id": "004",
             "href": "https://opentransport.chilternrailways.co.uk/",
             "item-metadata": [
                 {
@@ -364,6 +369,7 @@ def populate():
             ]
         },
         {
+            "id": "005",
             "href": "https://opentransport.crosscountrytrains.co.uk/",
             "item-metadata": [
                 {
@@ -413,6 +419,7 @@ def populate():
             ]
         },
         {
+            "id": "006",
             "href": "https://opentransport.eastmidlandsrailway.co.uk/",
             "item-metadata": [
                 {
@@ -462,6 +469,7 @@ def populate():
             ]
         },
         {
+            "id": "007",
             "href": "https://opentransport.gatwickexpress.com/",
             "item-metadata": [
                 {
@@ -511,6 +519,7 @@ def populate():
             ]
         },
         {
+            "id": "008",
             "href": "https://opentransport.grandcentralrail.com/",
             "item-metadata": [
                 {
@@ -560,6 +569,7 @@ def populate():
             ]
         },
         {
+            "id": "009",
             "href": "https://opentransport.greatnorthernrail.com/",
             "item-metadata": [
                 {
@@ -609,6 +619,7 @@ def populate():
             ]
         },
         {
+            "id": "010",
             "href": "https://opentransport.gwr.com/",
             "item-metadata": [
                 {
@@ -658,6 +669,7 @@ def populate():
             ]
         },
         {
+            "id": "011",
             "href": "https://opentransport.greateranglia.co.uk/",
             "item-metadata": [
                 {
@@ -707,6 +719,7 @@ def populate():
             ]
         },
         {
+            "id": "012",
             "href": "https://opentransport.heathrowexpress.com/",
             "item-metadata": [
                 {
@@ -756,6 +769,7 @@ def populate():
             ]
         },
         {
+            "id": "013",
             "href": "https://opentransport.hulltrains.co.uk",
             "item-metadata": [
                 {
@@ -805,6 +819,7 @@ def populate():
             ]
         },
         {
+            "id": "014",
             "href": "https://opentransport.southwesternrailway.com/destinations-and-offers/island-line",
             "item-metadata": [
                 {
@@ -854,6 +869,7 @@ def populate():
             ]
         },
         {
+            "id": "015",
             "href": "https://opentransport.lner.co.uk/",
             "item-metadata": [
                 {
@@ -903,6 +919,7 @@ def populate():
             ]
         },
         {
+            "id": "016",
             "href": "https://opentransport.londonnorthwesternrailway.co.uk/",
             "item-metadata": [
                 {
@@ -952,6 +969,7 @@ def populate():
             ]
         },
         {
+            "id": "017",
             "href": "https://opentransport.merseyrail.org/",
             "item-metadata": [
                 {
@@ -1001,6 +1019,7 @@ def populate():
             ]
         },
         {
+            "id": "018",
             "href": "https://opentransport.northernrailway.co.uk/",
             "item-metadata": [
                 {
@@ -1050,6 +1069,7 @@ def populate():
             ]
         },
         {
+            "id": "019",
             "href": "https://opentransport.scotrail.co.uk/",
             "item-metadata": [
                 {
@@ -1099,6 +1119,7 @@ def populate():
             ]
         },
         {
+            "id": "020",
             "href": "https://opentransport.southwesternrailway.com",
             "item-metadata": [
                 {
@@ -1148,6 +1169,7 @@ def populate():
             ]
         },
         {
+            "id": "021",
             "href": "https://opentransport.southeasternrailway.co.uk/",
             "item-metadata": [
                 {
@@ -1197,6 +1219,7 @@ def populate():
             ]
         },
         {
+            "id": "022",
             "href": "https://opentransport.southernrailway.com/",
             "item-metadata": [
                 {
@@ -1246,6 +1269,7 @@ def populate():
             ]
         },
         {
+            "id": "023",
             "href": "https://opentransport.stanstedexpress.com/",
             "item-metadata": [
                 {
@@ -1295,6 +1319,7 @@ def populate():
             ]
         },
         {
+            "id": "024",
             "href": "https://opentransport.thameslinkrailway.com/",
             "item-metadata": [
                 {
@@ -1344,6 +1369,7 @@ def populate():
             ]
         },
         {
+            "id": "025",
             "href": "https://opentransport.tpexpress.co.uk/",
             "item-metadata": [
                 {
@@ -1393,6 +1419,7 @@ def populate():
             ]
         },
         {
+            "id": "026",
             "href": "https://opentransport.tfwrail.wales/",
             "item-metadata": [
                 {
@@ -1442,6 +1469,7 @@ def populate():
             ]
         },
         {
+            "id": "027",
             "href": "https://opentransport.westmidlandsrailway.co.uk/",
             "item-metadata": [
                 {
@@ -1491,6 +1519,7 @@ def populate():
             ]
         },
         {
+            "id": "028",
             "href": "https://opentransport.tfl.gov.uk/modes/london-overground/",
             "item-metadata": [
                 {
@@ -1552,7 +1581,8 @@ def populate():
 
     for item in items:
         href = item['href']
-        item_model = add_item(href, catalogue)
+        operator_id = item['id']
+        item_model = add_item(operator_id, href, catalogue)
         for metadata in item['item-metadata']:
             add_item_metadata(metadata['rel'], metadata['val'], item_model)
 
@@ -1586,8 +1616,8 @@ def add_catalogue_metadata(rel, val, catalogue):
     return rel_val_pair
 
 
-def add_item(href, catalogue):
-    item = Item.objects.get_or_create(href=href, catalogue=catalogue)[0]
+def add_item(operator_id, href, catalogue):
+    item = Item.objects.get_or_create(operator_id=operator_id, href=href, catalogue=catalogue)[0]
     item.save()
     return item
 
