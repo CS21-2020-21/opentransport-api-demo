@@ -21,7 +21,7 @@ class requestDetailsForm(forms.Form):
 
 class linkAccountForm(forms.Form):
     URL = "https://cs21operatorapi.pythonanywhere.com/operator/"
-    headers = {'Authorization': 'Token f78cd4df8cfc696286047018e6092c532c08cc8d'}
+    headers = {'Authorization': 'Token e49c12b8afba06c33f3b88e4c4d93f1a94748dca'}
     request = requests.get(url=URL, headers=headers)
     operators_json = request.json()
     operators = [operator['item_metadata'][0]['val'] for operator in operators_json]
