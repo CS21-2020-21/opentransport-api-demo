@@ -112,7 +112,92 @@ class IntegrationTesting(TestCase):
         print("Scenario #2 successfully completed")
 
 
+class BasepageTests(SimpleTestCase):
 
+    def base_page_status_code(self):
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
+
+    def test_base_url_by_name(self):
+        response = self.client.get(reverse('login'))
+        self.assertEquals(response.status_code, 200)
+
+    def test_base_uses_correct_template(self):
+        response = self.client.get(reverse('login'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'login.html')
+
+    def test_page_contains_correct_html(self):
+        response = self.client.get('/')
+        self.assertContains(response, '<h1>Login</h1>')
+
+    def test_page_does_not_contain_incorrect_html(self):
+        response = self.client.get('/')
+        self.assertNotContains(
+            response, 'Hi there! I should not be on the page.')
+
+
+class SignUp(SimpleTestCase):
+    
+    def base_page_status_code(self):
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
+
+    def test_base_url_by_name(self):
+        response = self.client.get(reverse('signup'))
+        self.assertEquals(response.status_code, 200)
+
+    def test_base_uses_correct_template(self):
+        response = self.client.get(reverse('signup'))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'signup.html')
+
+    def test_page_contains_correct_html(self):
+        response = self.client.get('/')
+        self.assertContains(response, '<h1>Signup</h1>')
+
+    def test_page_does_not_contain_incorrect_html(self):
+        response = self.client.get('/')
+        self.assertNotContains(
+            response, 'Hi there! I should not be on the page.')
+
+
+class Tests(SimpleTestCase):
+    
+    def base_page_status_code(self):
+        response = self.client.get('/')
+        self.assertEquals(response.status_code, 200)
+
+    def test_base_url_by_name(self):
+        response = self.client.get(reverse(''))
+        self.assertEquals(response.status_code, 200)
+
+    def test_base_uses_correct_template(self):
+        response = self.client.get(reverse(''))
+        self.assertEquals(response.status_code, 200)
+        self.assertTemplateUsed(response, 'base.html')
+
+    def test_page_contains_correct_html(self):
+        response = self.client.get('/')
+        self.assertContains(response, '<h1>Main Page</h1>')
+
+    def test_page_does_not_contain_incorrect_html(self):
+        response = self.client.get('/')
+        self.assertNotContains(
+            response, 'Hi there! I should not be on the page.')
+
+class AuthTestCase(TestCase):
+    def setUp(self):
+        self.u = User.objects.create_user( 'iamtest', 'pass')
+        self.u.is_staff = True
+        self.u.is_superuser = True
+        self.u.is_active = True
+        self.u.save()
+
+    def testLogin(self):
+        self.client.login(username='iamtest', password='pass')
+
+   
 
 
 
