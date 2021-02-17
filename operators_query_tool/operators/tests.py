@@ -112,24 +112,24 @@ class IntegrationTesting(TestCase):
         print("Scenario #2 successfully completed")
 
 
-class BasepageTests(SimpleTestCase):
+class Login(SimpleTestCase):
 
     def base_page_status_code(self):
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
 
     def test_base_url_by_name(self):
-        response = self.client.get(reverse('login'))
+        response = self.client.get(reverse(''))
         self.assertEquals(response.status_code, 200)
 
     def test_base_uses_correct_template(self):
-        response = self.client.get(reverse('login'))
+        response = self.client.get(reverse(''))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'login.html')
 
     def test_page_contains_correct_html(self):
         response = self.client.get('/')
-        self.assertContains(response, '<h1>Login</h1>')
+        self.assertContains(response, '<h1>Home Page </h1>')
 
     def test_page_does_not_contain_incorrect_html(self):
         response = self.client.get('/')
@@ -154,7 +154,7 @@ class SignUp(SimpleTestCase):
 
     def test_page_contains_correct_html(self):
         response = self.client.get('/')
-        self.assertContains(response, '<h1>Signup</h1>')
+        self.assertContains(response, '<h1>Signup page</h1>')
 
     def test_page_does_not_contain_incorrect_html(self):
         response = self.client.get('/')
@@ -169,17 +169,17 @@ class Tests(SimpleTestCase):
         self.assertEquals(response.status_code, 200)
 
     def test_base_url_by_name(self):
-        response = self.client.get(reverse(''))
+        response = self.client.get(reverse('login'))
         self.assertEquals(response.status_code, 200)
 
     def test_base_uses_correct_template(self):
-        response = self.client.get(reverse(''))
+        response = self.client.get(reverse('login'))
         self.assertEquals(response.status_code, 200)
-        self.assertTemplateUsed(response, 'base.html')
+        self.assertTemplateUsed(response, 'login.html')
 
     def test_page_contains_correct_html(self):
         response = self.client.get('/')
-        self.assertContains(response, '<h1>Main Page</h1>')
+        self.assertContains(response, '<h1>Login Page</h1>')
 
     def test_page_does_not_contain_incorrect_html(self):
         response = self.client.get('/')
