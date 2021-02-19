@@ -19,10 +19,10 @@
         <h4 class="font-weight-light text-white py-4">Weather Disruptions</h4>
 
         {% if user.is_authenticated %}
-            <a href="{% url 'customers:index' %}" class="btn btn-dark btn-lg pt-2">View Amended Services</a>
+            <a href="{% url 'customers:index' %}" class="btn btn-dark btn-lg pt-2" id="query_button">View Amended Services</a>
             <!--<a href="{% url 'customers:query' %}" class="btn btn-dark btn-lg pt-2">View All Accounts</a>-->
         {% else %}
-            <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg pt-2">View Amended Services</a>
+            <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg pt-2" id="query_button">View Amended Services</a>
             <!--<a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg pt-2">View All Accounts</a>-->
         {% endif %}
     </div>

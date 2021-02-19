@@ -19,19 +19,19 @@
         {% for account in linked_accounts %}
         <div class="row">
             <div class="col py-1">
-                <a href="{% url 'customers:show_linked_account_purchases' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100">{{ account.operator }} Purchases</a>
+                <a href="{% url 'customers:show_linked_account_purchases' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100" id="purchases">{{ account.operator }} Purchases</a>
             </div>
         </div>
 
         <div class="row">
             <div class="col py-1">
-                <a href="{% url 'customers:show_linked_account_concessions' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100">{{ account.operator }} Concessions</a>
+                <a href="{% url 'customers:show_linked_account_concessions' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100" id="concessions">{{ account.operator }} Concessions</a>
             </div>
         </div>
 
         <div class="row">
             <div class="col py-1">
-                <a href="{% url 'customers:show_linked_account_usages' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100">{{ account.operator }} Usages</a>
+                <a href="{% url 'customers:show_linked_account_usages' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100" id="usages">{{ account.operator }} Usages</a>
             </div>
         </div>
         
