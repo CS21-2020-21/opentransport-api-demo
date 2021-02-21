@@ -2,6 +2,7 @@ from django.shortcuts import render
 #from .models import Mode, Operator, Monetary_Value, Transaction, Customer, AccountBalance, Vehicle, Ticket, LatLong, LocationFrom, LocationTo, Purchase, Discount, Concession
 from rest_framework import routers, serializers, viewsets
 #from .serializers import ModeSerializer, OperatorSerializer, Monetary_ValueSerializer, TransactionSerializer, AccountBalanceSerializer, VehicleSerializer, TicketSerializer, LatLongSerializer, LocationFromSerializer, LocationToSerializer, PurchaseSerializer, CustomerSerializer, DiscountSerializer, ConcessionSerializer
+# from rest_framework.permissions import IsAuthenticated
 
 from .models import *
 from .serializers import *
@@ -76,6 +77,7 @@ class LocationToViewSet(viewsets.ModelViewSet):
 
 class PurchaseViewSet(viewsets.ModelViewSet):
     
+    # permission_classes = (IsAuthenticated,)
     serializer_class = PurchaseSerializer
     def get_queryset(self):
         queryset = Purchase.objects.all()

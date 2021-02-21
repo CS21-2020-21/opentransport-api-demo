@@ -83,6 +83,7 @@ def query_purchases(request):
 
             #this is the URL of the API we want to query
             URL = "http://CS21CustomerProject.pythonanywhere.com/purchase/"
+            auth_header = {'Authorization': 'Token 9a032006b5b98d29a743d99acfaf51583ba25525'}
            
             #get the optional arguments from the form which the user submits
             date_from = form.cleaned_data.get('from_date')
@@ -110,7 +111,7 @@ def query_purchases(request):
             
             try:
                 #try the request, passing in the necessary parameters
-                response = requests.get(url=URL, params=params)
+                response = requests.get(url=URL, params=params, headers=auth_header)
                 
                 #if the status code is 500, the request met unexpected conditions meaning there are no purchases
                 if response.status_code==500:
@@ -163,6 +164,7 @@ def query_concessions(request):
 
             #url of the API we want to query
             URL = "http://CS21CustomerProject.pythonanywhere.com/concession/"
+            auth_header = {'Authorization': 'Token 9a032006b5b98d29a743d99acfaf51583ba25525'}
 
             #get the data from the form to pass into the request
             date_from = form.cleaned_data.get('from_date')
@@ -188,7 +190,7 @@ def query_concessions(request):
 
             try:
                 #try the request
-                response = requests.get(url=URL, params=params)
+                response = requests.get(url=URL, params=params, headers=auth_header)
 
                 #use the status code to check whether there were any concessions returned
                 if response.status_code==500:
@@ -235,6 +237,7 @@ def query_usages(request):
 
             #URL of the API we want to query
             URL = "http://CS21CustomerProject.pythonanywhere.com/usage/"
+            auth_header = {'Authorization': 'Token 9a032006b5b98d29a743d99acfaf51583ba25525'}
            
             #get the data from the form
             date_from = form.cleaned_data.get('from_date')
@@ -260,7 +263,7 @@ def query_usages(request):
 
             try:
                 #try the request
-                response = requests.get(url=URL, params=params)
+                response = requests.get(url=URL, params=params, headers=auth_header)
 
                 #use the status code to check whether any usages were returned
                 if response.status_code==500:
