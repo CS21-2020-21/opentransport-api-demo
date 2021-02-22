@@ -32,6 +32,7 @@ ALLOWED_HOSTS = ['cs21operatorapi.pythonanywhere.com', '127.0.0.1', ]
 INSTALLED_APPS = [
     'api',
     'rest_framework',
+    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
