@@ -25,14 +25,13 @@ SECRET_KEY = '$^ed(t1q&(ubl2n8^)ut6)^_u$!qtq)p)iwl39lc3+k%u_+)xq'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['http://cs21operatorapi.pythonanywhere.com/', '127.0.0.1', ]
+ALLOWED_HOSTS = ['cs21operatorapi.pythonanywhere.com', '127.0.0.1', ]
 
 # Application definition
 
 INSTALLED_APPS = [
     'api',
     'rest_framework',
-    'rest_framework.authtoken',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -42,7 +41,6 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -165,15 +163,15 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 
-    'DEFAULT_THROTTLE_CLASSES':[
+    'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
         'rest_framework.throttling.UserRateThrottle',
 
     ],
 
     'DEFAULT_THROTTLE_RATES': {
-        'anon':'0/day',
-        'user':'200/day',
+        'anon': '0/day',
+        'user': '200/day',
     },
 
 }
