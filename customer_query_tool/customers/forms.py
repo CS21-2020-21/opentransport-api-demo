@@ -1,8 +1,5 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 import requests
-from .models import *
 
 #this form will be used on the page where the user selects which query they would like to perform
 class customerQueryForm(forms.Form):

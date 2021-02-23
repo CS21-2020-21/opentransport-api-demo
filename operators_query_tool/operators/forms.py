@@ -1,13 +1,12 @@
 from django import forms
-from django.contrib.auth.forms import UserCreationForm
-from django.contrib.auth.models import User
 
 
 class operatorQueryForm(forms.Form):
     QUERY_CHOICES = [('mode', 'Modes'),
-                     ('operator', 'Operators'),]
+                     ('operator', 'Operators'), ]
     query_type = forms.CharField(label="What type of query would you like to perform?",
                                  widget=forms.Select(choices=QUERY_CHOICES))
+
 
 class requestDetailsForm(forms.Form):
     href = forms.CharField(label="Website of an operator (optional)", max_length=50, required=False)

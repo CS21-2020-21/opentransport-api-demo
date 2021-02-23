@@ -8,7 +8,6 @@ from django.core.paginator import Paginator
 from urllib.parse import urlencode
 
 
-
 def index(request):
     return render(request, 'operators/index.html')
 
@@ -41,10 +40,8 @@ def change_data(request):
     return render(request, 'operators/change_data.html')
 
 
-
 def query_modes(request):
-    
-    auth_header = {'Authorization': 'Token e49c12b8afba06c33f3b88e4c4d93f1a94748dca'}
+    auth_header = {'Authorization': 'Token cb6ea765b241ee676bc5409ac81759832fe06774'}
     URL = "https://cs21operatorapi.pythonanywhere.com/mode/"
 
     context = {}
@@ -156,10 +153,6 @@ def view_operators(request):
         params['rel'] = 'language'
         params['val'] = language
 
-    # if modes is not None:
-    #   params['rel'] = 'modes'
-    #  params['val'] = modes
-
     if mode != '':
         params['rel'] = 'mode'
         params['val'] = mode
@@ -169,7 +162,7 @@ def view_operators(request):
         params['val'] = url
 
     try:
-        auth_header = {'Authorization': 'Token e49c12b8afba06c33f3b88e4c4d93f1a94748dca'}
+        auth_header = {'Authorization': 'Token cb6ea765b241ee676bc5409ac81759832fe06774'}
         URL = "https://cs21operatorapi.pythonanywhere.com/operator/"
 
         response = requests.get(url=URL, params=params, headers=auth_header)

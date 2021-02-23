@@ -83,7 +83,7 @@ def query_purchases(request):
 
             #this is the URL of the API we want to query
             URL = "http://CS21CustomerProject.pythonanywhere.com/purchase/"
-            auth_header = {'Authorization': 'Token 9a032006b5b98d29a743d99acfaf51583ba25525'}
+            auth_header = {'Authorization': 'Token fa203fda0f7ae57d745ef008981eda5bafe62552'}
            
             #get the optional arguments from the form which the user submits
             date_from = form.cleaned_data.get('from_date')
@@ -164,7 +164,7 @@ def query_concessions(request):
 
             #url of the API we want to query
             URL = "http://CS21CustomerProject.pythonanywhere.com/concession/"
-            auth_header = {'Authorization': 'Token 9a032006b5b98d29a743d99acfaf51583ba25525'}
+            auth_header = {'Authorization': 'Token fa203fda0f7ae57d745ef008981eda5bafe62552'}
 
             #get the data from the form to pass into the request
             date_from = form.cleaned_data.get('from_date')
@@ -237,7 +237,7 @@ def query_usages(request):
 
             #URL of the API we want to query
             URL = "http://CS21CustomerProject.pythonanywhere.com/usage/"
-            auth_header = {'Authorization': 'Token 9a032006b5b98d29a743d99acfaf51583ba25525'}
+            auth_header = {'Authorization': 'Token fa203fda0f7ae57d745ef008981eda5bafe62552'}
            
             #get the data from the form
             date_from = form.cleaned_data.get('from_date')
@@ -474,7 +474,7 @@ def show_linked_account_purchases(request, id_slug):
         context_dict['account'] = linked_account
         
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-        headers = {'Authorization': 'Token 1eef5f9d5fcc28b388efeb24be25acff8e2b3292'}
+        headers = {'Authorization': 'Token cb6ea765b241ee676bc5409ac81759832fe06774'}
         all_operators = requests.get(url=URL, headers=headers).json()
         
 
@@ -519,7 +519,7 @@ def show_linked_account_concessions(request, id_slug):
         context_dict['account'] = linked_account
 
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-        headers = {'Authorization': 'Token 1eef5f9d5fcc28b388efeb24be25acff8e2b3292'}
+        headers = {'Authorization': 'Token cb6ea765b241ee676bc5409ac81759832fe06774'}
         all_operators = requests.get(url=URL, headers=headers).json()
 
         for operator in all_operators:
@@ -563,7 +563,7 @@ def show_linked_account_usages(request, id_slug):
         context_dict['account'] = linked_account
 
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-        headers = {'Authorization': 'Token 1eef5f9d5fcc28b388efeb24be25acff8e2b3292'}
+        headers = {'Authorization': 'Token cb6ea765b241ee676bc5409ac81759832fe06774'}
         all_operators = requests.get(url=URL, headers=headers).json()
 
         for operator in all_operators:
