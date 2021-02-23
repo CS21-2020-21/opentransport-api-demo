@@ -1,11 +1,12 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from rest_framework import viewsets, status
-# from rest_framework.permissions import IsAuthenticated
+from django_auto_prefetching import AutoPrefetchViewSetMixin
+from rest_framework.viewsets import ModelViewSet
 from .forms import *
 from django.forms import Textarea
 from .serializers import *
 from .models import *
+
 
 @login_required
 def change_data(request):
@@ -14,7 +15,8 @@ def change_data(request):
     item = Item.objects.get(operator_id=operator_id)
 
     ItemInlineFormSet = inlineformset_factory(Item, ItemMetadata, fields=('rel', 'val'), can_delete=False, widgets={
-        'rel': Textarea(attrs={'cols': 60, 'rows': 1, 'readonly':'readonly'}), 'val': Textarea(attrs={'cols': 60, 'rows': 1})
+        'rel': Textarea(attrs={'cols': 60, 'rows': 1, 'readonly': 'readonly'}),
+        'val': Textarea(attrs={'cols': 60, 'rows': 1})
     })
     if request.method == "POST":
         formset = ItemInlineFormSet(request.POST, request.FILES, instance=item)
@@ -22,11 +24,6 @@ def change_data(request):
         print(formset.non_form_errors())
         print(formset.errors)
         if formset.is_valid():
-            # for form in formset:
-            #     cleaned_data = form.cleaned_data
-            #     rel = cleaned_data['rel']
-            #     val = cleaned_data['val']
-            #     print(rel, val)
             formset.save()
             return redirect('/change_data')
     else:
@@ -34,23 +31,21 @@ def change_data(request):
     return render(request, 'api/change_data.html', {'formset': formset})
 
 
-class ModeViewSet(viewsets.ModelViewSet):
-    # permission_classes = (IsAuthenticated,)
+class ModeViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     queryset = Mode.objects.all().order_by('id')
     serializer_class = ModeSerializer
 
 
-class CatalogueViewSet(viewsets.ModelViewSet):
+class CatalogueViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     queryset = Catalogue.objects.all().order_by('id')
     serializer_class = CatalogueSerializer
 
 
-class ItemViewSet(viewsets.ModelViewSet):
+class ItemViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = ItemSerializer
     lookup_field = 'operator_id'
 
     def get_queryset(self):
-        print("Getting query set")
         queryset = Item.objects.all()
         rel = self.request.query_params.get('rel', None)
         val = self.request.query_params.get('val', None)
