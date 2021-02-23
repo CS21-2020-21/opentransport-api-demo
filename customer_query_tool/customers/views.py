@@ -474,7 +474,7 @@ def show_linked_account_purchases(request, id_slug):
         context_dict['account'] = linked_account
         
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-        headers = {'Authorization': 'Token e49c12b8afba06c33f3b88e4c4d93f1a94748dca'}
+        headers = {'Authorization': 'Token 1eef5f9d5fcc28b388efeb24be25acff8e2b3292'}
         all_operators = requests.get(url=URL, headers=headers).json()
         
 
@@ -519,7 +519,7 @@ def show_linked_account_concessions(request, id_slug):
         context_dict['account'] = linked_account
 
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-        headers = {'Authorization': 'Token e49c12b8afba06c33f3b88e4c4d93f1a94748dca'}
+        headers = {'Authorization': 'Token 1eef5f9d5fcc28b388efeb24be25acff8e2b3292'}
         all_operators = requests.get(url=URL, headers=headers).json()
 
         for operator in all_operators:
@@ -563,7 +563,7 @@ def show_linked_account_usages(request, id_slug):
         context_dict['account'] = linked_account
 
         URL = "https://cs21operatorapi.pythonanywhere.com/operator"
-        headers = {'Authorization': 'Token e49c12b8afba06c33f3b88e4c4d93f1a94748dca'}
+        headers = {'Authorization': 'Token 1eef5f9d5fcc28b388efeb24be25acff8e2b3292'}
         all_operators = requests.get(url=URL, headers=headers).json()
 
         for operator in all_operators:
