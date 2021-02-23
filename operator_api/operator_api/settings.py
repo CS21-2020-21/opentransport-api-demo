@@ -42,6 +42,8 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth',
     'allauth.account',
+    'crispy_forms',
+    'django_auto_prefetching',
 ]
 
 MIDDLEWARE = [

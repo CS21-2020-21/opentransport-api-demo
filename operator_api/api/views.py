@@ -1,6 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
-from django_auto_prefetching import AutoPrefetchViewSetMixin
+from django_auto_prefetching import AutoPrefetchViewSetMixin, prefetch
 from rest_framework.viewsets import ModelViewSet
 from .forms import *
 from django.forms import Textarea
@@ -20,9 +20,6 @@ def change_data(request):
     })
     if request.method == "POST":
         formset = ItemInlineFormSet(request.POST, request.FILES, instance=item)
-        print("Formset is valid:", formset.is_valid())
-        print(formset.non_form_errors())
-        print(formset.errors)
         if formset.is_valid():
             formset.save()
             return redirect('/change_data')
@@ -32,13 +29,19 @@ def change_data(request):
 
 
 class ModeViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
-    queryset = Mode.objects.all().order_by('id')
     serializer_class = ModeSerializer
+
+    def get_queryset(self):
+        queryset = Mode.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
 
 class CatalogueViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
-    queryset = Catalogue.objects.all().order_by('id')
     serializer_class = CatalogueSerializer
+
+    def get_queryset(self):
+        queryset = Catalogue.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
 
 class ItemViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
@@ -62,4 +65,5 @@ class ItemViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
 
         if href is not None:
             queryset = queryset.filter(href__contains=href)
-        return queryset
+
+        return prefetch(queryset, self.serializer_class)

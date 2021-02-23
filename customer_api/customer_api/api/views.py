@@ -1,84 +1,132 @@
-from django.shortcuts import render
-#from .models import Mode, Operator, Monetary_Value, Transaction, Customer, AccountBalance, Vehicle, Ticket, LatLong, LocationFrom, LocationTo, Purchase, Discount, Concession
-from rest_framework import routers, serializers, viewsets
-#from .serializers import ModeSerializer, OperatorSerializer, Monetary_ValueSerializer, TransactionSerializer, AccountBalanceSerializer, VehicleSerializer, TicketSerializer, LatLongSerializer, LocationFromSerializer, LocationToSerializer, PurchaseSerializer, CustomerSerializer, DiscountSerializer, ConcessionSerializer
-# from rest_framework.permissions import IsAuthenticated
-
+from rest_framework.viewsets import ModelViewSet
+from django_auto_prefetching import AutoPrefetchViewSetMixin, prefetch
 from .models import *
 from .serializers import *
 
 
-class ModeViewSet(viewsets.ModelViewSet):
-    queryset = Mode.objects.all()
+class ModeViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = ModeSerializer
 
-class DiscountViewSet(viewsets.ModelViewSet):
-    queryset = Discount.objects.all()
+    def get_queryset(self):
+        queryset = Mode.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class DiscountViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = DiscountSerializer
 
+    def get_queryset(self):
+        queryset = Discount.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
-class ServiceViewSet(viewsets.ModelViewSet):
-    queryset = Service.objects.all()
+
+class ServiceViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = ServiceSerializer
 
+    def get_queryset(self):
+        queryset = Service.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
-class LocationViewSet(viewsets.ModelViewSet):
-    queryset = Location.objects.all()
+
+class LocationViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = LocationSerializer
 
+    def get_queryset(self):
+        queryset = Location.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
-class TravelFromViewSet(viewsets.ModelViewSet):
-    queryset = TravelLocation.objects.all()
+
+class TravelFromViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = TravelLocationSerializer
 
-class OperatorViewSet(viewsets.ModelViewSet):
-    queryset = Operator.objects.all()
+    def get_queryset(self):
+        queryset = TravelLocation.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class OperatorViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = OperatorSerializer
 
+    def get_queryset(self):
+        queryset = Operator.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
-class Monetary_ValueViewSet(viewsets.ModelViewSet):
-    queryset = Monetary_Value.objects.all()
+
+class Monetary_ValueViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = Monetary_ValueSerializer
 
+    def get_queryset(self):
+        queryset = Monetary_Value.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
-class TransactionViewSet(viewsets.ModelViewSet):
-    queryset = Transaction.objects.all()
+
+class TransactionViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = TransactionSerializer
 
-class CustomerViewSet(viewsets.ModelViewSet):
-    queryset = Customer.objects.all()
+    def get_queryset(self):
+        queryset = Transaction.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class CustomerViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = CustomerSerializer
 
+    def get_queryset(self):
+        queryset = Customer.objects.all()
+        return prefetch(queryset, self.serializer_class)
 
 
-class AccountBalanceViewSet(viewsets.ModelViewSet):
-    queryset = AccountBalance.objects.all()
+class AccountBalanceViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = AccountBalanceSerializer
 
-class VehicleViewSet(viewsets.ModelViewSet):
-    queryset = Vehicle.objects.all()
+    def get_queryset(self):
+        queryset = AccountBalance.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class VehicleViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = VehicleSerializer
 
-class TicketViewSet(viewsets.ModelViewSet):
-    queryset = Ticket.objects.all()
+    def get_queryset(self):
+        queryset = Vehicle.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class TicketViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = TicketSerializer
 
-class LatLongViewSet(viewsets.ModelViewSet):
-    queryset = LatLong.objects.all()
+    def get_queryset(self):
+        queryset = Ticket.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class LatLongViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = LatLongSerializer
 
-class LocationFromViewSet(viewsets.ModelViewSet):
-    queryset = LocationFrom.objects.all()
+    def get_queryset(self):
+        queryset = LatLong.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class LocationFromViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = LocationFromSerializer
 
-class LocationToViewSet(viewsets.ModelViewSet):
-    queryset = LocationTo.objects.all()
+    def get_queryset(self):
+        queryset = LocationFrom.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class LocationToViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = LocationToSerializer
 
-class PurchaseViewSet(viewsets.ModelViewSet):
-    
-    # permission_classes = (IsAuthenticated,)
+    def get_queryset(self):
+        queryset = LocationTo.objects.all()
+        return prefetch(queryset, self.serializer_class)
+
+
+class PurchaseViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = PurchaseSerializer
+
     def get_queryset(self):
         queryset = Purchase.objects.all()
         customer_id = self.request.query_params.get('filterString', None)
@@ -91,30 +139,28 @@ class PurchaseViewSet(viewsets.ModelViewSet):
             customer = Customer.objects.get(customer_id=customer_id)
             queryset = queryset.filter(customer=customer)
 
-
         if travel_valid_during_from is not None and travel_valid_during_to is None:
             queryset = queryset.filter(travel_from_date_time__gte=travel_valid_during_from)
 
         elif travel_valid_during_to is not None and travel_valid_during_from is None:
             queryset = queryset.filter(travel_from_date_time__lte=travel_valid_during_to)
-        
+
         elif travel_valid_during_to is not None and travel_valid_during_from is not None:
             queryset = queryset.filter(travel_from_date_time__range=(travel_valid_during_from, travel_valid_during_to))
 
-        
         if limit is not None:
             queryset = queryset[:int(limit)]
-        
+
         if skip is not None:
             queryset = queryset[::int(skip)]
+            return queryset
+
+        # sort out travel dates
+
+        return prefetch(queryset, self.serializer_class)
 
 
-        #sort out travel dates
-        
-
-        return queryset
-
-class ConcessionViewSet(viewsets.ModelViewSet):
+class ConcessionViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = ConcessionSerializer
 
     def get_queryset(self):
@@ -134,22 +180,21 @@ class ConcessionViewSet(viewsets.ModelViewSet):
 
         elif travel_valid_during_to is not None and travel_valid_during_from is None:
             queryset = queryset.filter(valid_to_date_time__lte=travel_valid_during_to)
-        
+
         elif travel_valid_during_to is not None and travel_valid_during_from is not None:
             queryset = queryset.filter(valid_from_date_time__range=(travel_valid_during_from, travel_valid_during_to))
 
-
         if limit is not None:
             queryset = queryset[:int(limit)]
-        
-        
+
         if skip is not None:
             queryset = queryset[::int(skip)]
+            return queryset
 
-        return queryset
+        return prefetch(queryset, self.serializer_class)
 
-class UsageViewSet(viewsets.ModelViewSet):
-    
+
+class UsageViewSet(AutoPrefetchViewSetMixin, ModelViewSet):
     serializer_class = UsageSerializer
 
     def get_queryset(self):
@@ -164,23 +209,20 @@ class UsageViewSet(viewsets.ModelViewSet):
             customer = Customer.objects.get(customer_id=customer_id)
             queryset = queryset.filter(customer=customer)
 
-        if travel_valid_during_from is not None and travel_valid_during_to is None:            
+        if travel_valid_during_from is not None and travel_valid_during_to is None:
             queryset = queryset.filter(usage_date_time__gte=travel_valid_during_from)
 
         elif travel_valid_during_to is not None and travel_valid_during_from is None:
             queryset = queryset.filter(usage_date_time__lte=travel_valid_during_to)
-        
+
         elif travel_valid_during_to is not None and travel_valid_during_from is not None:
             queryset = queryset.filter(usage_date_time__range=(travel_valid_during_from, travel_valid_during_to))
 
-
-
         if limit is not None:
             queryset = queryset[:int(limit)]
-        
-        
+
         if skip is not None:
             queryset = queryset[::int(skip)]
+            return queryset
 
-        return queryset
-        
+        return prefetch(queryset, self.serializer_class)

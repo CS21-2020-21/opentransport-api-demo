@@ -2,7 +2,6 @@ from django.forms import ModelForm
 from .models import *
 from allauth.account.forms import SignupForm
 from django import forms
-from django.forms.models import inlineformset_factory
 
 
 class CustomSignupForm(SignupForm):
