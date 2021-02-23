@@ -1,0 +1,220 @@
+{
+	"info": {
+		"_postman_id": "4f77aff2-9246-416b-8fd2-51f83dbc78f4",
+		"name": "cs21postman",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Customer API",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {",
+							"    console.log(response.json());",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(200);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");",
+							"});",
+							"var schema1 = {",
+							"    \"id\": {",
+							"        \"type\": \"string\"",
+							"    }}",
+							"",
+							"var schema2 = {",
+							"    \"name\": {",
+							"        \"type\": \"string\"",
+							"    }}",
+							"",
+							"var schema3 = {",
+							"    \"valid_from_date_time\": {",
+							"        \"type\": \"string\"",
+							"    }}",
+							"",
+							"var schema4={",
+							"        \"valid_to_date_time\": {",
+							"        \"type\": \"string\"",
+							"    }",
+							"}",
+							"var schema5 = {",
+							"    \"prepaid\": {",
+							"        \"type\": \"boolean\"",
+							"    }}",
+							"",
+							"",
+							"",
+							"",
+							" ",
+							"",
+							"var data1 =[\"\"]",
+							"var data2 =[\"\"]",
+							"var data3 =[\"\"]",
+							"var data4 =[\"\"]",
+							"var data5 =[\"\"]",
+							"",
+							"pm.test('Schema is valid', function () {",
+							"    pm.expect(tv4.validate(data1, schema1)).to.be.string;",
+							"    pm.expect(tv4.validate(data2, schema2)).to.be.string;",
+							"    pm.expect(tv4.validate(data3, schema3)).to.be.string;",
+							"    pm.expect(tv4.validate(data3, schema4)).to.be.string;",
+							"    pm.expect(tv4.validate(data3, schema5)).to.be.true;",
+							"});",
+							"var jsonObject = xml2Json(responseBody);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://127.0.0.1:8000/purchase/?id=123&travel_class=business&booking_date_time=2015-10-22T19:50:08&agent=na&passenger_number=543&route=na&travel_from_date_time=2015-10-27T19:50:08&travel_to_date_time=2015-10-30T19:50:08&conditions=na&restrictions=na&reserved_position=na&service_request=na",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"purchase",
+						""
+					],
+					"query": [
+						{
+							"key": "id",
+							"value": "123"
+						},
+						{
+							"key": "travel_class",
+							"value": "business"
+						},
+						{
+							"key": "booking_date_time",
+							"value": "2015-10-22T19:50:08"
+						},
+						{
+							"key": "agent",
+							"value": "na"
+						},
+						{
+							"key": "passenger_number",
+							"value": "543"
+						},
+						{
+							"key": "route",
+							"value": "na"
+						},
+						{
+							"key": "travel_from_date_time",
+							"value": "2015-10-27T19:50:08"
+						},
+						{
+							"key": "travel_to_date_time",
+							"value": "2015-10-30T19:50:08"
+						},
+						{
+							"key": "conditions",
+							"value": "na"
+						},
+						{
+							"key": "restrictions",
+							"value": "na"
+						},
+						{
+							"key": "reserved_position",
+							"value": "na"
+						},
+						{
+							"key": "service_request",
+							"value": "na"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "OperatorAPI",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"pm.test(\"Response time is less than 200ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(250);",
+							"});",
+							"pm.test(\"Status code name has string\", function () {",
+							"    pm.response.to.have.status(\"OK\");})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token 7afbcff551d4ad594bcd5e383a8b6eaa40e57683",
+						"type": "text"
+					},
+					{
+						"key": "",
+						"value": "",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "[\n  {\n    \"catalogue-metadata\": [\n      {\n        \"rel\": \"string\",\n        \"val\": \"string\"\n      }\n    ],\n    \"items\": [\n      {\n        \"href\": \"string\",\n        \"item-metadata\": [\n          {\n            \"rel\": \"string\",\n            \"val\": \"string\"\n          }\n        ]\n      }\n    ]\n  }\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://127.0.0.1:8000/operators/",
+					"protocol": "http",
+					"host": [
+						"127",
+						"0",
+						"0",
+						"1"
+					],
+					"port": "8000",
+					"path": [
+						"operators",
+						""
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
