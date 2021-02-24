@@ -41,7 +41,6 @@ $RECYCLE.BIN/
 *.pyc
 
 # Compiled Documents
-*.pdf
 *.ps
 
 # Personal vscode settings files
