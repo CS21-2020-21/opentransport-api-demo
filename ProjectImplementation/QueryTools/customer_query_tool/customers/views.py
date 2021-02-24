@@ -16,8 +16,6 @@ from urllib.parse import urlencode
 from django.core.paginator import Paginator
 
 
-
-
 def index(request):
     return render(request, 'customers/index.html')
 
