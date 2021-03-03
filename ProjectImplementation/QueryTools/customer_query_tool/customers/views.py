@@ -33,13 +33,16 @@ def my_account(request):
 
     :param request: request from the user
     """
-        
-    user = request.user
-    customer_id = request.user.username
-    name = request.user.first_name
-    email = request.user.email
 
-    Customer.objects.get_or_create(user=user, customer_id=customer_id, name=name, email=email)
+    try:
+        customer = Customer.objects.get(customer_id=request.user.username)
+    except:
+        user = request.user
+        customer_id = request.user.username
+        name = request.user.first_name
+        email = request.user.email
+    
+        customer = Customer.objects.create(user=user, customer_id=customer_id, name=name, email=email)
     
     return render(request, 'customers/my_account.html')
 
@@ -70,7 +73,6 @@ def ferry_purchases(request):
         details = {}
         details['date_from'] = str(purchase.travel_from_date_time)[:10]
         details['date_to'] = str(purchase.travel_to_date_time)[:10]
-        details['price'] = purchase['transaction']['price']['amount']
         purchase_list.append(details)
     
     page_num = request.GET.get('page')
@@ -274,10 +276,10 @@ def show_linked_account_purchases(request, id_slug):
         headers = {'Authorization': 'Token 61a5afd286c1c0ec9f3c74a843186cefe458dc2c'}
         params = {'rel': 'urn:X-hypercat:rels:hasDescription:en', 'val': linked_account.operator}
         operator = requests.get(url=URL, headers=headers, params=params).json()
-
-        purchase_url = operator['item_metadata'][1]['val'] + 'purchase/?filterString=' + linked_account.username
+        
+        purchase_url = operator[0]['item_metadata'][1]['val'] + 'purchase/?filterString=' + linked_account.username
         purchases = requests.get(url=purchase_url).json()
-
+        
         purchase_list = []
         for purchase in purchases:
             details = {}
@@ -318,7 +320,7 @@ def show_linked_account_concessions(request, id_slug):
         params = {'rel': 'urn:X-hypercat:rels:hasDescription:en', 'val': linked_account.operator}
         operator = requests.get(url=URL, headers=headers, params=params).json()
      
-        concession_url = operator['item_metadata'][1]['val'] + 'concession/?filterString=' + linked_account.username
+        concession_url = operator[0]['item_metadata'][1]['val'] + 'concession/?filterString=' + linked_account.username
         concessions = requests.get(url=concession_url).json()
         concession_list = []
 
@@ -364,7 +366,7 @@ def show_linked_account_usages(request, id_slug):
         params = {'rel': 'urn:X-hypercat:rels:hasDescription:en', 'val': linked_account.operator}
         operator = requests.get(url=URL, headers=headers, params=params).json()
 
-        usage_url = operator['item_metadata'][1]['val'] + 'usage/?filterString=' + linked_account.username
+        usage_url = operator[0]['item_metadata'][1]['val'] + 'usage/?filterString=' + linked_account.username
         usages = requests.get(url=usage_url).json()
         usage_list = []
         for usage in usages:

@@ -16,7 +16,7 @@ class linkAccountForm(forms.Form):
     operators = [operator['item_metadata'][0]['val'] for operator in operators_json]
     operator_choices = [(operator, operator) for operator in operators]
     operator_cbo_box = forms.CharField(label="What company would you like to link your account to?", widget=forms.Select(choices=operator_choices))
-    email = forms.EmailField(label="What email account do you have registered on the account with which you would like to link?")
+    email = forms.EmailField(label="What email account do you have registered on the account with which you would like to link?", required=False)
     username = forms.CharField(label="What is the username on the account with which you would like to link?")
     
 class verificationForm(forms.Form):

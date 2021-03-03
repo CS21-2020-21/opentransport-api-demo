@@ -14,7 +14,7 @@ router.register(r'usage', views.UsageViewSet, basename='Usage')
 
 urlpatterns = [
     path('', include(router.urls)),
-    path('', views.index, name='index'),
+    path('index', views.index, name='index'),
 
     path('accounts/', views.my_account, name="my_account"),
     path('accounts/link_account/', views.link_account, name="link_account"),
