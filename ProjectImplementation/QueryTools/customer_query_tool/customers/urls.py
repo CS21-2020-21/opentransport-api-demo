@@ -13,14 +13,10 @@ router.register(r'usage', views.UsageViewSet, basename='Usage')
 
 
 urlpatterns = [
+    path('', include(router.urls)),
     path('', views.index, name='index'),
-    path('delete_user_profile/', views.deactivate_user_view, name='delete_user_profile'),
-    path('delete_user/', views.deactivate_user, name='delete_user'),
+
     path('accounts/', views.my_account, name="my_account"),
-    path('accounts/query/', views.query, name="query"),
-    path('accounts/query/purchases', views.query_purchases, name="query_purchases"),
-    path('accounts/query/concessions', views.query_concessions, name="query_concessions"),
-    path('accounts/query/usages', views.query_usages, name="query_usages"),
     path('accounts/link_account/', views.link_account, name="link_account"),
     path('accounts/check_email/', views.check_email, name="check_email"),
     path('accounts/account_linked/', views.account_linked, name="account_linked"),
@@ -29,11 +25,15 @@ urlpatterns = [
     path('accounts/linked_accounts/<slug:id_slug>/purchases', views.show_linked_account_purchases, name='show_linked_account_purchases'),
     path('accounts/linked_accounts/<slug:id_slug>/concessions', views.show_linked_account_concessions, name='show_linked_account_concessions'),
     path('accounts/linked_accounts/<slug:id_slug>/usages', views.show_linked_account_usages, name='show_linked_account_usages'),
+    
     path('accounts/ferry_account/', views.ferry_query_selection, name="ferry_query_selection"),
     path('accounts/ferry_account/ferry_purchases/', views.ferry_purchases, name="ferry_purchases"),
     path('accounts/ferry_account/ferry_concessions/', views.ferry_concessions, name="ferry_concessions"),
     path('accounts/ferry_account/ferry_usages/', views.ferry_usages, name="ferry_usages"),
-    path('', include(router.urls)),
-    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+    
+    path('delete_user_profile/', views.delete_user_view, name='delete_user_profile'),
+    path('delete_user/', views.delete_user, name='delete_user'),
+    path('delete_user_failed/', views.delete_user_failed, name='delete_user_failed'),
 
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
 ]
