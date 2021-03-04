@@ -1,14 +1,5 @@
 from django.test import TestCase
-
-# Create your tests here.
-from django.test import TestCase
-
-# Create your tests here.
-from django.test import TestCase
-
-# Create your tests here.
 from django.contrib.auth import get_user_model
-
 
 from rest_framework.test import APITestCase
 from rest_framework.test import APIClient, APIRequestFactory
@@ -29,6 +20,7 @@ class TestPoll(APITestCase):
         self.client = APIClient()
         self.user = self.setup_user()
         self.view =views.CatalogueViewSet.as_view({'post': 'list'})
+
 
     def setUpc(self):
         self.factory = APIRequestFactory()
