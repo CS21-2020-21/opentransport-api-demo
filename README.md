@@ -3,7 +3,7 @@
 
 Main code repository for Team Project 3 of Honours program.
 
-## Project
+# Project
 
 [Open Transport Initiative](https://opentransport.co.uk/)
 
@@ -13,7 +13,7 @@ There are two components to our project:
 
 * Implementing the Centralised Operator-Info API, providing  a lookup service which makes use of the PAS 212 standard in order to retrieve the details of different transport operators and MaaS platforms.  We are creating a simple endpoint to act as a query tool, where transport operators have the opportunity to fetch company data from the centralised database.
 
-## Built With
+# Built With
 
 
 * [Django](https://www.djangoproject.com/)
@@ -22,7 +22,7 @@ There are two components to our project:
 
 
 
-## Contributors
+# Contributors
 
 * [Ans Farooq](mailto:2390370f@student.gla.ac.uk) - 2390370f
 * [Dominykas Meistas](mailto:2404288m@student.gla.ac.uk) - 2404288m
@@ -30,26 +30,108 @@ There are two components to our project:
 * [David O'Neill](mailto:2378524o@student.gla.ac.uk) - 2378524o
 * [Lewis Tse](mailto:2385606t@student.gla.ac.uk) - 2385606t
 
-### Coach
+## Coach
 
 * Beth McDermid
 
-## Installation
+# Installation
 
-Further installation details to be provided at the conclusion of the project.
+* Clone the repository:
+```shell
+$ git clone https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main.git
+$ cd cs21-main
+```
+* Build the virtual environment:
+```shell
+$ mkvirtualenv env_name
+$ workon env_name
+```
 
-## Usage
+## Centralised Operator Database
+* Perform the following commands
+```shell
+(env_name)$ cd ProjectImplementation/APIs/operator_api
+(env_name)$ pip install -r requirements.txt
+(env_name)$ python manage.py makemigrations api
+(env_name)$ python manage.py migrate
+(env_name)$ python populate.py
+(env_name)$ python manage.py runserver
+```
+* Now navigate to http://127.0.0.1:8000/
 
-Further usage details to be provided at the conclusion of the project.
 
-## Roadmap
+## Operator Database Query Tool
+* Perform the following commands
+```shell
+(env_name)$ cd ProjectImplementation/QueryTools/operators_query_tool
+(env_name)$ pip install -r requirements.txt
+(env_name)$ python manage.py makemigrations
+(env_name)$ python manage.py migrate
+(env_name)$ python manage.py runserver
+```
+* Now navigate to http://127.0.0.1:8000/
 
-Further details regarding proposed features to be provided at the conclusion of the project.
+## Customer Account Query Tool
+* Perform the following commands
+```shell
+(env_name)$ cd ProjectImplementation/QueryTools/customer_query_tool
+(env_name)$ pip install -r requirements.txt
+(env_name)$ python manage.py makemigrations customers
+(env_name)$ python manage.py migrate
+(env_name)$ python populate.py
+(env_name)$ python manage.py runserver
+```
+* Now navigate to http://127.0.0.1:8000/
 
-## Credits
+## Second Customer Account Query Tool
+* Perform the following commands
+```shell
+(env_name)$ cd ProjectImplementation/QueryTools/second_customer_query_tool/customer_query_tool
+(env_name)$ pip install -r requirements.txt
+(env_name)$ python manage.py makemigrations customers
+(env_name)$ python manage.py migrate
+(env_name)$ python populate.py
+(env_name)$ python manage.py runserver
+```
+* Now navigate to http://127.0.0.1:8000/
+
+# Usage
+
+## Centralised Operator Database
+
+This is a centralised database storing details of transport operators and modes.  It is an implementation of the Open Transport Initiative Centralised Operator-info API, conforming to the specification.  This is not designed to be used, and the code provided is simply an example of what is required to implement the API specification.  
+For more details, go to:<br/>
+[Centralised Operator-info API Documentation](https://app.swaggerhub.com/apis/open-transport/operator-info/1.1.0)</br>
+This web application has been hosted at:</br>
+https://cs21operatorapi.pythonanywhere.com
+
+## Operator Database Query Tool
+
+This web application is designed to be used as a way of querying the centralised operator database.  It provides a means for the user to perform all the necessary queries on the database to match the specification.  To use, register and account, click to get started and begin performing queries.  This tool is not hosted remotely, but can be run on the Django development server in order to query the pythonanywhere hosted operator database.
+
+## Customer Account Query Tool
+
+This web application is a mock transport operator's account.  You can register for a fake user account, check any purchases you have made on this website and also link to your account on other websites.  When linking to another user account, the email verification is currently disabled.  Instead, the verification code is always "123456".  Once you have linked to another account, it is possible to check your details of the other account.  The linked accounts should exchange data using the Open Transport Customer-account specification.  This web application is not hosted remotely, but can be run on the Django development server.  The second customer account called PSDBuses is hosted on pythonanywhere, allowing your local machine to query the remotely hosted machine, demonstrating the communication between two accounts.  For more information, go to:</br>
+[Customer-account API Documentation](https://app.swaggerhub.com/apis/open-transport/customer-account/)
+
+## Second Customer Account Query Tool
+
+This web application performs the same function as the first customer query tool.  It is simply a different mock transport operator website, so that the two can communicate.  This web application is hosted at:</br>
+https://psdbuses.pythonanywhere.com/index/
+
+# Releases
+
+This repository makes use of release branching, with feature branching off of each release branch.  Currently, there are four releases of our project with the fifth release in development.
+
+
+# Roadmap
+
+Our repository is currently undergoing intensive testing and refactoring to deliver to our customer.  We will be storing our proof of concept on a GitHub repository to pass the code onto our customer and also act as a guide for developers implementing the API specifications in the future.
+
+# Credits
 
 * This project is an implementation of the [Open Transport Initiative Open Standard API specifications](https://opentransport.co.uk/open-standard/)
 
-## License
+# License
 
 [TBC]()
