@@ -60,7 +60,7 @@ class LinkedAccount(models.Model):
         self.slug = slugify(self.id)
         super(LinkedAccount, self).save(*args, **kwargs)
 
-    
+
 class AccountBalance(models.Model):
     account_id = models.IntegerField(primary_key=True, unique=True)
     amount = models.DecimalField(max_digits=6, decimal_places=2)

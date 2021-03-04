@@ -54,6 +54,7 @@ class AccountBalanceSerializer(serializers.ModelSerializer):
         model = AccountBalance
         fields = ('amount', 'currency')
 
+
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
@@ -68,7 +69,7 @@ class LatLongSerializer(serializers.ModelSerializer):
 
 class LocationSerializer(serializers.ModelSerializer):
     lat_long = LatLongSerializer(many=False, read_only=True)
-    
+   
     class Meta:
         model = Location
         fields = ('lat_long', 'NaPTAN', 'other', 'other_type', 'accuracy')
@@ -137,7 +138,6 @@ class PurchaseSerializer(serializers.ModelSerializer):
     ticket = TicketSerializer(many=False, read_only=True)
     location_from = LocationFromSerializer(many=False, read_only=True)
     location_to = LocationToSerializer(many=False, read_only=True)
-    
 
     class Meta:
         model = Purchase

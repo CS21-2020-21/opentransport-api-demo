@@ -27,7 +27,7 @@ class linkAccountForm(forms.Form):
     email = forms.EmailField(label="What email account do you have registered on the account with which you would like to link?", required=False)
     username = forms.CharField(label="What is the username on the account with which you would like to link?")
     
-
+    
 class verificationForm(forms.Form):
     code = forms.CharField(label="Please enter the verification code sent to the email you provided")
     
