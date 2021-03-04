@@ -1,15 +1,22 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django_auto_prefetching import AutoPrefetchViewSetMixin, prefetch
-from rest_framework.viewsets import ModelViewSet
-from .forms import *
 from django.forms import Textarea
+from rest_framework.viewsets import ModelViewSet
+
+from .forms import *
 from .serializers import *
 from .models import *
 
 
 @login_required
 def change_data(request):
+    """
+    Returns form to change operator data
+
+    :param request: request from the user
+    """
+
     userprofile = request.user.userprofile
     operator_id = userprofile.operator_id
     item = Item.objects.get(operator_id=operator_id)

@@ -62,12 +62,12 @@
 
 
     {% if operators.has_previous %}
-        <a href="?href=&description=&operator_id=&phone=&email=&homepage=&language=&modes=None&mode=&url=&page={{ operators.previous_page_number }}" class="btn btn-dark btn-lg pt-2">Previous</a>
+        <a href="?href=&description=&operator_id=&phone=&email=&homepage=&language=&modes=None&mode=&url=&page={{ operators.previous_page_number }}" class="btn btn-dark btn-lg pt-2 w-25">Previous</a>
 
     {% endif %}
 
     {% if operators.has_next %}
-        <a href="?href=&description=&operator_id=&phone=&email=&homepage=&language=&modes=None&mode=&url=&page={{ operators.next_page_number }}" class="btn btn-dark btn-lg pt-2">Next</a>
+        <a href="?href=&description=&operator_id=&phone=&email=&homepage=&language=&modes=None&mode=&url=&page={{ operators.next_page_number }}" class="btn btn-dark btn-lg pt-2 w-25">Next</a>
     {% endif %}
 </div>
 {% else %}
