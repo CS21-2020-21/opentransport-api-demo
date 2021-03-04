@@ -1,21 +1,24 @@
 from django.test import TestCase
 from django.contrib.auth.models import User
+
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
+
 import time
 
 
 class IntegrationTesting(TestCase):
 
-
     def setUp(self):
         #runs before every test
         self.driver = webdriver.Chrome(executable_path=r"C:\webdrivers/chromedriver.exe")
         self.driver.maximize_window()
-        
+
+
     def tearDown(self):
         #runs after every test
         self.driver.quit()
+
 
     def home_to_sign_in_page(self):
         #get the driver set to the homepage
@@ -28,6 +31,7 @@ class IntegrationTesting(TestCase):
 
         #check we are on the login page
         self.assertEqual(self.driver.title, "Operators - Login")
+
 
     def login_page(self):
         #type the username into the username field
@@ -49,11 +53,13 @@ class IntegrationTesting(TestCase):
         self.assertEqual(self.driver.title, "Operators - Homepage")
         assert user.is_authenticated
 
+
     def home_page_to_query_page(self):
         #click the button to go the the query page and check this worked
         self.driver.find_element_by_id('query button').click()
         time.sleep(1)
         self.assertEqual(self.driver.title, "Operators - Query Data")
+
 
     def perform_query(self, query_type):
         #select appropriate query from drop down menu
@@ -71,6 +77,7 @@ class IntegrationTesting(TestCase):
             #if we performed the operators query check the correct page is displayed
             self.assertEqual(self.driver.title, "Operators - Query Operators")
 
+
     def add_operator_argument(self, element_id, argument_value):
 
         #fill in a field depending on the parameter passed in
@@ -85,7 +92,6 @@ class IntegrationTesting(TestCase):
         self.assertEqual(self.driver.title, "Operators - View Operators")
         self.assertEqual(self.driver.find_element_by_id(element_id).text,argument_value)
 
-    
 
     def test_homepage_to_login_to_query_modes(self):
         
@@ -118,18 +124,22 @@ class Login(SimpleTestCase):
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
 
+
     def test_base_url_by_name(self):
         response = self.client.get(reverse(''))
         self.assertEquals(response.status_code, 200)
+
 
     def test_base_uses_correct_template(self):
         response = self.client.get(reverse(''))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'login.html')
 
+
     def test_page_contains_correct_html(self):
         response = self.client.get('/')
         self.assertContains(response, '<h1>Home Page </h1>')
+
 
     def test_page_does_not_contain_incorrect_html(self):
         response = self.client.get('/')
@@ -139,22 +149,27 @@ class Login(SimpleTestCase):
 
 class SignUp(SimpleTestCase):
     
+
     def base_page_status_code(self):
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
 
+
     def test_base_url_by_name(self):
         response = self.client.get(reverse('signup'))
         self.assertEquals(response.status_code, 200)
+
 
     def test_base_uses_correct_template(self):
         response = self.client.get(reverse('signup'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'signup.html')
 
+
     def test_page_contains_correct_html(self):
         response = self.client.get('/')
         self.assertContains(response, '<h1>Signup page</h1>')
+
 
     def test_page_does_not_contain_incorrect_html(self):
         response = self.client.get('/')
@@ -164,29 +179,37 @@ class SignUp(SimpleTestCase):
 
 class Tests(SimpleTestCase):
     
+
     def base_page_status_code(self):
         response = self.client.get('/')
         self.assertEquals(response.status_code, 200)
 
+
     def test_base_url_by_name(self):
         response = self.client.get(reverse('login'))
         self.assertEquals(response.status_code, 200)
+
 
     def test_base_uses_correct_template(self):
         response = self.client.get(reverse('login'))
         self.assertEquals(response.status_code, 200)
         self.assertTemplateUsed(response, 'login.html')
 
+
     def test_page_contains_correct_html(self):
         response = self.client.get('/')
         self.assertContains(response, '<h1>Login Page</h1>')
+
 
     def test_page_does_not_contain_incorrect_html(self):
         response = self.client.get('/')
         self.assertNotContains(
             response, 'Hi there! I should not be on the page.')
 
+
 class AuthTestCase(TestCase):
+
+
     def setUp(self):
         self.u = User.objects.create_user( 'iamtest', 'pass')
         self.u.is_staff = True
@@ -194,12 +217,6 @@ class AuthTestCase(TestCase):
         self.u.is_active = True
         self.u.save()
 
+
     def testLogin(self):
         self.client.login(username='iamtest', password='pass')
-
-   
-
-
-
-
-
