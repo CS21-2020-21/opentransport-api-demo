@@ -4,7 +4,6 @@ from django.template.defaultfilters import slugify
 from django.urls import reverse
 
 
-
 class Mode(models.Model):
     id = models.IntegerField(unique=True, primary_key=True)
     short_desc = models.CharField(max_length=50)
@@ -12,7 +11,6 @@ class Mode(models.Model):
 
     def __str__(self):
         return self.short_desc
-
 
 
 class Operator(models.Model):
@@ -50,7 +48,6 @@ class Customer(models.Model):
     email = models.EmailField()
     
 
-
 class LinkedAccount(models.Model):
     id = models.AutoField(primary_key=True)
     operator = models.CharField(max_length=50)
@@ -64,7 +61,6 @@ class LinkedAccount(models.Model):
         super(LinkedAccount, self).save(*args, **kwargs)
 
     
-
 class AccountBalance(models.Model):
     account_id = models.IntegerField(primary_key=True, unique=True)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
@@ -78,13 +74,11 @@ class Vehicle(models.Model):
     condition = models.CharField(max_length=100)
 
 
-
 class Ticket(models.Model):
     number_usages = models.IntegerField()
     reference = models.CharField(max_length=50, primary_key=True, unique=True)
     reference_type = models.CharField(max_length=50)
     medium = models.CharField(max_length=50)
-
 
 
 class LatLong(models.Model):
@@ -102,7 +96,6 @@ class LocationFrom(models.Model):
     accuracy = models.IntegerField()
 
 
-
 class LocationTo(models.Model):
     id = models.IntegerField(primary_key=True, unique=True)
     lat_long = models.ForeignKey(LatLong, related_name="location_to", on_delete=models.CASCADE)
@@ -116,7 +109,6 @@ class Discount(models.Model):
     discount_type = models.CharField(max_length=50)
     discount_value = models.IntegerField()
     discount_description = models.CharField(max_length=50)
-
 
 
 class Reference(models.Model):
@@ -137,7 +129,6 @@ class TravelLocation(models.Model):
     location = models.ForeignKey(Location, related_name="travel_location", on_delete=models.CASCADE)
     date_time = models.DateTimeField()
     reference = models.CharField(max_length=100)
-
 
 
 class Service(models.Model):
@@ -203,3 +194,4 @@ class Purchase(models.Model):
     location_to = models.ForeignKey(LocationTo, related_name="purchase",on_delete=models.CASCADE)
     reserved_position = models.CharField(max_length=50)
     service_request = models.CharField(max_length=100)
+    

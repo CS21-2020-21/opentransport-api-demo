@@ -1,0 +1,26 @@
+{% extends 'customers/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Homepage
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+    <div class="py-4">
+
+        {% if user.is_authenticated %}
+            <a href="{% url 'customers:index' %}" class="btn btn-dark btn-lg pt-2 w-25" id="query_button">View Timetables</a>
+        {% else %}
+            <a href="{% url 'customers:index' %}" class="btn btn-dark btn-lg pt-2 w-25" id="query_button">View Timetables</a>
+            <a href="{% url 'account_signup' %}" class="btn btn-dark btn-lg pt-2 w-25" id="query_button">Sign Up</a>
+        {% endif %}
+    </div>
+{% endblock %}

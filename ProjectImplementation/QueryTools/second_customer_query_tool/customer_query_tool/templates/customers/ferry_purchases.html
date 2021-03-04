@@ -1,0 +1,68 @@
+{% extends 'customers/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    PSD Buses Purchases
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+
+{% if user.is_authenticated %}
+
+    {% if purchases %}
+
+    <h4 class="font-weight-light text-white py-4">PSD Buses Purchases</h4>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"><h6 class="font-weight-light text-white py-1">Date From</h6></th>
+                    <th scope="col"><h6 class="font-weight-light text-white py-1">Date To</h6></th>
+                    
+
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for purchase in purchases %}
+                <tr>
+                    <td><h6 class="font-weight-light text-white py-1">{{ purchase.date_from }}</h6></td>
+                    <td><h6 class="font-weight-light text-white py-1">{{ purchase.date_to }}</h6></td>
+                    
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        
+        {% if purchases.has_previous %}
+            <a href="?page={{ purchases.previous_page_number }}" class="btn btn-dark btn-lg pt-2">Previous</a>
+        {% endif %}
+
+        {% if purchases.has_next %}
+            <a href="?page={{ purchases.next_page_number }}" class="btn btn-dark btn-lg pt-2">Next</a>
+        {% endif %}
+
+    {% else %}
+    <h4 class="font-weight-light text-white py-4">You have no purchases with PSD Ferries</h4>
+    {% endif %}
+
+{% else %}
+
+    <div class="py-4">
+        <h4 class="font-weight-light text-white py-4">Please login to perform the query</h4>
+    </div>
+
+{% endif %}
+
+{% endblock %}

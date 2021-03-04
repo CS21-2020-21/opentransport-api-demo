@@ -1,34 +1,55 @@
+import requests
+
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.urls import reverse
-from operators.forms import *
-import requests
 from django.core.paginator import Paginator
+
 from urllib.parse import urlencode
+
+from operators.forms import *
 
 
 def index(request):
+    """
+    Returns index view
+
+    :param request: request from the user
+    """
+
     return render(request, 'operators/index.html')
 
 
 def my_account(request):
+    """
+    Returns my_account view
+
+    :param request: request from the user
+    """
+
     return render(request, 'operators/my_account.html')
 
 
 def query(request):
+    """
+    Returns query view form for user to select the query they wish to perform
+
+    :param request: request from the user
+    """
+
     form = operatorQueryForm()
 
     if request.method == "POST":
+
         form = operatorQueryForm(request.POST)
 
         if form.is_valid():
             query_type = form.cleaned_data.get('query_type')
+
             if query_type == 'mode':
                 return redirect(reverse('operators:query_modes'))
             elif query_type == 'operator':
-                # redirect to the page showing operators info
-                # need to understand what is going on before we can implement this
                 return redirect(reverse('operators:query_operators'))
 
     context = {'form': form}
@@ -37,22 +58,33 @@ def query(request):
 
 
 def change_data(request):
+    """
+    Returns change data view
+
+    :param request: request from the user
+    """
+
     return render(request, 'operators/change_data.html')
 
 
 def query_modes(request):
-    auth_header = {'Authorization': 'Token cb6ea765b241ee676bc5409ac81759832fe06774'}
+    """
+    Returns query_modes view to show the user the modes of transport available
+
+    :param request: request from the user
+    """
+
+    token_url = "https://cs21operatorapi.pythonanywhere.com/api-token-auth/"
+    data = {'username':'cs21operatorapi', 'password':'123'}
+    token = requests.post(url=token_url, data=data).json()['token']
+    
+    auth_header = {'Authorization': 'Token ' + token}
     URL = "https://cs21operatorapi.pythonanywhere.com/mode/"
 
     context = {}
 
     try:
-
         response = requests.get(url=URL, headers=auth_header)
-
-        # if response.status == 500:
-        #     context['empty'] = True
-
         data = response.json()
 
         context['mode_list'] = []
@@ -72,13 +104,18 @@ def query_modes(request):
             context['modes'] = Paginator(context['mode_list'], 3).page(page_num)
 
     except:
-
         context['modes'] = False
 
     return render(request, 'operators/query_modes.html', context=context)
 
 
 def query_operators(request):
+    """
+    Returns query operators view giving the user a form to enter any parameters they wish
+
+    :param request: request from the user
+    """
+
     context = {}
 
     form = requestDetailsForm()
@@ -111,6 +148,12 @@ def query_operators(request):
 
 
 def view_operators(request):
+    """
+    Returns view_operators view to display the operators
+
+    :param request: request from the user
+    """
+
     href = request.GET.get('href')
     description = request.GET.get('description')
     operator_id = request.GET.get('operator_id')
@@ -162,11 +205,14 @@ def view_operators(request):
         params['val'] = url
 
     try:
-        auth_header = {'Authorization': 'Token cb6ea765b241ee676bc5409ac81759832fe06774'}
+        token_url = "https://cs21operatorapi.pythonanywhere.com/api-token-auth/"
+        data = {'username':'cs21operatorapi', 'password':'123'}
+        token = requests.post(url=token_url, data=data).json()['token']
+
+        auth_header = {'Authorization': 'Token ' + token}
         URL = "https://cs21operatorapi.pythonanywhere.com/operator/"
 
         response = requests.get(url=URL, params=params, headers=auth_header)
-
         data = response.json()
 
         context['operators_list'] = []
@@ -200,13 +246,11 @@ def view_operators(request):
 
         page_num = request.GET.get('page')
         pages = Paginator(context['operators_list'], 1)
-
         if page_num is None:
             context['operators'] = pages.page(1)
         else:
             context['operators'] = pages.page(page_num)
     except:
-
         context['operators'] = False
 
     return render(request, 'operators/view_operators.html', context=context)
