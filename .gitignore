@@ -50,3 +50,6 @@ __pycache__/
 db.sqlite3
 *.key
 thumbs.db
+
+# test coverage reports
+*.coverage

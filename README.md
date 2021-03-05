@@ -41,11 +41,8 @@ There are two components to our project:
 $ git clone https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main.git
 $ cd cs21-main
 ```
-* Build the virtual environment:
-```shell
-$ mkvirtualenv env_name
-$ workon env_name
-```
+* Create and activate your virtual environment
+
 
 ## Centralised Operator Database
 * Perform the following commands
@@ -81,7 +78,7 @@ $ workon env_name
 (env_name)$ python populate.py
 (env_name)$ python manage.py runserver
 ```
-* Now navigate to http://127.0.0.1:8000/
+* Now navigate to http://127.0.0.1:8000/index
 
 ## Second Customer Account Query Tool
 * Perform the following commands
@@ -93,7 +90,7 @@ $ workon env_name
 (env_name)$ python populate.py
 (env_name)$ python manage.py runserver
 ```
-* Now navigate to http://127.0.0.1:8000/
+* Now navigate to http://127.0.0.1:8000/index
 
 # Usage
 
@@ -111,8 +108,11 @@ This web application is designed to be used as a way of querying the centralised
 
 ## Customer Account Query Tool
 
-This web application is a mock transport operator's account.  You can register for a fake user account, check any purchases you have made on this website and also link to your account on other websites.  When linking to another user account, the email verification is currently disabled.  Instead, the verification code is always "123456".  Once you have linked to another account, it is possible to check your details of the other account.  The linked accounts should exchange data using the Open Transport Customer-account specification.  This web application is not hosted remotely, but can be run on the Django development server.  The second customer account called PSDBuses is hosted on pythonanywhere, allowing your local machine to query the remotely hosted machine, demonstrating the communication between two accounts.  For more information, go to:</br>
+This web application is a mock transport operator's account.  You can register for a fake user account, check any purchases you have made on this website and also link to your account on other websites.  When linking to another user account, the email verification is currently disabled.  Instead, the verification code is always "123456".  Once you have linked to another account, it is possible to check your details of the other account.  The linked accounts should exchange data using the Open Transport Customer-account specification.</br></br>
+After running the command line instructions above, the database will be populated with 5 mock users who have already got data, with usernames 1-5.  The password for each user is "12345678abc".</br></br>
+This web application is not hosted remotely, but can be run on the Django development server.  The second customer account called PSDBuses is hosted on pythonanywhere, allowing your local machine to query the remotely hosted machine, demonstrating the communication between two accounts.  The remote PSDBuses account has the same 5 users with the data on each of them, so linking to a user on PSDBuses with username 1-5 will illustrate the flow of data.  For more information, go to:</br>
 [Customer-account API Documentation](https://app.swaggerhub.com/apis/open-transport/customer-account/)
+
 
 ## Second Customer Account Query Tool
 

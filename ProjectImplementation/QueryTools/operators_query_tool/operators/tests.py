@@ -1,8 +1,11 @@
 from django.test import TestCase
+from django.test import SimpleTestCase
 from django.contrib.auth.models import User
 
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
+
+from webdriver_manager.chrome import ChromeDriverManager
 
 import time
 
@@ -11,7 +14,7 @@ class IntegrationTesting(TestCase):
 
     def setUp(self):
         #runs before every test
-        self.driver = webdriver.Chrome(executable_path=r"C:\webdrivers/chromedriver.exe")
+        self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.maximize_window()
 
 
@@ -21,7 +24,7 @@ class IntegrationTesting(TestCase):
 
 
     def home_to_sign_in_page(self):
-        #get the driver set to the homepage
+        #get the driver set to the homepage/chromedriver.exe
         self.driver.get("http://127.0.0.1:8000/")
         time.sleep(1)
 
