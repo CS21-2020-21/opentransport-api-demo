@@ -1,6 +1,7 @@
 from django.test import TestCase
 from django.urls import reverse
 from django.contrib.auth.models import User
+from django.template.defaultfilters import slugify
 
 from http import HTTPStatus
 
@@ -9,79 +10,36 @@ from selenium.webdriver.support.select import Select
 
 import time
 
-class TestViews(TestCase):
-    
-    def test_index_view(self):
-        response = self.client.get(reverse('customers:index'))
-        self.assertEqual(response.status_code, 200)
+from model_bakery import baker
+
+from customers.models import *
 
 
-    def test_account_view(self):
-        response = self.client.get(reverse('customers:my_account'))
-        self.assertEqual(response.status_code, 200)
+class ModelTesting(TestCase):
 
 
-    def test_query_view(self):
-        response = self.client.get(reverse('customers:query'))
-        self.assertEqual(response.status_code, 200)
+     def test_mode_model(self):
+        mode = baker.make(Mode, short_desc="bus")
+        
+        self.assertTrue(isinstance(mode, Mode))
+        self.assertEqual(str(mode), "bus")
 
 
-    def test_query_purchases_view(self):
-        response = self.client.get(reverse('customers:query_purchases'))
-        self.assertEqual(response.status_code, 200)
+     def test_operator_model(self):
+        operator = baker.make(Operator, name="ScotRail")
+        self.assertTrue(isinstance(operator, Operator))
+        self.assertEqual(str(operator), "ScotRail")
 
 
-    def test_query_concessions_view(self):
-        response = self.client.get(reverse('customers:query_concessions'))
-        self.assertEqual(response.status_code, 200)
+     def test_linked_account_model(self):
+         linked_account = baker.make(LinkedAccount, id=1)
+         slug = slugify(1)
+         linked_account.save()
+         self.assertEqual(linked_account.slug, slug)
 
-
-    def test_query_usages_view(self):
-        response = self.client.get(reverse('customers:query_usages'))
-        self.assertEqual(response.status_code, 200)
-
-
-class TestForms(TestCase):
-
-
-    def test_purchase_from_date_incorrect_format(self):
-        response = self.client.post(reverse('customers:query_purchases'), data={'from_date':'vbw'})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Enter a valid date/time.')
-
-
-    def test_purchase_to_date_incorrect_format(self):
-        response = self.client.post(reverse('customers:query_purchases'), data={'to_date':'vbw'})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Enter a valid date/time.')
-    
-
-    def test_concession_from_date_incorrect_format(self):
-        response = self.client.post(reverse('customers:query_concessions'), data={'from_date':'vbw'})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Enter a valid date/time.')
-
-
-    def test_concession_to_date_incorrect_format(self):
-        response = self.client.post(reverse('customers:query_concessions'), data={'to_date':'vbw'})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Enter a valid date/time.')
-
-
-    def test_usage_from_date_incorrect_format(self):
-        response = self.client.post(reverse('customers:query_usages'), data={'from_date':'vbw'})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Enter a valid date/time.')
-
-
-    def test_usage_to_date_incorrect_format(self):
-        response = self.client.post(reverse('customers:query_usages'), data={'to_date':'vbw'})
-        self.assertEqual(response.status_code, HTTPStatus.OK)
-        self.assertContains(response, 'Enter a valid date/time.')
-
-
+        
 class IntegrationTesting(TestCase):
-
+  
 
     def setUp(self):
         # runs before every test
@@ -98,7 +56,7 @@ class IntegrationTesting(TestCase):
 
     def home_page_to_sign_in_page(self):
         # get the driver set to the homepage
-        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.get("http://127.0.0.1:8000/index")
         time.sleep(1)
 
         # click on the button to go to the login page
@@ -111,7 +69,7 @@ class IntegrationTesting(TestCase):
 
     def home_page_to_sign_up_page(self):
         # get the driver set to the homepage
-        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.get("http://127.0.0.1:8000/index")
         time.sleep(1)
 
         # click on the button to go to the register page
@@ -124,7 +82,7 @@ class IntegrationTesting(TestCase):
 
     def sign_in_process(self):
         # type the username into the username field
-        self.driver.find_element_by_id('id_login').send_keys("6")
+        self.driver.find_element_by_id('id_login').send_keys("5")
         time.sleep(1)
 
         # type the password into the password field
@@ -132,7 +90,7 @@ class IntegrationTesting(TestCase):
         time.sleep(1)
 
         # if it doesn't already exist, create the user object and return it
-        user = User.objects.get_or_create(username="6", password="12345678abc")[0]
+        user = User.objects.get_or_create(username="5", password="12345678abc")[0]
 
         # submit the form
         self.driver.find_element_by_id('sign_in_button').click()
@@ -214,7 +172,7 @@ class IntegrationTesting(TestCase):
 
     def perform_linking_query(self):
         # fill in the company name that we want to link our account to
-        self.driver.find_element_by_id('id_operator_cbo_box').send_keys("CS21")
+        self.driver.find_element_by_id('id_operator_cbo_box').send_keys("PSD Buses")
         time.sleep(1)
 
         # fill in the email of the account that we're linking to
@@ -248,7 +206,7 @@ class IntegrationTesting(TestCase):
 
     def is_account_linked(self):
         # fill in the company name that we want to link our account to
-        self.driver.find_element_by_id('id_operator_cbo_box').send_keys("CS21")
+        self.driver.find_element_by_id('id_operator_cbo_box').send_keys("PSD Buses")
         time.sleep(1)
 
         # fill in the email of the account that we're linking to
@@ -435,4 +393,4 @@ class IntegrationTesting(TestCase):
         self.perform_linking_query()
         self.perform_email_verification()
         print("Scenario #7 successfully completed")
-        
+       

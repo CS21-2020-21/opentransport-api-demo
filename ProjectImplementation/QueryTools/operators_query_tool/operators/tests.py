@@ -25,7 +25,7 @@ class IntegrationTesting(TestCase):
 
     def home_to_sign_in_page(self):
         #get the driver set to the homepage/chromedriver.exe
-        self.driver.get("http://127.0.0.1:8000/")
+        self.driver.get("http://127.0.0.1:8000/index")
         time.sleep(1)
 
         #click on the button to go to the login page
