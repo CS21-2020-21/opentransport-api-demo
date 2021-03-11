@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django_nose',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
@@ -52,12 +51,6 @@ INSTALLED_APPS = [
     'rest_framework',
 ]
 
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=customers',
-]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

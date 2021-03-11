@@ -41,19 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
-    'django_nose',
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'crispy_forms',
     'operators',
-]
-
-TEST_RUNNER = 'django_nose.NoseTestSuiteRunner'
-
-NOSE_ARGS = [
-    '--with-coverage',
-    '--cover-package=operators',
 ]
 
 MIDDLEWARE = [

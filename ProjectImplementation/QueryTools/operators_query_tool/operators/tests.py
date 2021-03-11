@@ -16,6 +16,7 @@ class IntegrationTesting(TestCase):
         #runs before every test
         self.driver = webdriver.Chrome(ChromeDriverManager().install())
         self.driver.maximize_window()
+        print("starting")
 
 
     def tearDown(self):
@@ -25,20 +26,24 @@ class IntegrationTesting(TestCase):
 
     def home_to_sign_in_page(self):
         #get the driver set to the homepage/chromedriver.exe
-        self.driver.get("http://127.0.0.1:8000/index")
+        self.driver.get("http://127.0.0.1:8000/")
         time.sleep(1)
+
+        user = User.objects.get_or_create(username="1", password="12345678abc")[0]
 
         #click on the button to go to the login page
         self.driver.find_element_by_id('signin').click()
         time.sleep(1)
+
 
         #check we are on the login page
         self.assertEqual(self.driver.title, "Operators - Login")
 
 
     def login_page(self):
+       
         #type the username into the username field
-        self.driver.find_element_by_id('id_login').send_keys("user1")
+        self.driver.find_element_by_id('id_login').send_keys("1")
         time.sleep(1)
 
         #type the password into the password field
@@ -46,8 +51,9 @@ class IntegrationTesting(TestCase):
         time.sleep(1)
 
         #if it doesn't already exist, create the user object and return it
-        user = User.objects.get_or_create(username="user1", password="12345678abc")[0]
-
+        #user, created = User.objects.get_or_create(username="1", password="12345678abc")
+        
+        
         #submit the form
         self.driver.find_element_by_id('signinbutton').click()
         time.sleep(1)

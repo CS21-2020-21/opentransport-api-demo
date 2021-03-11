@@ -119,6 +119,28 @@ This web application is not hosted remotely, but can be run on the Django develo
 This web application performs the same function as the first customer query tool.  It is simply a different mock transport operator website, so that the two can communicate.  This web application is hosted at:</br>
 https://psdbuses.pythonanywhere.com/index/
 
+# Testing
+
+## Operator Query Tool
+There are unit and integration tests for the operators query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the operators query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
+```shell
+(env_name)$ cd ProjectImplementation/QueryTools/operators_query_tool
+(env_name)$ coverage erase
+(env_name)$ coverage run manage.py test operators
+(env_name)$ coverage report
+```
+
+## Customer Query Tool
+There are unit and integration tests for the customer query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the customer query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
+```shell
+(env_name)$ cd ProjectImplementation/QueryTools/customer_query_tool
+(env_name)$ coverage erase
+(env_name)$ coverage run manage.py test customers
+(env_name)$ coverage report
+```
+
+
+
 # Releases
 
 This repository makes use of release branching, with feature branching off of each release branch.  Currently, there are four releases of our project with the fifth release in development.
