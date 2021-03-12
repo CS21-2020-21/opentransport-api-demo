@@ -91,7 +91,6 @@ class UnitTesting(TestCase):
         self.assertEqual(response.status_code, 302)
         
 
-
 class IntegrationTesting(TestCase):
 
     def setUp(self):
@@ -142,8 +141,7 @@ class IntegrationTesting(TestCase):
 
         #check we have been redirected to the homepage and the user is logged in
         self.assertEqual(self.driver.title, "Operators - Homepage")
-        assert user.is_authenticated
-
+        
 
     def home_page_to_query_page(self):
         #click the button to go the the query page and check this worked
@@ -207,4 +205,3 @@ class IntegrationTesting(TestCase):
         self.perform_query("Operators")
         self.add_operator_argument("id_operator_id", "003")
         print("Scenario #2 successfully completed")
-
