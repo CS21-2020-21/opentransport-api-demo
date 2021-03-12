@@ -18,26 +18,167 @@ from customers.models import *
 class ModelTesting(TestCase):
 
 
-     def test_mode_model(self):
+    def test_mode_model(self):
         mode = baker.make(Mode, short_desc="bus")
         
         self.assertTrue(isinstance(mode, Mode))
         self.assertEqual(str(mode), "bus")
 
 
-     def test_operator_model(self):
+    def test_operator_model(self):
         operator = baker.make(Operator, name="ScotRail")
         self.assertTrue(isinstance(operator, Operator))
         self.assertEqual(str(operator), "ScotRail")
 
 
-     def test_linked_account_model(self):
+    def test_linked_account_model(self):
          linked_account = baker.make(LinkedAccount, id=1)
          slug = slugify(1)
          linked_account.save()
          self.assertEqual(linked_account.slug, slug)
+    
 
-        
+
+class UnitTesting(TestCase):
+
+
+    def test_index_page(self):
+        url = reverse('customers:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/index.html')
+
+
+    def test_my_account_page(self):
+        url = reverse('customers:my_account')
+        self.client.force_login(User.objects.get_or_create(username="test")[0])
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+
+    
+    def test_ferry_query_selection_page(self):
+        url = reverse('customers:ferry_query_selection')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/ferry_query_selection.html')
+
+    
+    def test_ferry_purchases_page(self):
+        url = reverse('customers:ferry_purchases')
+        user = User.objects.get_or_create(username="test")[0]
+        self.client.force_login(user)
+        Customer.objects.create(user=user, customer_id="test", name="test", email="test@test.com")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/ferry_purchases.html')
+
+    
+    def test_ferry_concessions_page(self):
+        url = reverse('customers:ferry_concessions')
+        user = User.objects.get_or_create(username="test")[0]
+        self.client.force_login(user)
+        Customer.objects.create(user=user, customer_id="test", name="test", email="test@test.com")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/ferry_concessions.html')
+
+
+    def test_ferry_usages_page(self):
+        url = reverse('customers:ferry_usages')
+        user = User.objects.get_or_create(username="test")[0]
+        self.client.force_login(user)
+        Customer.objects.create(user=user, customer_id="test", name="test", email="test@test.com")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/ferry_usages.html')
+
+    
+    def test_link_account_page(self):
+        url = reverse('customers:link_account')
+        user = User.objects.get_or_create(username="test")[0]
+        self.client.force_login(user)
+        Customer.objects.create(user=user, customer_id="test", name="test", email="test@test.com")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/link_account.html')
+
+
+    def test_check_email_page(self):
+        url = reverse('customers:check_email')
+        user = User.objects.get_or_create(username="test")[0]
+        self.client.force_login(user)
+        Customer.objects.create(user=user, customer_id="test", name="test", email="test@test.com")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/check_email.html')
+
+    
+    def test_account_linked_page(self):
+        url = reverse('customers:account_linked')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/account_linked.html')
+
+    
+    def test_linked_failed_page(self):
+        url = reverse('customers:link_failed')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/link_failed.html')
+
+
+    def test_linked_accounts_page(self):
+        url = reverse('customers:linked_accounts')
+        user = User.objects.get_or_create(username="test")[0]
+        self.client.force_login(user)
+        Customer.objects.create(user=user, customer_id="test", name="test", email="test@test.com")
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/linked_accounts.html')
+
+
+    def test_show_linked_account_purchases_page(self):
+        linked_account = baker.make(LinkedAccount, id=1)
+        linked_account.save()
+        url = reverse('customers:show_linked_account_purchases', kwargs={'id_slug':linked_account.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/show_linked_account_purchases.html')
+
+
+    def test_show_linked_account_concessions_page(self):
+        linked_account = baker.make(LinkedAccount, id=1)
+        linked_account.save()
+        url = reverse('customers:show_linked_account_concessions', kwargs={'id_slug':linked_account.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/show_linked_account_concessions.html')
+
+
+    def test_show_linked_account_usages_page(self):
+        linked_account = baker.make(LinkedAccount, id=1)
+        linked_account.save()
+        url = reverse('customers:show_linked_account_usages', kwargs={'id_slug':linked_account.slug})
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'customers/show_linked_account_usages.html')
+
+    
+    def test_link_account_form(self):
+        url = reverse('customers:link_account')
+        response = self.client.post(url, data={'operator_cbo_box':'PSDBuses', 'email':'test@test.com', 'username':'1'})
+        self.assertEqual(response.status_code, 302)
+
+
+    def test_check_email_form(self):
+        url = reverse('customers:check_email')+'?operator=PSDBuses&email=test@test.com&username=1'
+        user = User.objects.get_or_create(username="test")[0]
+        self.client.force_login(user)
+        Customer.objects.create(user=user, customer_id="test", name="test", email="test@test.com")
+        response = self.client.post(url, data={'code':'123456'})
+        self.assertEqual(response.status_code, 302)
+    
+   
 class IntegrationTesting(TestCase):
   
 

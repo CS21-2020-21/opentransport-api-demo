@@ -26,7 +26,7 @@ def index(request):
 
     return render(request, 'customers/index.html')
 
-
+@login_required
 def my_account(request):
     """
     Returns account view, if a Customer object doesn't exist it creates one.

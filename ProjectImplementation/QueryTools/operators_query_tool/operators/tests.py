@@ -1,6 +1,9 @@
 from django.test import TestCase
 from django.test import SimpleTestCase
+from django.test import Client
 from django.contrib.auth.models import User
+from django.urls import reverse
+
 
 from selenium import webdriver
 from selenium.webdriver.support.select import Select
@@ -8,6 +11,85 @@ from selenium.webdriver.support.select import Select
 from webdriver_manager.chrome import ChromeDriverManager
 
 import time
+
+
+class UnitTesting(TestCase):
+
+
+    def setUp(self):
+        #runs before every test
+        self.client = Client()  
+
+
+    def test_index_page(self):
+        url = reverse('operators:index')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'operators/index.html')
+
+
+    def test_my_account_page(self):
+        url = reverse('operators:my_account')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'operators/my_account.html')
+
+
+    def test_query_page(self):
+        url = reverse('operators:query')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'operators/query.html')
+    
+
+    def test_change_data_page(self):
+        url = reverse('operators:change_data')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'operators/change_data.html')
+
+    
+    def test_query_modes_page(self):
+        url = reverse('operators:query_modes')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'operators/query_modes.html')
+
+
+    def test_query_operators_page(self):
+        url = reverse('operators:query_operators')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'operators/query_operators.html')
+
+
+    def test_view_operators_page(self):
+        url = reverse('operators:view_operators')
+        response = self.client.get(url)
+        self.assertEqual(response.status_code, 200)
+        self.assertTemplateUsed(response, 'operators/view_operators.html')
+
+    
+    def test_query_form_with_mode(self):
+        url = reverse('operators:query')
+        response = self.client.post(url, data={'query_type':'Modes'})
+        self.assertEqual(response.status_code, 200)
+
+    
+    def test_query_form_with_operator(self):
+        url = reverse('operators:query')
+        response = self.client.post(url, data={'query_type':'Operators'})
+        self.assertEqual(response.status_code, 200)
+
+
+    def test_details_form(self):
+        url = reverse('operators:query_operators')
+        data = {'href':'www.scotrail.com', 'description':'trains', 'operator_id':'123', 
+        'phone':'01234567890', 'email':'test@test.com', 'homepage':'www.scotrail.com', 
+        'language':'en', 'modes':1, 'mode':'train', 'url':'www.scotrail.com'}
+        response = self.client.post(url, data=data)
+        self.assertEqual(response.status_code, 302)
+        
 
 
 class IntegrationTesting(TestCase):
