@@ -41,9 +41,9 @@ def my_account(request):
         customer_id = request.user.username
         name = request.user.first_name
         email = request.user.email
-    
+
         customer = Customer.objects.create(user=user, customer_id=customer_id, name=name, email=email)
-    
+
     return render(request, 'customers/my_account.html')
 
 
@@ -74,7 +74,7 @@ def ferry_purchases(request):
         details['date_from'] = str(purchase.travel_from_date_time)[:10]
         details['date_to'] = str(purchase.travel_to_date_time)[:10]
         purchase_list.append(details)
-    
+
     page_num = request.GET.get('page')
     if page_num is None:
         context_dict['purchases'] = Paginator(purchase_list, 3).page(1)
@@ -103,7 +103,7 @@ def ferry_concessions(request):
         details['date_to'] = str(concession.valid_from_date_time)[:10]
         details['discount'] = str(concession.discount.discount_value) + concession.discount.discount_type
         concession_list.append(details)
-    
+
     page_num = request.GET.get('page')
     if page_num is None:
         context_dict['concessions'] = Paginator(concession_list, 3).page(1)
@@ -127,11 +127,11 @@ def ferry_usages(request):
     usage_list = []
     for usage in usages:
         details = {}
-        
+
         details['date'] = str(usage.usage_date_time)[:10]
         details['travel_class'] = usage.travel_class
         usage_list.append(details)
-    
+
     page_num = request.GET.get('page')
     if page_num is None:
         context_dict['usages'] = Paginator(usage_list, 3).page(1)
@@ -150,7 +150,7 @@ def link_account(request):
 
     form = linkAccountForm()
 
-    if request.method == "POST":
+    if request.method == 'POST':
 
         form = linkAccountForm(request.POST)
 
@@ -162,13 +162,13 @@ def link_account(request):
             email = form.cleaned_data.get('email')
             username = form.cleaned_data.get('username')
             url_params = {'operator':operator, 'email':email, 'username':username}
-            
+
             # If account is already linked
             if operator in linked_operators:
                 return redirect(reverse('customers:link_failed'))
             else:
                 return redirect('{}?{}'.format(reverse('customers:check_email'), urlencode(url_params)))
-           
+
     context = {'form': form}
 
     return render(request, 'customers/link_account.html', context=context)
@@ -195,15 +195,15 @@ def check_email(request):
     #     )
 
     form = verificationForm()
-    
-    if request.method == "POST":
+
+    if request.method == 'POST':
 
         form = verificationForm(request.POST)
 
         if form.is_valid():
-            
-            code = form.cleaned_data.get('code')        
-            if code == "123456": # would need this to link to value in email
+
+            code = form.cleaned_data.get('code')
+            if code == '123456': # would need this to link to value in email
                 operator = request.GET.get('operator')
                 email = request.GET.get('email')
                 username = request.GET.get('username')
@@ -213,7 +213,7 @@ def check_email(request):
                 return redirect(reverse('customers:account_linked'))
             else:
                 return redirect(reverse('customers:link_failed'))
-       
+
     context = {'form': form}
 
     return render(request, 'customers/check_email.html', context=context)
@@ -250,7 +250,7 @@ def linked_accounts(request):
     linked_accounts = LinkedAccount.objects.filter(customer=request.user.username)
 
     page_num = request.GET.get('page')
-    
+
     if page_num is None:
         context['linked_accounts'] = Paginator(linked_accounts, 1).page(1)
     else:
@@ -265,25 +265,25 @@ def show_linked_account_purchases(request, id_slug):
     
     :param request: request from the user
     """
-    
+
     context_dict = {}
     try:
         linked_account = LinkedAccount.objects.get(slug=id_slug)
-       
+
         context_dict['account'] = linked_account
-        
-        token_url = "https://cs21operatorapi.pythonanywhere.com/api-token-auth/"
+
+        token_url = 'https://cs21operatorapi.pythonanywhere.com/api-token-auth/'
         data = {'username':'cs21operatorapi', 'password':'123'}
         token = requests.post(url=token_url, data=data).json()['token']
 
-        URL = "https://cs21operatorapi.pythonanywhere.com/operator"
+        URL = 'https://cs21operatorapi.pythonanywhere.com/operator'
         headers = {'Authorization': 'Token ' + token}
         params = {'rel': 'urn:X-hypercat:rels:hasDescription:en', 'val': linked_account.operator}
         operator = requests.get(url=URL, headers=headers, params=params).json()
-        
+
         purchase_url = operator[0]['item_metadata'][1]['val'] + 'purchase/?filterString=' + linked_account.username
         purchases = requests.get(url=purchase_url).json()
-        
+
         purchase_list = []
         for purchase in purchases:
             details = {}
@@ -292,7 +292,7 @@ def show_linked_account_purchases(request, id_slug):
             details['date_to'] = purchase['travel_to_date_time'][:10]
             details['price'] = purchase['transaction']['price']['amount']
             purchase_list.append(details)
-                        
+
         page_num = request.GET.get('page')
         if page_num is None:
             context_dict['purchases'] = Paginator(purchase_list, 3).page(1)
@@ -302,7 +302,7 @@ def show_linked_account_purchases(request, id_slug):
     except:
         context_dict['account'] = None
         context_dict['purchases'] = None
-    
+
     return render(request, 'customers/show_linked_account_purchases.html', context=context_dict)
 
 
@@ -316,18 +316,18 @@ def show_linked_account_concessions(request, id_slug):
     context_dict = {}
     try:
         linked_account = LinkedAccount.objects.get(slug=id_slug)
-       
+
         context_dict['account'] = linked_account
 
-        token_url = "https://cs21operatorapi.pythonanywhere.com/api-token-auth/"
+        token_url = 'https://cs21operatorapi.pythonanywhere.com/api-token-auth/'
         data = {'username':'cs21operatorapi', 'password':'123'}
         token = requests.post(url=token_url, data=data).json()['token']
 
-        URL = "https://cs21operatorapi.pythonanywhere.com/operator"
+        URL = 'https://cs21operatorapi.pythonanywhere.com/operator'
         headers = {'Authorization': 'Token ' + token}
         params = {'rel': 'urn:X-hypercat:rels:hasDescription:en', 'val': linked_account.operator}
         operator = requests.get(url=URL, headers=headers, params=params).json()
-     
+
         concession_url = operator[0]['item_metadata'][1]['val'] + 'concession/?filterString=' + linked_account.username
         concessions = requests.get(url=concession_url).json()
         concession_list = []
@@ -342,7 +342,7 @@ def show_linked_account_concessions(request, id_slug):
             details['date_to'] = concession['valid_from_date_time'][:10]
             details['conditions'] = concession['conditions']
             concession_list.append(details)
-                        
+
         page_num = request.GET.get('page')
         if page_num is None:
             context_dict['concessions'] = Paginator(concession_list, 3).page(1)
@@ -352,7 +352,7 @@ def show_linked_account_concessions(request, id_slug):
     except:
         context_dict['account'] = None
         context_dict['concession'] = None
-    
+
     return render(request, 'customers/show_linked_account_concessions.html', context=context_dict)
 
 
@@ -369,11 +369,11 @@ def show_linked_account_usages(request, id_slug):
 
         context_dict['account'] = linked_account
 
-        token_url = "https://cs21operatorapi.pythonanywhere.com/api-token-auth/"
+        token_url = 'https://cs21operatorapi.pythonanywhere.com/api-token-auth/'
         data = {'username':'cs21operatorapi', 'password':'123'}
         token = requests.post(url=token_url, data=data).json()['token']
 
-        URL = "https://cs21operatorapi.pythonanywhere.com/operator"
+        URL = 'https://cs21operatorapi.pythonanywhere.com/operator'
         headers = {'Authorization': 'Token ' + token}
         params = {'rel': 'urn:X-hypercat:rels:hasDescription:en', 'val': linked_account.operator}
         operator = requests.get(url=URL, headers=headers, params=params).json()
@@ -388,17 +388,17 @@ def show_linked_account_usages(request, id_slug):
             details['date_to'] = usage['travel_to']['date_time'][:10]
             details['price'] = usage['price']['amount']
             usage_list.append(details)
-                     
+
         page_num = request.GET.get('page')
         if page_num is None:
             context_dict['usages'] = Paginator(usage_list, 3).page(1)
         else:
             context_dict['usages'] = Paginator(usage_list, 3).page(page_num)
-                
+
     except:
         context_dict['account'] = None
         context_dict['usage'] = None
-    
+
     return render(request, 'customers/show_linked_account_usages.html', context=context_dict)
 
 
@@ -410,7 +410,7 @@ def delete_user_view(request):
     :param request: request from the user
     """
 
-    return render(request, "account/delete_user_account.html")
+    return render(request, 'account/delete_user_account.html')
 
 
 # Possibility of removing HTTPResponse from this code, will help clean up imports
@@ -428,9 +428,9 @@ def delete_user(request):
     if request.user.is_authenticated and request.user.id == user.id:
         user.is_active = False
         user.delete()
-        return redirect("customers:index")
+        return redirect('customers:index')
     else:
-        return redirect("customers:delete_user_failed")
+        return redirect('customers:delete_user_failed')
 
 
 @login_required
@@ -538,16 +538,16 @@ class PurchaseViewSet(viewsets.ModelViewSet):
 
         elif travel_valid_during_to is not None and travel_valid_during_from is None:
             queryset = queryset.filter(travel_from_date_time__lte=travel_valid_during_to)
-        
+
         elif travel_valid_during_to is not None and travel_valid_during_from is not None:
             queryset = queryset.filter(travel_from_date_time__range=(travel_valid_during_from, travel_valid_during_to))
 
         if limit is not None:
             queryset = queryset[:int(limit)]
-        
+
         if skip is not None:
             queryset = queryset[::int(skip)]
-        
+
         return queryset
 
 
@@ -571,13 +571,13 @@ class ConcessionViewSet(viewsets.ModelViewSet):
 
         elif travel_valid_during_to is not None and travel_valid_during_from is None:
             queryset = queryset.filter(valid_to_date_time__lte=travel_valid_during_to)
-        
+
         elif travel_valid_during_to is not None and travel_valid_during_from is not None:
             queryset = queryset.filter(valid_from_date_time__range=(travel_valid_during_from, travel_valid_during_to))
 
         if limit is not None:
             queryset = queryset[:int(limit)]
-        
+
         if skip is not None:
             queryset = queryset[::int(skip)]
 
@@ -599,20 +599,19 @@ class UsageViewSet(viewsets.ModelViewSet):
             customer = Customer.objects.get(customer_id=customer_id)
             queryset = queryset.filter(customer=customer)
 
-        if travel_valid_during_from is not None and travel_valid_during_to is None:            
+        if travel_valid_during_from is not None and travel_valid_during_to is None:
             queryset = queryset.filter(usage_date_time__gte=travel_valid_during_from)
 
         elif travel_valid_during_to is not None and travel_valid_during_from is None:
             queryset = queryset.filter(usage_date_time__lte=travel_valid_during_to)
-        
+
         elif travel_valid_during_to is not None and travel_valid_during_from is not None:
             queryset = queryset.filter(usage_date_time__range=(travel_valid_during_from, travel_valid_during_to))
 
         if limit is not None:
             queryset = queryset[:int(limit)]
-        
+
         if skip is not None:
             queryset = queryset[::int(skip)]
 
         return queryset
-        

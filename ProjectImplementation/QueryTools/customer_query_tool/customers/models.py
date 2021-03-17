@@ -1,7 +1,6 @@
-from django.db import models
 from django.contrib.auth.models import User
+from django.db import models
 from django.template.defaultfilters import slugify
-from django.urls import reverse
 
 
 class Mode(models.Model):
@@ -46,7 +45,7 @@ class Customer(models.Model):
     customer_id = models.CharField(primary_key=True, unique=True, max_length=50)
     name = models.CharField(max_length=50)
     email = models.EmailField()
-    
+
 
 class LinkedAccount(models.Model):
     id = models.AutoField(primary_key=True)
@@ -60,7 +59,7 @@ class LinkedAccount(models.Model):
         self.slug = slugify(self.id)
         super(LinkedAccount, self).save(*args, **kwargs)
 
-    
+
 class AccountBalance(models.Model):
     account_id = models.IntegerField(primary_key=True, unique=True)
     amount = models.DecimalField(max_digits=6, decimal_places=2)
@@ -168,7 +167,7 @@ class Concession(models.Model):
     valid_from_date_time = models.DateTimeField()
     valid_to_date_time = models.DateTimeField()
     conditions = models.CharField(max_length=100)
-    
+
 
 class Purchase(models.Model):
     id = models.CharField(unique=True, primary_key=True, max_length=100)
@@ -194,4 +193,3 @@ class Purchase(models.Model):
     location_to = models.ForeignKey(LocationTo, related_name="purchase",on_delete=models.CASCADE)
     reserved_position = models.CharField(max_length=50)
     service_request = models.CharField(max_length=100)
-    

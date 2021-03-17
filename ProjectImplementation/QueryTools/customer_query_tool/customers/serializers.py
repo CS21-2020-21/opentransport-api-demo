@@ -1,6 +1,5 @@
-from rest_framework import serializers
-
 from customers.models import *
+from rest_framework import serializers
 
 
 class ModeSerializer(serializers.ModelSerializer):
@@ -54,6 +53,7 @@ class AccountBalanceSerializer(serializers.ModelSerializer):
         model = AccountBalance
         fields = ('amount', 'currency')
 
+
 class TicketSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ticket
@@ -68,7 +68,7 @@ class LatLongSerializer(serializers.ModelSerializer):
 
 class LocationSerializer(serializers.ModelSerializer):
     lat_long = LatLongSerializer(many=False, read_only=True)
-    
+
     class Meta:
         model = Location
         fields = ('lat_long', 'NaPTAN', 'other', 'other_type', 'accuracy')
@@ -76,7 +76,7 @@ class LocationSerializer(serializers.ModelSerializer):
 
 class TravelLocationSerializer(serializers.ModelSerializer):
     location = LocationSerializer(many=False, read_only=True)
-    
+
     class Meta:
         model = TravelLocation
         fields = ('location', 'date_time', 'reference')
@@ -84,7 +84,7 @@ class TravelLocationSerializer(serializers.ModelSerializer):
 
 class LocationFromSerializer(serializers.ModelSerializer):
     lat_long = LatLongSerializer(many=False, read_only=True)
-    
+
     class Meta:
         model = LocationFrom
         fields = ('lat_long', 'NaPTAN', 'other', 'other_type', 'accuracy')
@@ -92,7 +92,7 @@ class LocationFromSerializer(serializers.ModelSerializer):
 
 class LocationToSerializer(serializers.ModelSerializer):
     lat_long = LatLongSerializer(many=False, read_only=True)
-    
+
     class Meta:
         model = LocationTo
         fields = ('lat_long', 'NaPTAN', 'other', 'other_type', 'accuracy')
@@ -121,14 +121,14 @@ class UsageSerializer(serializers.ModelSerializer):
     ticket = TicketSerializer(many=False, read_only=True)
     price = Monetary_ValueSerializer(many=False, read_only=True)
     services = ServiceSerializer(many=True, read_only=True)
-    
+
     class Meta:
         model = Usage
-        fields = ('id', 'mode', 'operator', 'reference', 'travel_class', 'travel_from', 'travel_to', 'purchase_id', 'route_via_avoid', 'ticket', 'pre_paid', 'price', 'services')
+        fields = ('id', 'mode', 'operator', 'reference', 'travel_class', 'travel_from', 'travel_to', 'purchase_id',
+                  'route_via_avoid', 'ticket', 'pre_paid', 'price', 'services')
 
 
 class PurchaseSerializer(serializers.ModelSerializer):
-    
     mode = ModeSerializer(many=False, read_only=True)
     operator = OperatorSerializer(many=False, read_only=True)
     transaction = TransactionSerializer(many=False, read_only=True)
@@ -138,16 +138,15 @@ class PurchaseSerializer(serializers.ModelSerializer):
     location_from = LocationFromSerializer(many=False, read_only=True)
     location_to = LocationToSerializer(many=False, read_only=True)
     
-
     class Meta:
         model = Purchase
-        fields = ('id', 'mode', 'operator', 'travel_class', 
+        fields = ('id', 'mode', 'operator', 'travel_class',
                   'booking_date_time', 'transaction', 'account_balance',
-                  'agent', 'passenger_number', 'passenger_type', 
-                  'vehicle', 'route', 'travel_from_date_time', 
+                  'agent', 'passenger_number', 'passenger_type',
+                  'vehicle', 'route', 'travel_from_date_time',
                   'travel_to_date_time', 'conditions', 'concession',
                   'restrictions', 'ticket', 'location_from',
-                  'location_to', 'reserved_position', 'service_request') 
+                  'location_to', 'reserved_position', 'service_request')
 
 
 class ConcessionSerializer(serializers.ModelSerializer):

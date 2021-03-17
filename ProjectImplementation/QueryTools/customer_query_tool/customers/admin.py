@@ -1,10 +1,10 @@
-from django.contrib import admin
-
 from customers.models import *
+from django.contrib import admin
 
 
 class LinkedAccountAdmin(admin.ModelAdmin):
-    prepopulated_fields = {'slug':('id',)}
+    prepopulated_fields = {'slug': ('id',)}
+
 
 admin.site.register(Mode)
 admin.site.register(Operator)
