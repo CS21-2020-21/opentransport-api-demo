@@ -40,7 +40,7 @@ def query(request):
 
     form = operatorQueryForm()
 
-    if request.method == "POST":
+    if request.method == 'POST':
 
         form = operatorQueryForm(request.POST)
 
@@ -74,12 +74,12 @@ def query_modes(request):
     :param request: request from the user
     """
 
-    token_url = "https://cs21operatorapi.pythonanywhere.com/api-token-auth/"
+    token_url = 'https://cs21operatorapi.pythonanywhere.com/api-token-auth/'
     data = {'username':'cs21operatorapi', 'password':'123'}
     token = requests.post(url=token_url, data=data).json()['token']
     
     auth_header = {'Authorization': 'Token ' + token}
-    URL = "https://cs21operatorapi.pythonanywhere.com/mode/"
+    URL = 'https://cs21operatorapi.pythonanywhere.com/mode/'
 
     context = {}
 
@@ -120,7 +120,7 @@ def query_operators(request):
 
     form = requestDetailsForm()
 
-    if request.method == "POST":
+    if request.method == 'POST':
 
         form = requestDetailsForm(request.POST)
 
@@ -205,12 +205,12 @@ def view_operators(request):
         params['val'] = url
 
     try:
-        token_url = "https://cs21operatorapi.pythonanywhere.com/api-token-auth/"
+        token_url = 'https://cs21operatorapi.pythonanywhere.com/api-token-auth/'
         data = {'username':'cs21operatorapi', 'password':'123'}
         token = requests.post(url=token_url, data=data).json()['token']
 
         auth_header = {'Authorization': 'Token ' + token}
-        URL = "https://cs21operatorapi.pythonanywhere.com/operator/"
+        URL = 'https://cs21operatorapi.pythonanywhere.com/operator/'
 
         response = requests.get(url=URL, params=params, headers=auth_header)
         data = response.json()
@@ -258,7 +258,7 @@ def view_operators(request):
 
 @login_required
 def deactivate_user_view(request):
-    return render(request, "account/delete_user_account.html")
+    return render(request, 'account/delete_user_account.html')
 
 
 @login_required
@@ -269,6 +269,6 @@ def deactivate_user(request):
     if request.user.is_authenticated and request.user.id == user.id:
         user.is_active = False
         user.delete()
-        return redirect("operators:index")
+        return redirect('operators:index')
     else:
-        return HttpResponse("Cannot delete account")
+        return HttpResponse('Cannot delete account')
