@@ -7,7 +7,7 @@ from .models import *
 
 
 class CustomSignupForm(SignupForm):
-    operator_id = forms.CharField(max_length=10, label="Operater ID")
+    operator_id = forms.CharField(max_length=10, label='Operator ID')
 
     class Meta:
         model = UserProfile
