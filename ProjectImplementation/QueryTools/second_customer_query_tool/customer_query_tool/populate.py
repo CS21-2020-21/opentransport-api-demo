@@ -7,20 +7,23 @@ from customers.models import *
 
 import datetime
 
+
 def populate():
-    modes = [{"id": "007", "short_desc": "bus", "long_desc": "includes any vehicle typically greater than 8 seats.. such as a mini bus"},
+
+    modes = [{'id': '007', 'short_desc': 'bus', 'long_desc': 'includes any vehicle typically greater than 8 seats.. such as a mini bus'},
             ]
 
-    
     for mode in modes:
         add_mode(mode)
 
+
     operators = [{'id':'029', 'name':'PSD Buses','homepage':'www.psdbuses.com', 'api_url':'www.psdbuses.pythonanywhere.com', 
                 'default_language':'en', 'phone':'0141523678', 'email':'psdbuses@gmail.com' },
-                 ]
+                ]
 
     for operator in operators:
         add_operator(operator)
+
 
     money = [{'id':1, 'amount':2.15, 'currency':'GBP'},
             {'id':2, 'amount':3.90, 'currency':'GBP'},
@@ -33,36 +36,36 @@ def populate():
     for value in money:
         add_money(value)
 
-    
-    customers = [{'user': User.objects.create_user('1', "palin@gmail.com", '12345678abc'), 'id':1, 'name':'Michael Palin', 'email':'palin@gmail.com'},
+
+    customers = [{'user': User.objects.create_user('1', 'palin@gmail.com', '12345678abc'), 'id':1, 'name':'Michael Palin', 'email':'palin@gmail.com'},
                 {'user':User.objects.create_user('2', 'columbus@gmail.com', '12345678abc'), 'id':2, 'name':'Christopher Columbus', 'email':'columbus@gmail.com'},
                 {'user':User.objects.create_user('3', 'da@hotmail.com', '12345678abc'), 'id':3, 'name':'David Attenborough', 'email':'da@hotmail.com'},
                 {'user':User.objects.create_user('4', 'bear@yahoo.com', '12345678abc'), 'id':4, 'name':'Bear Grylls', 'email':'bear@yahoo.com'},
                 {'user':User.objects.create_user('5', 'peake@gmail.com', '12345678abc'), 'id':5, 'name':'Tim Peake', 'email':'peake@gmail.com'},
                 ]
 
-    
     for customer in customers:
         add_customer(customer)
 
 
     accounts = [{'id':1, 'amount':0.15, 'currency':'GBP'},
-            {'id':2, 'amount':4.87, 'currency':'GBP'},
-            {'id':3, 'amount':9.10, 'currency':'USD'},
-            {'id':4, 'amount':13.20, 'currency':'GBP'},
-            {'id':5, 'amount':45.67, 'currency':'HKD'},
-            {'id':6, 'amount':0.23, 'currency':'GBP'},
-            ]
+                {'id':2, 'amount':4.87, 'currency':'GBP'},
+                {'id':3, 'amount':9.10, 'currency':'USD'},
+                {'id':4, 'amount':13.20, 'currency':'GBP'},
+                {'id':5, 'amount':45.67, 'currency':'HKD'},
+                {'id':6, 'amount':0.23, 'currency':'GBP'},
+                ]
 
     for account in accounts:
         add_balance(account)
+
 
     vehicles = [{'included':'yes', 'reference':'BA20 FGD', 'vehicle_type':'bus', 'condition':'brand new' },
                 {'included':'no', 'reference':'GH56 TCF', 'vehicle_type':'bus', 'condition':'old' },
                 {'included':'yes', 'reference':'DR19 JKD', 'vehicle_type':'bus', 'condition':'nearly new' },
                 {'included':'no', 'reference':'JL12 UTY', 'vehicle_type':'bus', 'condition':'rusty and needing repairs' },
                 {'included':'yes', 'reference':'RD20 OIP', 'vehicle_type':'bus', 'condition':'brand new' },
-            ]
+                ]
 
     for vehicle in vehicles:
         add_vehicle(vehicle)
@@ -74,7 +77,7 @@ def populate():
                     {'date_time':'2021-01-01T11:33:11Z', 'reference':'745', 'payment_type':'Card', 'payment_method':'visa', 'price':Monetary_Value.objects.get(money_id=3)},
                     {'date_time':'2020-11-10T11:33:11Z', 'reference':'231', 'payment_type':'Card', 'payment_method':'visa', 'price':Monetary_Value.objects.get(money_id=2)},
                     {'date_time':'2020-12-20T11:33:11Z', 'reference':'986', 'payment_type':'Card', 'payment_method':'visa', 'price':Monetary_Value.objects.get(money_id=1)},
-                   ]
+                    ]
 
     for transaction in transactions:
         add_transaction(transaction)
@@ -85,7 +88,7 @@ def populate():
                 {'number_usages':6, 'reference':'1134D', 'reference_type':'ticket ref', 'medium':'card'},
                 {'number_usages':1, 'reference':'1534D', 'reference_type':'ticket ref', 'medium':'cash'},
                 {'number_usages':2, 'reference':'1834D', 'reference_type':'ticket ref', 'medium':'cash'},
-            ]
+                ]
 
     for ticket in tickets:
         add_ticket(ticket)
@@ -108,9 +111,10 @@ def populate():
                 {'id':4, 'lat_long':LatLong.objects.get(id=5), 'NaPTAN':'9100GLGS', 'other':'lots of trucks', 'other_type':'trucks', 'accuracy':99},
                 {'id':5, 'lat_long':LatLong.objects.get(id=4), 'NaPTAN':'9100GLGJ', 'other':'lots of lorries', 'other_type':'lorries', 'accuracy':2},
                 ]
-        
+
     for loc in locfroms:
         add_loc_from(loc)
+
 
     loctos = [{'id':1, 'lat_long':LatLong.objects.get(id=2), 'NaPTAN':'9100GLGC', 'other':'lots of buses', 'other_type':'buses', 'accuracy':9},
                 {'id':2, 'lat_long':LatLong.objects.get(id=1), 'NaPTAN':'9100GLGF', 'other':'lots of cars', 'other_type':'cars', 'accuracy':6},
@@ -122,15 +126,17 @@ def populate():
     for loc in loctos:
         add_loc_to(loc)
 
+
     discounts = [{'discount_type':'%', 'discount_value':10, 'discount_description':'friends and family'},
-                    {'discount_type':'%', 'discount_value':20, 'discount_description':'summer sale'},
-                    {'discount_type':'%', 'discount_value':20, 'discount_description':'winter sale'},
-                    {'discount_type':'%', 'discount_value':30, 'discount_description':'spring sale'},
-                    {'discount_type':'%', 'discount_value':50, 'discount_description':'autumn sale'},
+                {'discount_type':'%', 'discount_value':20, 'discount_description':'summer sale'},
+                {'discount_type':'%', 'discount_value':20, 'discount_description':'winter sale'},
+                {'discount_type':'%', 'discount_value':30, 'discount_description':'spring sale'},
+                {'discount_type':'%', 'discount_value':50, 'discount_description':'autumn sale'},
                 ]
 
     for discount in discounts:
         add_discount(discount)
+
 
     references = [{'reference':'2b', 'reference_type':'seat'},
                 {'reference':'3c', 'reference_type':'seat'},
@@ -159,12 +165,12 @@ def populate():
                         {'location':Location.objects.get(id=3), 'date_time':'2021-01-03T11:33:11Z', 'reference':'125'},
                         {'location':Location.objects.get(id=4), 'date_time':'2020-12-14T11:33:11Z', 'reference':'126'},
                         {'location':Location.objects.get(id=5), 'date_time':'2020-11-07T11:33:11Z', 'reference':'127'},
-                    ]
+                        ]
 
     for location in travel_locations:
         add_travel_location(location)
 
-    
+
     services = [{'service_type':'charging', 'unit':'kwH', 'amount':20.0, 'price':Monetary_Value.objects.get(money_id=2)},
                 {'service_type':'meal', 'unit':'calories', 'amount':300.0, 'price':Monetary_Value.objects.get(money_id=4)},
                 ]
@@ -180,7 +186,6 @@ def populate():
                 'usage_date_time':'2020-11-07T11:33:11Z', 'route_via_avoid':'avoid bridge',
                 'ticket':Ticket.objects.get(reference='1134D'), 'pre_paid':True, 
                 'price':Monetary_Value.objects.get(money_id=3)},
-
 
                 {'id':'124', 'customer':Customer.objects.get(customer_id=1), 'mode':Mode.objects.get(id='007'), 
                 'operator':Operator.objects.get(id='029'), 'reference':Reference.objects.get(id=2),
@@ -198,7 +203,6 @@ def populate():
                 'ticket':Ticket.objects.get(reference='1134D'), 'pre_paid':True, 
                 'price':Monetary_Value.objects.get(money_id=6)},
 
-
                 {'id':'126', 'customer':Customer.objects.get(customer_id=2), 'mode':Mode.objects.get(id='007'), 
                 'operator':Operator.objects.get(id='029'), 'reference':Reference.objects.get(id=4),
                 'travel_class':'first', 'travel_from':TravelLocation.objects.get(reference='127'),
@@ -206,7 +210,7 @@ def populate():
                 'usage_date_time':'2020-12-16T11:33:11Z', 'route_via_avoid':'avoid one way road',
                 'ticket':Ticket.objects.get(reference='1834D'), 'pre_paid':False, 
                 'price':Monetary_Value.objects.get(money_id=2)},
-    
+
                 {'id':'127', 'customer':Customer.objects.get(customer_id=3), 'mode':Mode.objects.get(id='007'), 
                 'operator':Operator.objects.get(id='029'), 'reference':Reference.objects.get(id=2),
                 'travel_class':'first', 'travel_from':TravelLocation.objects.get(reference='127'),
@@ -256,7 +260,6 @@ def populate():
                 'price':Monetary_Value.objects.get(money_id=4)},
     
             ]
-
 
     for usage in usages:
         add_usage(usage)
@@ -419,22 +422,23 @@ def populate():
         add_purchase(purchase)
 
 
-
-
 def add_mode(mode_data):
     mode = Mode.objects.get_or_create(id=mode_data['id'], short_desc=mode_data['short_desc'], long_desc=mode_data['long_desc'])[0]
     mode.save()
     return mode
+
 
 def add_operator(operator):
     op = Operator.objects.get_or_create(id=operator['id'], name=operator['name'], homepage=operator['homepage'], api_url=operator['api_url'], default_language=operator['default_language'], phone=operator['phone'], email=operator['email'])[0]
     op.save()
     return op
 
+
 def add_money(value):
     money = Monetary_Value.objects.get_or_create(money_id=value['id'], amount=value['amount'], currency=value['currency'])[0]
     money.save()
     return money
+
 
 def add_customer(customer):
     person = Customer.objects.get_or_create(user=customer['user'], customer_id=customer['id'], name=customer['name'], email=customer['email'])[0]
@@ -450,59 +454,69 @@ def add_balance(balance):
 
 def add_vehicle(vehicle):
     transport_vehicle = Vehicle.objects.get_or_create(included=vehicle['included'], reference=vehicle['reference'], vehicle_type=vehicle['vehicle_type'], condition=vehicle['condition'])[0]
-
     transport_vehicle.save()
     return transport_vehicle
+
 
 def add_transaction(transaction):
     transact = Transaction.objects.get_or_create(date_time=transaction['date_time'], reference=transaction['reference'], payment_type=transaction['payment_type'], payment_method=transaction['payment_method'], price=transaction['price'])[0]
     transact.save()
     return transact
 
+
 def add_ticket(ticket):
     tick = Ticket.objects.get_or_create(number_usages=ticket['number_usages'], reference=ticket['reference'], reference_type=ticket['reference_type'], medium=ticket['medium'])[0]
     tick.save()
     return tick
+
 
 def add_latlong(latlong):
     location = LatLong.objects.get_or_create(id=latlong['id'], latitude=latlong['latitude'], longitude=latlong['longitude'])[0]
     location.save()
     return location
 
+
 def add_loc_from(loc):
     location = LocationFrom.objects.get_or_create(id=loc['id'], lat_long=loc['lat_long'], NaPTAN=loc['NaPTAN'], other=loc['other'], other_type=loc['other_type'], accuracy=loc['accuracy'])[0]
     location.save()
     return location
+
 
 def add_loc_to(loc):
     location = LocationTo.objects.get_or_create(id=loc['id'], lat_long=loc['lat_long'], NaPTAN=loc['NaPTAN'], other=loc['other'], other_type=loc['other_type'], accuracy=loc['accuracy'])[0]
     location.save()
     return location
 
+
 def add_discount(discount):
     discount_details = Discount.objects.get_or_create(discount_type=discount['discount_type'], discount_value=discount['discount_value'], discount_description=discount['discount_description'])[0]
     discount_details.save()
     return discount_details
+
 
 def add_reference(ref):
     reference = Reference.objects.get_or_create(reference=ref['reference'], reference_type=ref['reference_type'])[0]
     reference.save()
     return reference
 
+
 def add_location(loc):
     location = Location.objects.get_or_create(id=loc['id'], lat_long=loc['lat_long'], NaPTAN=loc['NaPTAN'], other=loc['other'], other_type=loc['other_type'], accuracy=loc['accuracy'])[0]
     location.save()
     return location
+
 
 def add_travel_location(loc):
     location = TravelLocation.objects.get_or_create(location=loc['location'], date_time=loc['date_time'], reference=loc['reference'])[0]
     location.save()
     return location
 
+
 def add_service(ser):
     service = Service.objects.get_or_create(service_type=ser['service_type'], unit=ser['unit'], amount=ser['amount'], price=ser['price'])[0]
     service.save()
     return service
+
 
 def add_usage(usage):
     use = Usage.objects.get_or_create(id=usage['id'], customer=usage['customer'], 
@@ -523,6 +537,7 @@ def add_concession(conc):
     concession.save()
     return concession
 
+
 def add_purchase(purch):
     purchase = Purchase.objects.get_or_create(id=purch['id'], customer=purch['customer'],
     mode=purch['mode'], operator=purch['operator'], travel_class=purch['travel_class'], booking_date_time=purch['booking_date_time'],
@@ -536,10 +551,6 @@ def add_purchase(purch):
     return purchase
 
 
-
-
 if __name__ == '__main__':
     print('Starting api population script...')
     populate()
-
-
