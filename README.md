@@ -138,10 +138,16 @@ There are unit and integration tests for the customer query tool, making use of 
 (env_name)$ coverage run manage.py test customers
 (env_name)$ coverage report
 ```
-
+## Customer API and Operator API
+### Postman Testing
+In Postman, click the Runner button at the top of the Postman window. The Collection Runner window will appear.
+Under "Choose a collection or folder", select the folder containing the collection to run.
+Click the Environment menu and choose the environment to use.
+Click the Start Run button.
 
 
 # Releases
+
 
 This repository makes use of release branching, with feature branching off of each release branch.  Currently, there are four releases of our project with the fifth release in development.
 
