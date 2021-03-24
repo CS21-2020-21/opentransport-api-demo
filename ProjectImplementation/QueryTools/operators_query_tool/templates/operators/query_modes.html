@@ -1,0 +1,74 @@
+{% extends 'operators/base.html' %}
+
+{% block title_block %}
+	View Modes
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+
+    {% if user.is_authenticated %}
+
+	{% if modes %}
+
+		<h4 class="font-weight-light text-white py-4" id="title">Here are the transport modes</h4>
+
+		
+		<div>
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">ID</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Short Description</h6></th>
+                        <th scope="col"><h6 class="font-weight-light text-white py-1">Long Description</h6></th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for mode in modes %}
+                    <tr>
+                        <td><h6 class="font-weight-light text-white py-1">{{ mode.id }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ mode.short_desc }}</h6></td>
+                        <td><h6 class="font-weight-light text-white py-1">{{ mode.long_desc }}</h6></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+            
+            {% if modes.has_previous %}
+                <a href="?page={{ modes.previous_page_number }}" class="btn btn-dark btn-lg pt-2 w-25">Previous</a>
+            {% endif %}
+
+            {% if modes.has_next %}
+                <a href="?page={{ modes.next_page_number }}" class="btn btn-dark btn-lg pt-2 w-25">Next</a>
+            {% endif %}
+
+
+
+		</div>
+
+	{% else %}
+
+		<div class="py-4">
+			<h4 class="font-weight-light text-white py-4">Unfortunately we were unable to process your request</h4>
+			<a href="{% url 'operators:query' %}" class="btn btn-dark btn-lg pt-2">Click here to try again</a>
+		</div>
+
+    {% endif %}
+    
+    {% else %}
+
+    <div class="py-4">
+        <h4 class="font-weight-light text-white py-4">Please login to perform the query</h4>
+    </div>
+
+    {% endif %}
+
+{% endblock %}

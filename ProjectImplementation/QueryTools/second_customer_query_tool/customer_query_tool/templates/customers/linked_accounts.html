@@ -1,0 +1,68 @@
+{% extends 'customers/base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title_block %}
+    Linked Accounts
+{% endblock %}
+
+{% block head_block %}
+{% endblock %}
+
+{% block body_block %}
+{% endblock %}
+
+{% block text_block %}
+
+
+{% if linked_accounts %}
+
+        <div class="py-4">
+    
+            {% for account in linked_accounts %}
+                <div class="row">
+                    <div class="col py-1">
+                        <a href="{% url 'customers:show_linked_account_purchases' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100" id="purchases">{{ account.operator }} Purchases</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col py-1">
+                        <a href="{% url 'customers:show_linked_account_concessions' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100" id="concessions">{{ account.operator }} Concessions</a>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col py-1">
+                        <a href="{% url 'customers:show_linked_account_usages' account.slug %}" class="btn btn-dark btn-lg pt-2 w-100" id="usages">{{ account.operator }} Usages</a>
+                    </div>
+                </div>
+            
+            {% endfor %}
+        
+            {% if linked_accounts.has_previous %}
+            <div class="row">
+                <div class="col py-1">
+                    <a href="?page={{ linked_accounts.previous_page_number }}" class="btn btn-dark btn-lg pt-2 w-100">Previous Account</a>
+                </div>
+            </div>
+            {% endif %}
+
+            {% if linked_accounts.has_next %}
+            <div class="row">
+                <div class="col py-1">
+                    <a href="?page={{ linked_accounts.next_page_number }}" class="btn btn-dark btn-lg pt-2 w-100">Next Account</a>
+                </div>
+            </div>
+            {% endif %}
+    
+        </div>
+
+{% else %}
+
+<div class="py-4">
+    <h4 class="font-weight-light text-white py-4">You do not have any linked accounts yet</h4>
+</div>
+
+{% endif %}
+
+{% endblock %}

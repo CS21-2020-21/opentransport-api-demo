@@ -1,0 +1,71 @@
+{% extends 'customers/base.html' %}
+{% load staticfiles %}
+
+{% block title_block %}
+    PSD Ferries Concessions
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+
+{% if user.is_authenticated %}
+
+    {% if concessions %}
+
+    <h4 class="font-weight-light text-white py-4">PSD Ferries Concessions</h4>
+
+    <div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col"><h6 class="font-weight-light text-white py-1">Name</h6></th>
+                    <th scope="col"><h6 class="font-weight-light text-white py-1">Discount</h6></th>
+                    <th scope="col"><h6 class="font-weight-light text-white py-1">Valid From</h6></th>
+                    <th scope="col"><h6 class="font-weight-light text-white py-1">Valid To</h6></th>
+
+                </tr>
+            </thead>
+
+            <tbody>
+                {% for concession in concessions %}
+                <tr>
+                    <td><h6 class="font-weight-light text-white py-1">{{ concession.name }}</h6></td>
+                    <td><h6 class="font-weight-light text-white py-1">{{ concession.discount }}</h6></td>
+                    <td><h6 class="font-weight-light text-white py-1">{{ concession.date_from }}</h6></td>
+                    <td><h6 class="font-weight-light text-white py-1">{{ concession.date_to }}</h6></td>
+
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+
+        {% if concessions.has_previous %}
+            <a href="?page={{ concessions.previous_page_number }}" class="btn btn-dark btn-lg pt-2">Previous</a>
+        {% endif %}
+
+        {% if concessions.has_next %}
+            <a href="?page={{ concessions.next_page_number }}" class="btn btn-dark btn-lg pt-2">Next</a>
+        {% endif %}
+
+
+    {% else %}
+    <h4 class="font-weight-light text-white py-4">You have no concessions with PSD Ferries</h4>
+    {% endif %}   
+
+{% else %}
+
+    <div class="py-4">
+        <h4 class="font-weight-light text-white py-4">Please login to perform the query</h4>
+    </div>
+
+{% endif %}
+
+{% endblock %}

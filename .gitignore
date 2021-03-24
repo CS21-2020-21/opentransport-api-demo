@@ -41,10 +41,18 @@ $RECYCLE.BIN/
 *.pyc
 
 # Compiled Documents
-*.pdf
 *.ps
+
+# Personal vscode settings files
+settings.json
 
 __pycache__/
 db.sqlite3
 *.key
 thumbs.db
+
+# test coverage reports
+*.coverage
+
+# debug files
+*.log

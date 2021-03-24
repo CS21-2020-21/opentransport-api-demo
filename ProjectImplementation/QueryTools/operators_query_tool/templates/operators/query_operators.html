@@ -1,0 +1,98 @@
+{% extends 'operators/base.html' %}
+{% load crispy_forms_tags %}
+{% load staticfiles %}
+
+{% block title_block %}
+    Query Operators
+{% endblock %}
+
+{% block head_block %}
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+
+	{% if user.is_authenticated %}
+		<div class='col-8'>
+			<div class="text-center text-white">
+				<form id="details_form" method="post" style="left:20%;position:relative;">
+					{% csrf_token %}
+					
+					<table class="table" style="font-size:1px;">
+						<tbody>
+							<tr>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.href.label_tag }}</h6></th>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.description.label_tag }}</h6></th>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.operator_id.label_tag }}</h6></th>
+									
+							</tr>
+						</tbody>
+						<tbody>
+							
+							<tr>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.href }}</h6></td>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.description }}</h6></td>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.operator_id }}</h6></td>
+
+							</tr>
+							
+						</tbody>
+
+						<tbody>
+							<tr>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.phone.label_tag }}</h6></th>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.email.label_tag }}</h6></th>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.homepage.label_tag }}</h6></th>
+								
+								
+							</tr>
+						</tbody>
+
+						<tbody>
+							
+							<tr>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.phone }}</h6></td>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.email }}</h6></td>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.homepage}}</h6></td>
+								
+							</tr>
+							
+						</tbody>
+
+						<tbody>
+							<tr>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.language.label_tag }}</h6></th>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.mode.label_tag }}</h6></th>
+								<th scope="col"><h6 class="font-weight-light text-white py-1">{{ form.url.label_tag }}</h6></th>
+						
+							</tr>
+						</tbody>
+
+						<tbody>
+							
+							<tr>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.language }}</h6></td>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.mode }}</h6></td>
+								<td><h6 class="font-weight-light text-white py-1">{{ form.url }}</h6></td>
+							
+							</tr>
+							
+						</tbody>	
+					</table>
+					<td><input type="submit" name="submit" value="Submit Query" class="btn btn-dark btn-md pt-2 w-25" style="left:5%;position:relative;"/></td>
+					
+				</form>
+			</div>
+		</div>
+	
+	{% else %}
+	<div class="py-4">
+        <h4 class="font-weight-light text-white py-4">Please login to perform the query</h4>
+    </div>
+	
+	{% endif %}
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'operators/base.html' %}
+
+{% block title_block %}
+	My Account
+{% endblock %}
+
+{% block head_block %}
+
+
+{% endblock %}
+
+{% block body_block %}
+
+{% endblock %}
+
+{% block text_block %}
+	<div class="py-4">
+			
+		<a href="{% url 'operators:query' %}" class="btn btn-dark btn-lg pt-2">Query Data</a>
+		<a href="{% url 'operators:change_data' %}" class="btn btn-dark btn-lg pt-2">Change Data</a>
+
+	</div>
+{% endblock %}

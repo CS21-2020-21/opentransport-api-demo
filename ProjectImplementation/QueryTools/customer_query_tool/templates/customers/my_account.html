@@ -1,0 +1,33 @@
+{% extends 'customers/base.html' %}
+
+{% block title_block %}
+    My Account
+{% endblock %}
+
+{% block head_block %}
+{% endblock %}
+
+{% block body_block %}
+{% endblock %}
+
+{% block text_block %}
+    <div class="py-4">
+        <div class="row">
+            <div class="col py-1">
+                <a href="{% url 'customers:ferry_query_selection' %}" class="btn btn-dark btn-lg pt-2 w-100" id="psd_ferries_account">My PSD Ferries Account</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col py-1">
+                <a href="{% url 'customers:link_account' %}" class="btn btn-dark btn-lg pt-2 w-100" id="link_account">Link To My Other Accounts</a>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col py-1">
+                <a href="{% url 'customers:linked_accounts' %}" class="btn btn-dark btn-lg pt-2 w-100" id="linked_accounts">My Linked Accounts</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}
