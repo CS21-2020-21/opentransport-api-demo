@@ -1,5 +1,5 @@
 @ECHO OFF
-cd ..\ProjectImplementation\QueryTools\customer_query_tool
+cd ..\QueryTools\customer_query_tool
 pip install -r requirements.txt
 python manage.py makemigrations customers
 python manage.py migrate

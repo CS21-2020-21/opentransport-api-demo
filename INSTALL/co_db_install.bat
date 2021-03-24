@@ -1,5 +1,5 @@
 @ECHO OFF
-cd ..\ProjectImplementation\APIs\operator_api
+cd ..\operator_api
 pip install -r requirements.txt
 python manage.py makemigrations api
 python manage.py migrate

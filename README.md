@@ -55,7 +55,7 @@ $ python -m venv cs21
 * Perform the following commands
 ```shell
 $ cs21\Scripts\activate.bat
-(cs21) $ cd ProjectImplementation/APIs/operator_api
+(cs21) $ cd operator_api
 (cs21) $ pip install -r requirements.txt
 (cs21) $ python manage.py makemigrations api
 (cs21) $ python manage.py migrate
@@ -71,7 +71,7 @@ $ cs21\Scripts\activate.bat
 * Perform the following commands
 ```shell
 $ cs21\Scripts\activate.bat
-(cs21) $ cd ProjectImplementation/QueryTools/operators_query_tool
+(cs21) $ cd QueryTools/operators_query_tool
 (cs21) $ pip install -r requirements.txt
 (cs21) $ python manage.py makemigrations
 (cs21) $ python manage.py migrate
@@ -83,7 +83,7 @@ $ cs21\Scripts\activate.bat
 * Perform the following commands
 ```shell
 $ cs21\Scripts\activate.bat
-(cs21) $ cd ProjectImplementation/QueryTools/customer_query_tool
+(cs21) $ cd QueryTools/customer_query_tool
 (cs21) $ pip install -r requirements.txt
 (cs21) $ python manage.py makemigrations customers
 (cs21) $ python manage.py migrate
@@ -96,7 +96,7 @@ $ cs21\Scripts\activate.bat
 * Perform the following commands
 ```shell
 $ cs21\Scripts\activate.bat
-(cs21) $ cd ProjectImplementation/QueryTools/second_customer_query_tool/customer_query_tool
+(cs21) $ cd QueryTools/second_customer_query_tool/customer_query_tool
 (cs21) $ pip install -r requirements.txt
 (cs21) $ python manage.py makemigrations customers
 (cs21) $ python manage.py migrate
@@ -147,7 +147,7 @@ https://psdbuses.pythonanywhere.com/index/
 
 There are unit and integration tests for the operators query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the operators query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
 ```shell
-(cs21)$ cd ProjectImplementation/QueryTools/operators_query_tool
+(cs21)$ cd QueryTools/operators_query_tool
 (cs21)$ coverage erase
 (cs21)$ coverage run manage.py test operators
 (cs21)$ coverage report
@@ -157,7 +157,7 @@ There are unit and integration tests for the operators query tool, making use of
 
 There are unit and integration tests for the customer query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the customer query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
 ```shell
-(cs21)$ cd ProjectImplementation/QueryTools/customer_query_tool
+(cs21)$ cd QueryTools/customer_query_tool
 (cs21)$ coverage erase
 (cs21)$ coverage run manage.py test customers
 (cs21)$ coverage report
