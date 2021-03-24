@@ -1,5 +1,4 @@
 # TP3 - CS21 Main
-[![pipeline status](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/badges/master/pipeline.svg)](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/-/commits/master)[![coverage report](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/badges/master/coverage.svg)](https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main/-/commits/master)
 
 Main code repository for Team Project 3 of Honours program.
 
@@ -36,7 +35,9 @@ There are two components to our project:
 
 # Installation
 
-* Open an Anaconda Prompt Window
+## Windows Instructions
+
+* Open an Command Prompt window
 
 * Clone the repository:
 ```shell
@@ -45,64 +46,73 @@ $ cd cs21-main
 ```
 * Create your virtual environment named cs21:
 ```shell
-$ conda create --name cs21 python=3.7
+$ python -m venv cs21
 ```
 
 
 
-## Centralised Operator Database
+### Centralised Operator Database
 * Perform the following commands
 ```shell
-(base)$ conda activate cs21
-(cs21)$ cd ProjectImplementation/APIs/operator_api
-(cs21)$ pip install -r requirements.txt
-(cs21)$ python manage.py makemigrations api
-(cs21)$ python manage.py migrate
-(cs21)$ python populate.py
-(cs21)$ python manage.py runserver
+$ cs21\Scripts\activate.bat
+(cs21) $ cd ProjectImplementation/APIs/operator_api
+(cs21) $ pip install -r requirements.txt
+(cs21) $ python manage.py makemigrations api
+(cs21) $ python manage.py migrate
+(cs21) $ python populate.py
+(cs21) $ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/
 
 * Please note that the Centralised Operator Database is not designed to be a web app which the user can interact with directly.  Instead, it should be queried via the Operator Database Query Tool.
 
 
-## Operator Database Query Tool
+### Operator Database Query Tool
 * Perform the following commands
 ```shell
-(base)$ conda activate cs21
-(cs21)$ cd ProjectImplementation/QueryTools/operators_query_tool
-(cs21)$ pip install -r requirements.txt
-(cs21)$ python manage.py makemigrations
-(cs21)$ python manage.py migrate
-(cs21)$ python manage.py runserver
+$ cs21\Scripts\activate.bat
+(cs21) $ cd ProjectImplementation/QueryTools/operators_query_tool
+(cs21) $ pip install -r requirements.txt
+(cs21) $ python manage.py makemigrations
+(cs21) $ python manage.py migrate
+(cs21) $ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/
 
-## Customer Account Query Tool
+### Customer Account Query Tool
 * Perform the following commands
 ```shell
-(base)$ conda activate cs21
-(cs21)$ cd ProjectImplementation/QueryTools/customer_query_tool
-(cs21)$ pip install -r requirements.txt
-(cs21)$ python manage.py makemigrations customers
-(cs21)$ python manage.py migrate
-(cs21)$ python populate.py
-(cs21)$ python manage.py runserver
+$ cs21\Scripts\activate.bat
+(cs21) $ cd ProjectImplementation/QueryTools/customer_query_tool
+(cs21) $ pip install -r requirements.txt
+(cs21) $ python manage.py makemigrations customers
+(cs21) $ python manage.py migrate
+(cs21) $ python populate.py
+(cs21) $ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/index
 
-## Second Customer Account Query Tool
+### Second Customer Account Query Tool
 * Perform the following commands
 ```shell
-(base)$ conda activate cs21
-(cs21)$ cd ProjectImplementation/QueryTools/second_customer_query_tool/customer_query_tool
-(cs21)$ pip install -r requirements.txt
-(cs21)$ python manage.py makemigrations customers
-(cs21)$ python manage.py migrate
-(cs21)$ python populate.py
-(cs21)$ python manage.py runserver
+$ cs21\Scripts\activate.bat
+(cs21) $ cd ProjectImplementation/QueryTools/second_customer_query_tool/customer_query_tool
+(cs21) $ pip install -r requirements.txt
+(cs21) $ python manage.py makemigrations customers
+(cs21) $ python manage.py migrate
+(cs21) $ python populate.py
+(cs21) $ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/index
+
+### One-Line Install
+
+OR in the `INSTALL` directory, you can use the provided batch scripts to autoinstall all or some of the web apps with one click. If you're using Linux you're probably smart enough to not need a one click install. Run these commands via command prompt or powershell, they will not work properly if you click them.
+
+* Open a command prompt window in the `INSTALL` directory, your virtual environment MUST be running, it should be already if you've just done the first install step:
+```shell
+(cs21) $ one_click_install.bat
+```
 
 # Usage
 
@@ -134,6 +144,7 @@ https://psdbuses.pythonanywhere.com/index/
 # Testing
 
 ## Operator Query Tool
+
 There are unit and integration tests for the operators query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the operators query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
 ```shell
 (cs21)$ cd ProjectImplementation/QueryTools/operators_query_tool
@@ -143,6 +154,7 @@ There are unit and integration tests for the operators query tool, making use of
 ```
 
 ## Customer Query Tool
+
 There are unit and integration tests for the customer query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the customer query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
 ```shell
 (cs21)$ cd ProjectImplementation/QueryTools/customer_query_tool
@@ -150,7 +162,9 @@ There are unit and integration tests for the customer query tool, making use of 
 (cs21)$ coverage run manage.py test customers
 (cs21)$ coverage report
 ```
+
 ## Customer API and Operator API
+
 ### Postman Testing
 * In Postman, click the Runner button at the top of the Postman window. The Collection Runner window will appear.
 * Under "Choose a collection or folder", select the folder containing the collection to run.
@@ -164,9 +178,9 @@ There are unit and integration tests for the customer query tool, making use of 
 This repository makes use of release branching, with feature branching off of each release branch.  Currently, there are four releases of our project with the fifth release in development.
 
 
-# Roadmap
+# Project Status
 
-Our repository is currently undergoing intensive testing and refactoring to deliver to our customer.  We will be storing our proof of concept on a GitHub repository to pass the code onto our customer and also act as a guide for developers implementing the API specifications in the future.
+This code is NOT being actively maintained, any issues will not be addressed by us. This project is merely a demonstration of the API specification, any queries regarding the API standard should be directed to the [Open Transport Initiative](https://opentransport.co.uk/).
 
 # Credits
 
@@ -174,7 +188,7 @@ Our repository is currently undergoing intensive testing and refactoring to deli
 
 # License
 
-Copyright [2021] [CS21 - Ans Farooq, Dominykas Meistas, Pragati Mishra, David O'Neill, Lewis Tse]
+Copyright 2021 CS21 - Ans Farooq, Dominykas Meistas, Pragati Mishra, David O'Neill, Lewis Tse
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
