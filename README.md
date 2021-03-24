@@ -36,59 +36,71 @@ There are two components to our project:
 
 # Installation
 
+* Open an Anaconda Prompt Window
+
 * Clone the repository:
 ```shell
 $ git clone https://stgit.dcs.gla.ac.uk/tp3-2020-CS21/cs21-main.git
 $ cd cs21-main
 ```
-* Create and activate your virtual environment
+* Create your virtual environment named cs21:
+```shell
+$ conda create --name cs21 python=3.7
+```
+
 
 
 ## Centralised Operator Database
 * Perform the following commands
 ```shell
-(env_name)$ cd ProjectImplementation/APIs/operator_api
-(env_name)$ pip install -r requirements.txt
-(env_name)$ python manage.py makemigrations api
-(env_name)$ python manage.py migrate
-(env_name)$ python populate.py
-(env_name)$ python manage.py runserver
+(base)$ conda activate cs21
+(cs21)$ cd ProjectImplementation/APIs/operator_api
+(cs21)$ pip install -r requirements.txt
+(cs21)$ python manage.py makemigrations api
+(cs21)$ python manage.py migrate
+(cs21)$ python populate.py
+(cs21)$ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/
+
+* Please note that the Centralised Operator Database is not designed to be a web app which the user can interact with directly.  Instead, it should be queried via the Operator Database Query Tool.
 
 
 ## Operator Database Query Tool
 * Perform the following commands
 ```shell
-(env_name)$ cd ProjectImplementation/QueryTools/operators_query_tool
-(env_name)$ pip install -r requirements.txt
-(env_name)$ python manage.py makemigrations
-(env_name)$ python manage.py migrate
-(env_name)$ python manage.py runserver
+(base)$ conda activate cs21
+(cs21)$ cd ProjectImplementation/QueryTools/operators_query_tool
+(cs21)$ pip install -r requirements.txt
+(cs21)$ python manage.py makemigrations
+(cs21)$ python manage.py migrate
+(cs21)$ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/
 
 ## Customer Account Query Tool
 * Perform the following commands
 ```shell
-(env_name)$ cd ProjectImplementation/QueryTools/customer_query_tool
-(env_name)$ pip install -r requirements.txt
-(env_name)$ python manage.py makemigrations customers
-(env_name)$ python manage.py migrate
-(env_name)$ python populate.py
-(env_name)$ python manage.py runserver
+(base)$ conda activate cs21
+(cs21)$ cd ProjectImplementation/QueryTools/customer_query_tool
+(cs21)$ pip install -r requirements.txt
+(cs21)$ python manage.py makemigrations customers
+(cs21)$ python manage.py migrate
+(cs21)$ python populate.py
+(cs21)$ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/index
 
 ## Second Customer Account Query Tool
 * Perform the following commands
 ```shell
-(env_name)$ cd ProjectImplementation/QueryTools/second_customer_query_tool/customer_query_tool
-(env_name)$ pip install -r requirements.txt
-(env_name)$ python manage.py makemigrations customers
-(env_name)$ python manage.py migrate
-(env_name)$ python populate.py
-(env_name)$ python manage.py runserver
+(base)$ conda activate cs21
+(cs21)$ cd ProjectImplementation/QueryTools/second_customer_query_tool/customer_query_tool
+(cs21)$ pip install -r requirements.txt
+(cs21)$ python manage.py makemigrations customers
+(cs21)$ python manage.py migrate
+(cs21)$ python populate.py
+(cs21)$ python manage.py runserver
 ```
 * Now navigate to http://127.0.0.1:8000/index
 
@@ -124,19 +136,19 @@ https://psdbuses.pythonanywhere.com/index/
 ## Operator Query Tool
 There are unit and integration tests for the operators query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the operators query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
 ```shell
-(env_name)$ cd ProjectImplementation/QueryTools/operators_query_tool
-(env_name)$ coverage erase
-(env_name)$ coverage run manage.py test operators
-(env_name)$ coverage report
+(cs21)$ cd ProjectImplementation/QueryTools/operators_query_tool
+(cs21)$ coverage erase
+(cs21)$ coverage run manage.py test operators
+(cs21)$ coverage report
 ```
 
 ## Customer Query Tool
 There are unit and integration tests for the customer query tool, making use of coverage.  In order to run the tests and evaluate the coverage, two consoles must be open.  The first should run the customer query tool using the running instructions above.  The Django development server should be kept running.  In the second console, perform the following commands:
 ```shell
-(env_name)$ cd ProjectImplementation/QueryTools/customer_query_tool
-(env_name)$ coverage erase
-(env_name)$ coverage run manage.py test customers
-(env_name)$ coverage report
+(cs21)$ cd ProjectImplementation/QueryTools/customer_query_tool
+(cs21)$ coverage erase
+(cs21)$ coverage run manage.py test customers
+(cs21)$ coverage report
 ```
 ## Customer API and Operator API
 ### Postman Testing
@@ -162,4 +174,3 @@ Our repository is currently undergoing intensive testing and refactoring to deli
 
 # License
 
-[TBC]()
