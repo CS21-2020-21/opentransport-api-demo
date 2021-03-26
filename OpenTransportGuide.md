@@ -28,6 +28,8 @@ During our time implementing the API specifications, we took note of certain iss
 
 * n+1 performance issue
 
+* If implementing a similar repository with multiple Django applications you may find creating a CI/CD pipeline problematic. However, we have very little experience with AutoDevOps therefore you may have better luck. If you do decide to go down the same route, we would highly encourage using a different repository for each Django application and implementing a seperate pipeline for each.
+
 ## Our experience
 
 We have greatly appreciated to work with Hayden and the Open Transport who have been an excellent client.  We have gained valuable experience in the professional software development world and we hope that our project will encourage other developers to expose smart data with these innovative APIs, helping to improve the transport industry as a whole.
