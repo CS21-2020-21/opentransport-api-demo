@@ -1,7 +1,7 @@
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django_auto_prefetching import AutoPrefetchViewSetMixin, prefetch
-from django.forms import Textarea
+from django.forms import Textarea, inlineformset_factory
 from rest_framework.viewsets import ModelViewSet
 
 from .forms import *
