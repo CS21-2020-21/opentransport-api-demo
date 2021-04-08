@@ -1,5 +1,8 @@
 # Open Transport Initiative APIs - Guidance for Implementation
 
+## Our team
+Our team consists of Ans Farooq, David O'Neill, Lewis Tse, Dominykas Meistas and Pragati Mishra and we are third-year Computing Science students at the University of Glasgow. 
+
 ## Our background
 
 From October 2020 - March 2021, we have been working with the Open Transport Initiative as part of the University of Glasgow Professional Software Development Honours project.  Our goal was to provide a proof of concept, illustrating how the Open Transport Initiative API specifications can be implemented in practice.  Our final product is located on our GitHub repository [here]().
@@ -8,11 +11,11 @@ From October 2020 - March 2021, we have been working with the Open Transport Ini
 
 At the start of the project, we decided that we would be implementing both the Operator and Customer API specifications.  We would do this by creating the centralised operator-info API, with an accompanying operator query tool to facilitate queries.  We also agreed to create two mock customer accounts which could communicate using the customer API specification.  All members of our team had experience building Django web applications, so we planned to use the [Django Rest Framework](https://www.django-rest-framework.org/).
 
-## Our Design
+## Our design
 
 Initially, reading the API specifications was rather daunting as we had not attempted any project like this before.  In order to help us understand the specifications on a deeper level, we spent some time visualising them with sequence diagrams.  This gave us a clear idea of who would be using the APIs and what was required of us. 
 
-## Our Product
+## Our product
 
 Our final product is located on our GitHub repository [here]().  We hope that this repository can act as a useful guide to any developers implementing the API spec.  It contains the centralised operator database (also hosted at https://cs21operatorapi.pythonanywhere.com) and two customer accounts which are able to communicate with each other.  We have a customer account hosted at https://psdbuses.pythonanywhere.com which can communicate with the other account running on a local machine.
 
